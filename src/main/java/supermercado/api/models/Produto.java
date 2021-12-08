@@ -1,4 +1,4 @@
-package supermercado.api;
+package supermercado.api.models;
 
 import javax.persistence.*;
 import java.math.BigInteger;
