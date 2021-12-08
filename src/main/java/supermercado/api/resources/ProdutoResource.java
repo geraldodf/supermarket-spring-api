@@ -2,6 +2,7 @@ package supermercado.api.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import supermercado.api.models.Produto;
@@ -21,5 +22,11 @@ public class ProdutoResource {
     public ArrayList<Produto> pegarTodosProdutos () {
         return produtoService.pegarTodosProdutos();
     }
+
+    @PostMapping
+    public void adicionarProduto(){
+        produtoService.adicionarProduto();
+    }
+
 
 }
