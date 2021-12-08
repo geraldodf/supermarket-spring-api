@@ -16,6 +16,7 @@ public class ProdutoService {
         return (ArrayList<Produto>) produtoRepository.findAll();
     }
 
-    public void adicionarProduto() {
+    public void criarProduto(Produto produto) {
+        produtoRepository.save(produto);
     }
 }
