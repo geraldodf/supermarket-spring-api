@@ -5,6 +5,7 @@ import supermercado.api.models.Produto;
 import supermercado.api.repositories.ProdutoRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 public class ProdutoService {
@@ -18,5 +19,10 @@ public class ProdutoService {
 
     public void criarProduto(Produto produto) {
         produtoRepository.save(produto);
+    }
+
+    public Produto pegarUmProduto(Long id) {
+       Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+       return produtoBuscadoPeloID.get();
     }
 }
