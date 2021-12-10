@@ -1,9 +1,9 @@
-package supermercado.api.resources;
+package br.com.supermercado.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import supermercado.api.models.Produto;
-import supermercado.api.services.ProdutoService;
+import br.com.supermercado.models.Produto;
+import br.com.supermercado.services.ProdutoService;
 
 import java.util.ArrayList;
 

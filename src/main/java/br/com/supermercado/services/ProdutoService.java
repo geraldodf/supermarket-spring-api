@@ -1,13 +1,14 @@
-package supermercado.api.services;
+package br.com.supermercado.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import supermercado.api.models.Produto;
-import supermercado.api.repositories.ProdutoRepository;
+import org.springframework.stereotype.Service;
+import br.com.supermercado.models.Produto;
+import br.com.supermercado.repositories.ProdutoRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-
+@Service
 public class ProdutoService {
 
     @Autowired

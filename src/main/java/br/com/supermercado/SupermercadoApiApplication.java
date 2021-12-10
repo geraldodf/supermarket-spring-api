@@ -1,4 +1,4 @@
-package br.com.supermercadoapi;
+package br.com.supermercado;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
