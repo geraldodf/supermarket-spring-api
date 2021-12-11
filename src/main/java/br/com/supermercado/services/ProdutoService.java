@@ -18,12 +18,17 @@ public class ProdutoService {
         return (ArrayList<Produto>) produtoRepository.findAll();
     }
 
+    public Produto pegarUmProduto(Long id) {
+        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+        return produtoBuscadoPeloID.get();
+    }
+
     public void criarProduto(Produto produto) {
         produtoRepository.save(produto);
     }
 
-    public Produto pegarUmProduto(Long id) {
-       Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
-       return produtoBuscadoPeloID.get();
+
+    public void excluirProduto(Long id) {
+        produtoRepository.deleteById(id);
     }
 }

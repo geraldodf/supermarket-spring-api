@@ -29,6 +29,11 @@ public class ProdutoResource {
         produtoService.criarProduto(produto);
     }
 
+    @DeleteMapping("/{id}")
+    public void excluirProduto(@PathVariable("id") Long id){
+        produtoService.excluirProduto(id);
+    }
+
 
 
 
