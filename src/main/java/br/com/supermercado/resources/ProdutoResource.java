@@ -25,7 +25,7 @@ public class ProdutoResource {
     }
 
     @PostMapping
-    public void adicionarProduto(Produto produto){
+    public void adicionarProduto(@RequestBody Produto produto){
         produtoService.criarProduto(produto);
     }
 

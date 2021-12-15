@@ -32,10 +32,6 @@ public class Produto {
         this.id = id;
     }
 
-    public void setCodigo(BigInteger codigo) {
-        this.codigo = codigo;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -52,19 +48,19 @@ public class Produto {
         this.preco = preco;
     }
 
-    public Long getCodigo() {
-        return id;
-    }
-
-    public void setCodigo(Long codigo) {
-        this.id = codigo;
-    }
-
     public Long getQuantidade() {
         return quantidade;
     }
 
     public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public BigInteger getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(BigInteger codigo) {
+        this.codigo = codigo;
     }
 }
