@@ -34,6 +34,11 @@ public class ProdutoResource {
         produtoService.excluirProduto(id);
     }
 
+    @PutMapping("/{id}")
+    public void atualizarProduto(@PathVariable ("id") Long id,@RequestBody Produto produto){
+        produtoService.atualizarProduto(id, produto);
+    }
+
 
 
 
