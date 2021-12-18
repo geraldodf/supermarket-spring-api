@@ -19,6 +19,11 @@ public class ProdutoResource {
         return produtoService.pegarTodosProdutos();
     }
 
+    @GetMapping("/search")
+    public ArrayList<Produto> pesquisaProdutoPorNome (@RequestParam (name = "descricao") String descricao){
+        return produtoService.pesquisaProdutoPorNome(descricao);
+    }
+
     @GetMapping("/{id}")
     public Produto pegarUmProduto(@PathVariable ("id") Long id){
         return produtoService.pegarUmProduto(id);

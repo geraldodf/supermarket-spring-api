@@ -41,4 +41,8 @@ public class ProdutoService {
         novoProduto.setQuantidade(produto.getQuantidade());
         produtoRepository.save(novoProduto);
     }
+
+    public ArrayList<Produto> pesquisaProdutoPorNome(String descricao) {
+            return (ArrayList<Produto>) produtoRepository.search(descricao);
+    }
 }
