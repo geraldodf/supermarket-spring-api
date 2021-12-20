@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 @RequestMapping("/produtos")

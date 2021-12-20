@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -43,6 +44,7 @@ public class ProdutoService {
     }
 
     public ArrayList<Produto> pesquisaProdutoPorNome(String descricao) {
-            return (ArrayList<Produto>) produtoRepository.search(descricao);
+            return (ArrayList<Produto>) produtoRepository.pesquisaPorDescricao(descricao);
     }
+
 }

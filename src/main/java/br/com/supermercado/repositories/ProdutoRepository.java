@@ -12,5 +12,6 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
-    public List<Produto> search(String keyword);
+    public List<Produto> pesquisaPorDescricao(String descricao);
+
 }
