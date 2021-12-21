@@ -47,4 +47,7 @@ public class ProdutoService {
             return (ArrayList<Produto>) produtoRepository.pesquisaPorDescricao(descricao);
     }
 
+    public ArrayList<Produto> pesquisaProdutoPorCodigo(BigInteger codigo) {
+           return (ArrayList<Produto>) produtoRepository.pesquisaPorCodigo(codigo);
+    }
 }

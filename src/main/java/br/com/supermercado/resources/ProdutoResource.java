@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
 
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -20,9 +21,14 @@ public class ProdutoResource {
         return produtoService.pegarTodosProdutos();
     }
 
-    @GetMapping("/search")
+    @GetMapping("/descricao")
     public ArrayList<Produto> pesquisaProdutoPorNome (@RequestParam (name = "descricao") String descricao){
         return produtoService.pesquisaProdutoPorNome(descricao);
+    }
+
+    @GetMapping("/codigo")
+    public ArrayList<Produto> pesquisaProdutoPorCodigo(@RequestParam (name = "codigo") BigInteger codigo ){
+        return produtoService.pesquisaProdutoPorCodigo(codigo);
     }
 
     @GetMapping("/{id}")
