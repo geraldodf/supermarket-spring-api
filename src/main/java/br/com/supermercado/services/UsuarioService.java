@@ -5,6 +5,8 @@ import br.com.supermercado.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class UsuarioService {
 
@@ -13,5 +15,9 @@ public class UsuarioService {
 
     public void criarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
+    }
+
+    public ArrayList<Usuario> pegarTodosUsuarios() {
+        return (ArrayList<Usuario>) usuarioRepository.findAll();
     }
 }
