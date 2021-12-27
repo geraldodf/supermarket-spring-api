@@ -28,4 +28,11 @@ public class UsuarioResource {
     public Usuario pegarUmUsuario(@PathVariable ("id") Long id){
         return usuarioService.pegarUmUsuario(id);
     }
+
+    @PutMapping("/{id}")
+    public void atualizarUsuario(@PathVariable ("id") Long id, Usuario usuario){
+        usuarioService.atualizarUsuario(id, usuario);
+    }
+
+
 }
