@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -19,5 +20,10 @@ public class UsuarioService {
 
     public ArrayList<Usuario> pegarTodosUsuarios() {
         return (ArrayList<Usuario>) usuarioRepository.findAll();
+    }
+
+    public Usuario pegarUmUsuario(Long id) {
+        Optional<Usuario> usuarioPeloId = usuarioRepository.findById(id);
+        return usuarioPeloId.get();
     }
 }

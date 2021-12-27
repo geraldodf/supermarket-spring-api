@@ -23,6 +23,9 @@ public class UsuarioResource {
     public ArrayList<Usuario> pegarTodosUsuarios(){
         return usuarioService.pegarTodosUsuarios();
     }
-
-
+    
+    @GetMapping("/{id}")
+    public Usuario pegarUmUsuario(@RequestParam ("id") Long id){
+        return usuarioService.pegarUmUsuario(id);
+    }
 }
