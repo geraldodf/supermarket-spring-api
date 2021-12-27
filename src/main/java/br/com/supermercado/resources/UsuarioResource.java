@@ -25,7 +25,7 @@ public class UsuarioResource {
     }
     
     @GetMapping("/{id}")
-    public Usuario pegarUmUsuario(@RequestParam ("id") Long id){
+    public Usuario pegarUmUsuario(@PathVariable ("id") Long id){
         return usuarioService.pegarUmUsuario(id);
     }
 }
