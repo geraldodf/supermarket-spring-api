@@ -14,11 +14,6 @@ public class UsuarioResource {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping
-    public void criarUsuario(@RequestBody Usuario usuario){
-        usuarioService.criarUsuario(usuario);
-    }
-
     @GetMapping
     public ArrayList<Usuario> pegarTodosUsuarios(){
         return usuarioService.pegarTodosUsuarios();
@@ -29,10 +24,21 @@ public class UsuarioResource {
         return usuarioService.pegarUmUsuario(id);
     }
 
+    @PostMapping
+    public void criarUsuario(@RequestBody Usuario usuario){
+        usuarioService.criarUsuario(usuario);
+    }
+
     @PutMapping("/{id}")
-    public void atualizarUsuario(@PathVariable ("id") Long id, Usuario usuario){
+    public void atualizarUsuario(@PathVariable ("id") Long id,@RequestBody Usuario usuario){
         usuarioService.atualizarUsuario(id, usuario);
     }
+
+    @DeleteMapping("/{id}")
+    public void excuirUsuario(@PathVariable ("id") Long id){
+        usuarioService.excuirUsuario(id);
+    }
+
 
 
 }

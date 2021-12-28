@@ -32,9 +32,13 @@ public class UsuarioService {
     public void atualizarUsuario(Long id, Usuario usuario) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
         Usuario usuarioParaAtualizar = usuarioOptional.get();
-        usuario.setCargo(usuarioParaAtualizar.getCargo());
-        usuario.setNome(usuarioParaAtualizar.getNome());
-        usuario.setSenha(usuarioParaAtualizar.getSenha());
-        usuarioRepository.save(usuario);
+        usuarioParaAtualizar.setCargo(usuario.getCargo());
+        usuarioParaAtualizar.setNome(usuario.getNome());
+        usuarioParaAtualizar.setSenha(usuario.getSenha());
+        usuarioRepository.save(usuarioParaAtualizar);
+    }
+
+    public void excuirUsuario(Long id) {
+        usuarioRepository.deleteById(id);
     }
 }
