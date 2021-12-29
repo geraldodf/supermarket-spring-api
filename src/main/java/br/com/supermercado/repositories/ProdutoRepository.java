@@ -7,16 +7,16 @@ import org.springframework.stereotype.Repository;
 import br.com.supermercado.models.Produto;
 
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
-    public List<Produto> pesquisaPorDescricao(String descricao);
+    public ArrayList<Produto> pesquisaPorDescricao(String descricao);
 
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigo, '') LIKE %?1%")
-    public List<Produto> pesquisaPorCodigo(BigInteger codigo);
+    public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
 
 }

@@ -19,7 +19,7 @@ public class Usuario {
     private String cargo;
 
     @Column(name = "usuario_senha")
-    private BigInteger senha;
+    private Long senha;
 
     public Long getId() {
         return id;
@@ -45,11 +45,11 @@ public class Usuario {
         this.cargo = cargo;
     }
 
-    public BigInteger getSenha() {
+    public Long getSenha() {
         return senha;
     }
 
-    public void setSenha(BigInteger senha) {
+    public void setSenha(Long senha) {
         this.senha = senha;
     }
 }

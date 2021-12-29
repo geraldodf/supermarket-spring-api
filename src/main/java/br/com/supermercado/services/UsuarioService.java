@@ -2,11 +2,11 @@ package br.com.supermercado.services;
 
 import br.com.supermercado.models.Usuario;
 import br.com.supermercado.repositories.UsuarioRepository;
-import br.com.supermercado.resources.UsuarioResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +40,10 @@ public class UsuarioService {
 
     public void excuirUsuario(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    public ArrayList<Usuario> pegarUsuarioPorNome(String nome) {
+        List<Usuario> usuarios = usuarioRepository.pesquisaPorNome(nome);
+        return (ArrayList<Usuario>) usuarios;
     }
 }

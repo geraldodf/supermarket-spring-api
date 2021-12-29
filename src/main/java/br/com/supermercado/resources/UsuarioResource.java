@@ -24,6 +24,11 @@ public class UsuarioResource {
         return usuarioService.pegarUmUsuario(id);
     }
 
+    @GetMapping("/search")
+    public ArrayList<Usuario> pegarUsuarioPorNome(@RequestParam (name = "search") String nome){
+        return usuarioService.pegarUsuarioPorNome(nome);
+    }
+
     @PostMapping
     public void criarUsuario(@RequestBody Usuario usuario){
         usuarioService.criarUsuario(usuario);

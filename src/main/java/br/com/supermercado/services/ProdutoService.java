@@ -43,11 +43,11 @@ public class ProdutoService {
         produtoRepository.save(novoProduto);
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorNome(String descricao) {
-            return (ArrayList<Produto>) produtoRepository.pesquisaPorDescricao(descricao);
+    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) {
+        return  produtoRepository.pesquisaPorCodigo(codigo);
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorCodigo(BigInteger codigo) {
-           return (ArrayList<Produto>) produtoRepository.pesquisaPorCodigo(codigo);
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) {
+      return produtoRepository.pesquisaPorDescricao(descricao);
     }
 }
