@@ -22,7 +22,7 @@ public class Produto {
     private Long quantidade;
 
     @Column(name = "produto_codigo")
-    private BigInteger codigo;
+    private Long codigo;
 
     public Long getId() {
         return id;
@@ -56,11 +56,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public BigInteger getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(BigInteger codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 }

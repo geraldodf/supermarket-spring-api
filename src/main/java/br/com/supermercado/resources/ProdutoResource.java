@@ -36,7 +36,7 @@ public class ProdutoResource {
     }
 
     @PostMapping
-    public void adicionarProduto(@RequestBody Produto produto){
+    public void adicionarProduto(@RequestBody Produto produto) throws Exception {
         produtoService.criarProduto(produto);
     }
 
