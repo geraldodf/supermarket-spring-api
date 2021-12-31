@@ -21,12 +21,13 @@ public class ProdutoResource {
         return produtoService.pegarTodosProdutos();
     }
 
-    @GetMapping("/search")
-    public ArrayList<Produto> pesquisaProdutoPorNomeOuCodigo(@RequestParam (name = "descricao") String descricao, @RequestParam (name = "codigo") Long codigo){
-        if (descricao == null){
-            return produtoService.pesquisaProdutoPorCodigo(codigo);
-        } else
+    @GetMapping("/search-descricao")
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam  (name ="descricao" ) String descricao){
         return produtoService.pesquisaProdutoPorDescricao(descricao);
+    }
+    @GetMapping("/search-codigo")
+    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam (name = "codigo") Long codigo){
+        return produtoService.pesquisaProdutoPorCodigo(codigo);
     }
 
     @GetMapping("/{id}")
