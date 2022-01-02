@@ -49,7 +49,10 @@ public class ProdutoService {
         }
     }
 
-    public void excluirProduto(Long id) {
+    public void excluirProduto(Long id) throws Exception {
+        if (produtoRepository.pesquisaPorCodigo(id) == null){
+            throw new Exception("Produto inexistente! verifique e tente novamente.");
+        }
         produtoRepository.deleteById(id);
     }
 

@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
-
-
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 @RequestMapping("/produtos")
@@ -41,7 +38,7 @@ public class ProdutoResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluirProduto(@PathVariable("id") Long id){
+    public void excluirProduto(@PathVariable("id") Long id) throws Exception {
         produtoService.excluirProduto(id);
     }
 
