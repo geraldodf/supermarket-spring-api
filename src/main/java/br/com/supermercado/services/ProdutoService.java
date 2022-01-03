@@ -70,11 +70,13 @@ public class ProdutoService {
         if (produtoRepository.pesquisaPorCodigo(codigo) == null){
             throw new Exception("Produto inexistente! verifique e tente novamente.");
         }
-        produtoRepository.deleteById(codigo);
         return produtoRepository.pesquisaPorCodigo(codigo);
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) {
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) throws Exception {
+        if (produtoRepository.pesquisaPorDescricao(descricao) == null){
+            throw new Exception("Produto inexistente! verifique e tente novamente.");
+        }
         return produtoRepository.pesquisaPorDescricao(descricao);
     }
 }

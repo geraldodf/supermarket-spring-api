@@ -19,7 +19,7 @@ public class ProdutoResource {
     }
 
     @GetMapping("/search-descricao")
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam  (name ="descricao" ) String descricao){
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam  (name ="descricao" ) String descricao) throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
     @GetMapping("/search-codigo")
