@@ -66,7 +66,11 @@ public class ProdutoService {
         produtoRepository.save(novoProduto);
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) {
+    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
+        if (produtoRepository.pesquisaPorCodigo(codigo) == null){
+            throw new Exception("Produto inexistente! verifique e tente novamente.");
+        }
+        produtoRepository.deleteById(codigo);
         return produtoRepository.pesquisaPorCodigo(codigo);
     }
 

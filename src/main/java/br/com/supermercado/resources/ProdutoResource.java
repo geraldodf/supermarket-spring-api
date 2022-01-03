@@ -23,7 +23,7 @@ public class ProdutoResource {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
     @GetMapping("/search-codigo")
-    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam (name = "codigo") Long codigo){
+    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam (name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
     }
 
