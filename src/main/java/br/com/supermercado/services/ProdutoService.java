@@ -18,7 +18,10 @@ public class ProdutoService {
         return (ArrayList<Produto>) produtoRepository.findAll();
     }
 
-    public Produto pegarUmProduto(Long id) {
+    public Produto pegarUmProduto(Long id) throws Exception {
+        if (id == null){
+            throw new Exception("Produto inválido! verifique e tente novamente.");
+        }
         Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
     }

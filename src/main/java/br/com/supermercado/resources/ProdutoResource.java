@@ -28,7 +28,7 @@ public class ProdutoResource {
     }
 
     @GetMapping("/{id}")
-    public Produto pegarUmProduto(@PathVariable ("id") Long id){
+    public Produto pegarUmProduto(@PathVariable ("id") Long id) throws Exception {
         return produtoService.pegarUmProduto(id);
     }
 
