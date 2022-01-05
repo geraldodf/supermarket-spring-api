@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
+
 import java.util.ArrayList;
 
 @RequestMapping("/produtos")
@@ -14,21 +15,22 @@ public class ProdutoResource {
     private ProdutoService produtoService;
 
     @GetMapping
-    public ArrayList<Produto> pegarTodosProdutos () {
+    public ArrayList<Produto> pegarTodosProdutos() {
         return produtoService.pegarTodosProdutos();
     }
 
     @GetMapping("/search-descricao")
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam  (name ="descricao" ) String descricao) throws Exception {
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao) throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
+
     @GetMapping("/search-codigo")
-    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam (name = "codigo") Long codigo) throws Exception {
+    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
     }
 
     @GetMapping("/{id}")
-    public Produto pegarUmProduto(@PathVariable ("id") Long id) throws Exception {
+    public Produto pegarUmProduto(@PathVariable("id") Long id) throws Exception {
         return produtoService.pegarUmProduto(id);
     }
 
@@ -43,11 +45,9 @@ public class ProdutoResource {
     }
 
     @PutMapping("/{id}")
-    public void atualizarProduto(@PathVariable ("id") Long id,@RequestBody Produto produto) throws Exception {
+    public void atualizarProduto(@PathVariable("id") Long id, @RequestBody Produto produto) throws Exception {
         produtoService.atualizarProduto(id, produto);
     }
-
-
 
 
 }

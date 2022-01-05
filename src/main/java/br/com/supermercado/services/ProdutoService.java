@@ -19,35 +19,22 @@ public class ProdutoService {
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
-        try{
-        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
-        return produtoBuscadoPeloID.get();
-        }catch (Exception e){
-            throw  new Exception("Produto inválido! tente novamente.");
+        try {
+            Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+            return produtoBuscadoPeloID.get();
+        } catch (Exception e) {
+            throw new Exception("Produto inválido! tente novamente.");
         }
     }
 
     public void criarProduto(Produto produto) throws Exception {
-        if (produto.getCodigo() == null) {
-            throw new Exception("O produto deve ter um código! Verifique se o código foi informado e tente novamente.");
-        }
-        if (produto.getDescricao().length() <= 5) {
-            throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
-        }
-        if (produto.getPreco() == null) {
-            throw new Exception("O produto deve ter um preço! Verifique se o preço foi informado e tente novamente.");
-        }
-        if (produto.getQuantidade() == null) {
-            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
-        }
+        verificarProduto(produto);
         try {
             if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
                 produtoRepository.save(produto);
             } else {
                 throw new Exception();
             }
-
-
         } catch (Exception e) {
             throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
         }
@@ -67,18 +54,8 @@ public class ProdutoService {
         Optional<Produto> resposta = produtoRepository.findById(id);
         Produto novoProduto = resposta.get();
 
-        if (produto.getCodigo() == null) {
-            throw new Exception("O produto deve ter um código! Verifique se o código foi informado e tente novamente.");
-        }
-        if (produto.getDescricao().length() <= 5) {
-            throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
-        }
-        if (produto.getPreco() == null) {
-            throw new Exception("O produto deve ter um preço! Verifique se o preço foi informado e tente novamente.");
-        }
-        if (produto.getQuantidade() == null) {
-            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
-        }
+        verificarProduto(produto);
+
         try {
             if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
                 novoProduto.setCodigo(produto.getCodigo());
@@ -92,10 +69,7 @@ public class ProdutoService {
         } catch (Exception e) {
             throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
         }
-
-
     }
-
 
     public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
         if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
@@ -109,5 +83,20 @@ public class ProdutoService {
             throw new Exception("Produto inexistente! verifique e tente novamente.");
         }
         return produtoRepository.pesquisaPorDescricao(descricao);
+    }
+
+    public void verificarProduto(Produto produto) throws Exception {
+        if (produto.getCodigo() == null) {
+            throw new Exception("O produto deve ter um código! Verifique se o código foi informado e tente novamente.");
+        }
+        if (produto.getDescricao().length() <= 5) {
+            throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
+        }
+        if (produto.getPreco() == null) {
+            throw new Exception("O produto deve ter um preço! Verifique se o preço foi informado e tente novamente.");
+        }
+        if (produto.getQuantidade() == null) {
+            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
+        }
     }
 }
