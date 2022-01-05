@@ -19,11 +19,12 @@ public class ProdutoService {
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
-        if (id == null){
-            throw new Exception("Produto inválido! verifique e tente novamente.");
-        }
+        try{
         Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
+        }catch (Exception e){
+            throw  new Exception("Produto inválido! tente novamente.");
+        }
     }
 
     public void criarProduto(Produto produto) throws Exception {
@@ -53,31 +54,58 @@ public class ProdutoService {
     }
 
     public void excluirProduto(Long id) throws Exception {
-        if (produtoRepository.pesquisaPorCodigo(id) == null){
+        if (produtoRepository.pesquisaPorCodigo(id) == null) {
             throw new Exception("Produto inexistente! verifique e tente novamente.");
         }
         produtoRepository.deleteById(id);
     }
 
-    public void atualizarProduto(Long id, Produto produto) {
+    public void atualizarProduto(Long id, Produto produto) throws Exception {
+        if (id == null) {
+            throw new Exception("Produto inexistente!");
+        }
         Optional<Produto> resposta = produtoRepository.findById(id);
         Produto novoProduto = resposta.get();
-        novoProduto.setCodigo(produto.getCodigo());
-        novoProduto.setDescricao(produto.getDescricao());
-        novoProduto.setPreco(produto.getPreco());
-        novoProduto.setQuantidade(produto.getQuantidade());
-        produtoRepository.save(novoProduto);
+
+        if (produto.getCodigo() == null) {
+            throw new Exception("O produto deve ter um código! Verifique se o código foi informado e tente novamente.");
+        }
+        if (produto.getDescricao().length() <= 5) {
+            throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
+        }
+        if (produto.getPreco() == null) {
+            throw new Exception("O produto deve ter um preço! Verifique se o preço foi informado e tente novamente.");
+        }
+        if (produto.getQuantidade() == null) {
+            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
+        }
+        try {
+            if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+                novoProduto.setCodigo(produto.getCodigo());
+                novoProduto.setDescricao(produto.getDescricao());
+                novoProduto.setPreco(produto.getPreco());
+                novoProduto.setQuantidade(produto.getQuantidade());
+                produtoRepository.save(novoProduto);
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
+        }
+
+
     }
 
+
     public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
-        if (produtoRepository.pesquisaPorCodigo(codigo) == null){
+        if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
             throw new Exception("Produto inexistente! verifique e tente novamente.");
         }
         return produtoRepository.pesquisaPorCodigo(codigo);
     }
 
     public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) throws Exception {
-        if (produtoRepository.pesquisaPorDescricao(descricao) == null){
+        if (produtoRepository.pesquisaPorDescricao(descricao) == null) {
             throw new Exception("Produto inexistente! verifique e tente novamente.");
         }
         return produtoRepository.pesquisaPorDescricao(descricao);

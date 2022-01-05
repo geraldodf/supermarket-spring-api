@@ -43,7 +43,7 @@ public class ProdutoResource {
     }
 
     @PutMapping("/{id}")
-    public void atualizarProduto(@PathVariable ("id") Long id,@RequestBody Produto produto){
+    public void atualizarProduto(@PathVariable ("id") Long id,@RequestBody Produto produto) throws Exception {
         produtoService.atualizarProduto(id, produto);
     }
 
