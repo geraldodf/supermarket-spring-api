@@ -15,35 +15,34 @@ public class UsuarioResource {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public ArrayList<Usuario> pegarTodosUsuarios(){
+    public ArrayList<Usuario> pegarTodosUsuarios() {
         return usuarioService.pegarTodosUsuarios();
     }
-    
+
     @GetMapping("/{id}")
-    public Usuario pegarUmUsuario(@PathVariable ("id") Long id){
+    public Usuario pegarUmUsuario(@PathVariable("id") Long id) throws Exception {
         return usuarioService.pegarUmUsuario(id);
     }
 
     @GetMapping("/search")
-    public ArrayList<Usuario> pegarUsuarioPorNome(@RequestParam (name = "search") String nome){
+    public ArrayList<Usuario> pegarUsuarioPorNome(@RequestParam(name = "search") String nome) {
         return usuarioService.pegarUsuarioPorNome(nome);
     }
 
     @PostMapping
-    public void criarUsuario(@RequestBody Usuario usuario){
+    public void criarUsuario(@RequestBody Usuario usuario) throws Exception {
         usuarioService.criarUsuario(usuario);
     }
 
     @PutMapping("/{id}")
-    public void atualizarUsuario(@PathVariable ("id") Long id,@RequestBody Usuario usuario){
+    public void atualizarUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
         usuarioService.atualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void excuirUsuario(@PathVariable ("id") Long id){
+    public void excuirUsuario(@PathVariable("id") Long id) {
         usuarioService.excuirUsuario(id);
     }
-
 
 
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
-
 import java.util.ArrayList;
 
 @RequestMapping("/produtos")
@@ -48,6 +47,4 @@ public class ProdutoResource {
     public void atualizarProduto(@PathVariable("id") Long id, @RequestBody Produto produto) throws Exception {
         produtoService.atualizarProduto(id, produto);
     }
-
-
 }
