@@ -35,7 +35,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{id}")
-    public void atualizarUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+    public void atualizarUsuario(@PathVariable("id") Long id,@RequestBody Usuario usuario) {
         usuarioService.atualizarUsuario(id, usuario);
     }
 

@@ -29,7 +29,7 @@ public class ProdutoService {
     public void criarProduto(Produto produto) throws Exception {
         verificarProduto(produto);
         try {
-            if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+            if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao().length() <= 5) {
                 produtoRepository.save(produto);
             } else {
                 throw new Exception();
