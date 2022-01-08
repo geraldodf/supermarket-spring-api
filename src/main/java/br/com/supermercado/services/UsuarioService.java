@@ -30,15 +30,7 @@ public class UsuarioService {
     }
 
     public void criarUsuario(Usuario usuario) throws Exception {
-        if (usuario.getCargo().length() <= 3) {
-            throw new Exception("Usuario precisa possuir um cargo com mais de 3 caracteres! Verifique se o cargo foi indicado e tente novamente.");
-        }
-        if (usuario.getNome().length() <= 3) {
-            throw new Exception("Usuario precisa possuir um nome com mais de 3 caracteres! Verifique se o nome foi indicado e tente novamente.");
-        }
-        if (usuario.getSenha() <= 999) {
-            throw new Exception("Usuario precisa possuir uma senha com pelo menos 4 números ! Verifique se a senha foi indicada e tente novamente.");
-        }
+        verificarUsuario(usuario);
         if (usuario.getSenha() >= 999 && usuario.getCargo().length() >= 3 && usuario.getNome().length() >= 3) {
             try {
                 usuarioRepository.save(usuario);
@@ -48,21 +40,51 @@ public class UsuarioService {
         }
     }
 
-        public void atualizarUsuario (Long id, Usuario usuario){
+    public void atualizarUsuario(Long id, Usuario usuario) throws Exception {
+        verificarUsuario(usuario);
+        try {
             Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-            Usuario usuarioParaAtualizar = usuarioOptional.get();
-            usuarioParaAtualizar.setCargo(usuario.getCargo());
-            usuarioParaAtualizar.setNome(usuario.getNome());
-            usuarioParaAtualizar.setSenha(usuario.getSenha());
-            usuarioRepository.save(usuarioParaAtualizar);
-        }
-
-        public void excuirUsuario (Long id){
-            usuarioRepository.deleteById(id);
-        }
-
-        public ArrayList<Usuario> pegarUsuarioPorNome (String nome){
-            List<Usuario> usuarios = usuarioRepository.pesquisaPorNome(nome);
-            return (ArrayList<Usuario>) usuarios;
+            if (usuario.getNome().length() > 3 && usuario.getCargo().length() > 3 && usuario.getSenha() > 999) {
+                Usuario usuarioParaAtualizar = usuarioOptional.get();
+                usuarioParaAtualizar.setCargo(usuario.getCargo());
+                usuarioParaAtualizar.setNome(usuario.getNome());
+                usuarioParaAtualizar.setSenha(usuario.getSenha());
+                usuarioRepository.save(usuarioParaAtualizar);
+            }
+        } catch (Exception e) {
+            throw new Exception("Ocorreu um erro ao atualizar o usuário! verifique os dados e tente novamente.");
         }
     }
+
+    public void excuirUsuario(Long id) throws Exception {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Erro ao excluir o produto! verifique e tente novamente");
+        }
+
+    }
+
+    public ArrayList<Usuario> pegarUsuarioPorNome(String nome) throws Exception {
+        try {
+            ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuarioRepository.pesquisaPorNome(nome);
+            return usuarios;
+        } catch (Exception e) {
+            throw new Exception("Usuário inválido! verifique e tente novamente.");
+        }
+
+    }
+
+
+    public void verificarUsuario(Usuario usuario) throws Exception {
+        if (usuario.getCargo().length() <= 3) {
+            throw new Exception("Usuario precisa possuir um cargo com mais de 3 caracteres! Verifique se o cargo foi indicado e tente novamente.");
+        }
+        if (usuario.getNome().length() <= 3) {
+            throw new Exception("Usuario precisa possuir um nome com mais de 3 caracteres! Verifique se o nome foi indicado e tente novamente.");
+        }
+        if (usuario.getSenha() <= 999) {
+            throw new Exception("Usuario precisa possuir uma senha com pelo menos 4 números ! Verifique se a senha foi indicada e tente novamente.");
+        }
+    }
+}

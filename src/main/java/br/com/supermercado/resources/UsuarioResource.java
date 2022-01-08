@@ -25,7 +25,7 @@ public class UsuarioResource {
     }
 
     @GetMapping("/search")
-    public ArrayList<Usuario> pegarUsuarioPorNome(@RequestParam(name = "search") String nome) {
+    public ArrayList<Usuario> pegarUsuarioPorNome(@RequestParam(name = "search") String nome) throws Exception {
         return usuarioService.pegarUsuarioPorNome(nome);
     }
 
@@ -35,12 +35,12 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{id}")
-    public void atualizarUsuario(@PathVariable("id") Long id,@RequestBody Usuario usuario) {
+    public void atualizarUsuario(@PathVariable("id") Long id,@RequestBody Usuario usuario) throws Exception {
         usuarioService.atualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void excuirUsuario(@PathVariable("id") Long id) {
+    public void excuirUsuario(@PathVariable("id") Long id) throws Exception {
         usuarioService.excuirUsuario(id);
     }
 

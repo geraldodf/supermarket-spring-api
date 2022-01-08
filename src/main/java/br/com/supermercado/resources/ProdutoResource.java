@@ -13,6 +13,7 @@ public class ProdutoResource {
     @Autowired
     private ProdutoService produtoService;
 
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping
     public ArrayList<Produto> pegarTodosProdutos() {
         return produtoService.pegarTodosProdutos();
