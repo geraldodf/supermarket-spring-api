@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,9 +15,14 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
 
-    public ArrayList<Usuario> pegarTodosUsuarios() {
-        return (ArrayList<Usuario>) usuarioRepository.findAll();
+    public ArrayList<Usuario> pegarTodosUsuarios() throws Exception {
+        try {
+            return (ArrayList<Usuario>) usuarioRepository.findAll();
+        } catch (Exception e) {
+            throw new Exception("Erro! tente novamente.");
+        }
     }
+
 
     public Usuario pegarUmUsuario(Long id) throws Exception {
         try {

@@ -15,7 +15,7 @@ public class UsuarioResource {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public ArrayList<Usuario> pegarTodosUsuarios() {
+    public ArrayList<Usuario> pegarTodosUsuarios() throws Exception {
         return usuarioService.pegarTodosUsuarios();
     }
 
