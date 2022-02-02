@@ -1,21 +1,33 @@
 package br.com.supermercado.models;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "produtos")
 public class Produto {
 
     @Id
     @Column(name = "produto_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
     @Column(name = "produto_descricao")
     private String descricao;
 
-    @Column(name = "produto_preco")
-    private Double preco;
+    @Column(name = "produto_preco_de_compra")
+    private BigDecimal precoDeCompra;
+
+    @Column(name="produto_preco_de_venda")
+    private BigDecimal precoDeVenda;
+
+    @Column(name = "lucro_liquido")
+    private BigDecimal lucroLiquido;
 
     @Column(name = "produto_quantidade")
     private Long quantidade;
@@ -23,43 +35,4 @@ public class Produto {
     @Column(name = "produto_codigo")
     private Long codigo;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
-    public Long getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Long quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public Long getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
-    }
 }

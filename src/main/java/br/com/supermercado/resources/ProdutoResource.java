@@ -19,31 +19,37 @@ public class ProdutoResource {
         return produtoService.pegarTodosProdutos();
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/search-descricao")
     public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao) throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/search-codigo")
     public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/{id}")
     public Produto pegarUmProduto(@PathVariable("id") Long id) throws Exception {
         return produtoService.pegarUmProduto(id);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @PostMapping
     public void adicionarProduto(@RequestBody Produto produto) throws Exception {
         produtoService.criarProduto(produto);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public void excluirProduto(@PathVariable("id") Long id) throws Exception {
         produtoService.excluirProduto(id);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @PutMapping("/{id}")
     public void atualizarProduto(@PathVariable("id") Long id, @RequestBody Produto produto) throws Exception {
         produtoService.atualizarProduto(id, produto);

@@ -26,10 +26,11 @@ public class ProdutoService {
         }
     }
 
-    public void criarProduto(Produto produto) throws Exception {
+    public void  criarProduto(Produto produto) throws Exception {
         verificarProduto(produto);
         try {
-            if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao().length() <= 5) {
+            if (produto.getQuantidade() != null && produto.getPrecoDeCompra() != null && produto.getPrecoDeVenda() != null && produto.getCodigo() != null && produto.getDescricao().length() >= 5) {
+                produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
             } else {
                 throw new Exception();
@@ -56,12 +57,16 @@ public class ProdutoService {
         verificarProduto(produto);
 
         try {
-            if (produto.getQuantidade() != null && produto.getPreco() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+            if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getPrecoDeCompra()!= null && produto.getCodigo() != null && produto.getDescricao() != null) {
+
                 novoProduto.setCodigo(produto.getCodigo());
                 novoProduto.setDescricao(produto.getDescricao());
-                novoProduto.setPreco(produto.getPreco());
+                novoProduto.setPrecoDeVenda(produto.getPrecoDeVenda());
+                novoProduto.setPrecoDeCompra(produto.getPrecoDeCompra());
                 novoProduto.setQuantidade(produto.getQuantidade());
+                novoProduto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(novoProduto);
+
             } else {
                 throw new Exception();
             }
@@ -91,8 +96,11 @@ public class ProdutoService {
         if (produto.getDescricao().length() <= 5) {
             throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
         }
-        if (produto.getPreco() == null) {
-            throw new Exception("O produto deve ter um preço! Verifique se o preço foi informado e tente novamente.");
+        if (produto.getPrecoDeVenda() == null) {
+            throw new Exception("O produto deve ter um preço de venda! Verifique se o preço foi informado e tente novamente.");
+        }
+        if (produto.getPrecoDeCompra() == null) {
+            throw new Exception("O produto deve ter um preço de compra! Verifique se o preço foi informado e tente novamente.");
         }
         if (produto.getQuantidade() == null) {
             throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
