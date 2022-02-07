@@ -1,5 +1,6 @@
 package br.com.supermercado.resources;
 
+import br.com.supermercado.Dto.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
@@ -39,8 +40,8 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @PostMapping
-    public void adicionarProduto(@RequestBody Produto produto) throws Exception {
-        produtoService.criarProduto(produto);
+    public void adicionarProduto(@RequestBody ProdutoDto produtoDto) throws Exception {
+        produtoService.criarProduto(produtoDto);
     }
 
     @CrossOrigin(allowedHeaders = "*")
@@ -51,7 +52,7 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @PutMapping("/{id}")
-    public void atualizarProduto(@PathVariable("id") Long id, @RequestBody Produto produto) throws Exception {
-        produtoService.atualizarProduto(id, produto);
+    public void atualizarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDto produtoDto) throws Exception {
+        produtoService.atualizarProduto(id, produtoDto);
     }
 }

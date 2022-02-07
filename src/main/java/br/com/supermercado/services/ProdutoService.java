@@ -1,9 +1,11 @@
 package br.com.supermercado.services;
 
+import br.com.supermercado.Dto.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -26,7 +28,8 @@ public class ProdutoService {
         }
     }
 
-    public void  criarProduto(Produto produto) throws Exception {
+    public void criarProduto(ProdutoDto produtoDto) throws Exception {
+        Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
             if (produto.getQuantidade() != null && produto.getPrecoDeCompra() != null && produto.getPrecoDeVenda() != null && produto.getCodigo() != null && produto.getDescricao().length() >= 5) {
@@ -47,25 +50,25 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public void atualizarProduto(Long id, Produto produto) throws Exception {
+    public void atualizarProduto(Long id, ProdutoDto produtoDto) throws Exception {
         if (id == null) {
             throw new Exception("Produto inexistente!");
         }
         Optional<Produto> resposta = produtoRepository.findById(id);
-        Produto novoProduto = resposta.get();
-
+        Produto produtoAAtualizar = resposta.get();
+        Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
 
         try {
-            if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getPrecoDeCompra()!= null && produto.getCodigo() != null && produto.getDescricao() != null) {
-
-                novoProduto.setCodigo(produto.getCodigo());
-                novoProduto.setDescricao(produto.getDescricao());
-                novoProduto.setPrecoDeVenda(produto.getPrecoDeVenda());
-                novoProduto.setPrecoDeCompra(produto.getPrecoDeCompra());
-                novoProduto.setQuantidade(produto.getQuantidade());
-                novoProduto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
-                produtoRepository.save(novoProduto);
+            if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
+                produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+                produtoAAtualizar.setCodigo(produto.getCodigo());
+                produtoAAtualizar.setDescricao(produto.getDescricao());
+                produtoAAtualizar.setPrecoDeVenda(produto.getPrecoDeVenda());
+                produtoAAtualizar.setPrecoDeCompra(produto.getPrecoDeCompra());
+                produtoAAtualizar.setQuantidade(produto.getQuantidade());
+                produtoAAtualizar.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
+                produtoRepository.save(produtoAAtualizar);
 
             } else {
                 throw new Exception();
@@ -105,5 +108,19 @@ public class ProdutoService {
         if (produto.getQuantidade() == null) {
             throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
         }
+        if (produto.getLucroLiquido() == null) {
+            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
+        }
+    }
+
+    public Produto criandoProdutoComDto(ProdutoDto produtoDto) {
+        Produto produto = new Produto();
+        produto.setCodigo(produtoDto.getCodigo());
+        produto.setDescricao(produtoDto.getDescricao());
+        produto.setQuantidade(produtoDto.getQuantidade());
+        produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
+        produto.setPrecoDeVenda(produtoDto.getPrecoDeVenda());
+        produto.setLucroLiquido(produtoDto.getPrecoDeCompra().subtract(produtoDto.getPrecoDeVenda()));
+        return produto;
     }
 }
