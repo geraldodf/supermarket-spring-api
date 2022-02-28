@@ -16,18 +16,18 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping
-    public ArrayList<Produto> pegarTodosProdutos() {
+    public ArrayList<Produto> pegarTodosProdutos() { // metodo que a requisição vai fazer
         return produtoService.pegarTodosProdutos();
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/search-descricao")
+    @GetMapping("/pesquisa-por-descricao")
     public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao) throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/search-codigo")
+    @GetMapping("/pesquisa-por-codigo")
     public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
     }

@@ -28,7 +28,7 @@ public class ProdutoService {
         }
     }
 
-    public void criarProduto(ProdutoDto produtoDto) throws Exception {
+    public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
         Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
@@ -41,6 +41,7 @@ public class ProdutoService {
         } catch (Exception e) {
             throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
         }
+        return produto;
     }
 
     public void excluirProduto(Long id) throws Exception {
@@ -61,7 +62,8 @@ public class ProdutoService {
 
         try {
             if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
-                produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+                    produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+
                 produtoAAtualizar.setCodigo(produto.getCodigo());
                 produtoAAtualizar.setDescricao(produto.getDescricao());
                 produtoAAtualizar.setPrecoDeVenda(produto.getPrecoDeVenda());
