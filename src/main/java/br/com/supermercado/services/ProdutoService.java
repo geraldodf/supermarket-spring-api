@@ -122,7 +122,7 @@ public class ProdutoService {
         produto.setQuantidade(produtoDto.getQuantidade());
         produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
         produto.setPrecoDeVenda(produtoDto.getPrecoDeVenda());
-        produto.setLucroLiquido(produtoDto.getPrecoDeCompra().subtract(produtoDto.getPrecoDeVenda()));
+        produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         return produto;
     }
 }

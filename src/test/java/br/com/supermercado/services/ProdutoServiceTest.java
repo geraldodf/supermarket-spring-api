@@ -35,7 +35,7 @@ class ProdutoServiceTest {
     ProdutoDto produtoDto = new ProdutoDto();
 
     @Test
-    public void verificandoCodigo() throws Exception {
+    public void verificandoProduto() throws Exception {
         produtoDto.setDescricao("Produto Teste");
         produtoDto.setCodigo(1L);
         produtoDto.setQuantidade(1L);
@@ -108,4 +108,24 @@ class ProdutoServiceTest {
 
         Assert.assertSame(produto.getPrecoDeVenda(),BigDecimal.valueOf(2));
     }
+
+    @Test
+    public void verificandoCriacaoDeProdutoComDto() {
+        produtoDto.setDescricao("Produto Teste");
+        produtoDto.setCodigo(1L);
+        produtoDto.setQuantidade(1L);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
+
+        Produto produto = produtoService.criandoProdutoComDto(produtoDto);
+
+        Assert.assertEquals(produto.getCodigo(), 1, 0.00);
+        error.checkThat(produto.getDescricao(), is("Produto Teste"));
+        error.checkThat(produto.getCodigo(), is(1l));
+        error.checkThat(produto.getQuantidade(), is(1L));
+        error.checkThat(produto.getPrecoDeCompra(), is(BigDecimal.valueOf(1)));
+        error.checkThat(produto.getPrecoDeVenda(), is(BigDecimal.valueOf(2)));
+        Assert.assertEquals(produto.getLucroLiquido(), BigDecimal.valueOf(1));
+    }
+
 }
