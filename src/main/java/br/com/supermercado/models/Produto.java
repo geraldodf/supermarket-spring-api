@@ -34,4 +34,7 @@ public class Produto {
     @Column(name = "produto_codigo")
     private Long codigo;
 
+    @Column(name = "produto_data_criacao")
+    private String dataDeCriacao;
+
 }
