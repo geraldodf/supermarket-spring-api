@@ -1,6 +1,7 @@
 package br.com.supermercado.services;
 
 import br.com.supermercado.Dto.ProdutoDto;
+import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
@@ -113,6 +114,9 @@ public class ProdutoService {
         if (produto.getLucroLiquido() == null) {
             throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
         }
+        if (produto.getDataDeCriacao() == null){
+            throw new Exception("Erro ao gerar a Data.");
+        }
     }
 
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) {
@@ -123,6 +127,7 @@ public class ProdutoService {
         produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
         produto.setPrecoDeVenda(produtoDto.getPrecoDeVenda());
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
+        produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
         return produto;
     }
 }
