@@ -30,12 +30,39 @@ public class VendaService {
     public void criarVenda(VendaDto vendaDto) throws Exception {
         Venda venda = new Venda();
         ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
-        Optional<Produto> produtoOptionalBuscadoPeloID = produtoRepository.findById(vendaDto.getIdProduto());
-        Produto produto = produtoOptionalBuscadoPeloID.get();
-
-        listaDeProdutos.add(produto);
-        venda.setListaDeProdutos(listaDeProdutos);
-        venda.setVendaData(DataUtilitario.getHorarioEDataAtualString());
+        venda = criarVendaComDto(vendaDto);
         vendaRepository.save(venda);
+    }
+
+    public void excluirVenda(Long id) {
+        vendaRepository.deleteById(id);
+    }
+
+    public void atualizarVenda(VendaDto vendaDto, Long id) {
+
+        Optional<Venda> vendaOptional = vendaRepository.findById(id);
+        Venda venda = vendaOptional.get();
+
+
+
+    }
+
+    public Venda criarVendaComDto(VendaDto vendaDto) throws Exception {
+
+        Venda vendaCriada = new Venda();
+        ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+
+        vendaCriada.setVendaData(DataUtilitario.getHorarioEDataAtualString());
+        vendaDto.getIdProduto().forEach( p -> {
+            try {
+                listaDeProdutos.add(produtoService.pegarUmProduto(p));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } );
+
+        vendaCriada.setListaDeProdutos(listaDeProdutos);
+
+        return vendaCriada;
     }
 }

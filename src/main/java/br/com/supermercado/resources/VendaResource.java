@@ -16,7 +16,7 @@ public class VendaResource {
     private VendaService vendaService;
 
     @GetMapping
-    public ArrayList<Venda> pegarTodasVendas(){
+    public ArrayList<Venda> pegarTodasVendas() {
         return vendaService.pegarTodasVendas();
     }
 
@@ -25,6 +25,15 @@ public class VendaResource {
         vendaService.criarVenda(vendaDto);
     }
 
+    @PutMapping("/{id}")
+    public void atualizarVenda(@RequestBody VendaDto vendaDto, @RequestParam("id") Long id) {
+        vendaService.atualizarVenda(vendaDto, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void excluirVenda(@PathVariable("id") Long id) {
+        vendaService.excluirVenda(id);
+    }
 
 
 }
