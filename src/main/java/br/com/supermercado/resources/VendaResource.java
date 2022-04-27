@@ -20,13 +20,18 @@ public class VendaResource {
         return vendaService.pegarTodasVendas();
     }
 
+    @GetMapping("/{id}")
+    public Venda pegarVendaPeloId(@PathVariable("id") Long id) {
+        return vendaService.pegarVendaPeloId(id);
+    }
+
     @PostMapping
     public void criarVenda(@RequestBody VendaDto vendaDto) throws Exception {
         vendaService.criarVenda(vendaDto);
     }
 
     @PutMapping("/{id}")
-    public void atualizarVenda(@RequestBody VendaDto vendaDto, @RequestParam("id") Long id) {
+    public void atualizarVenda(@RequestBody VendaDto vendaDto, @PathVariable("id") Long id) throws Exception {
         vendaService.atualizarVenda(vendaDto, id);
     }
 

@@ -27,9 +27,13 @@ public class VendaService {
         return (ArrayList<Venda>) vendaRepository.findAll();
     }
 
+    public Venda pegarVendaPeloId(Long id) {
+        Optional<Venda> vendaOptional =vendaRepository.findById(id);
+        return vendaOptional.get();
+    }
+
     public void criarVenda(VendaDto vendaDto) throws Exception {
         Venda venda = new Venda();
-        ArrayList<Produto> listaDeProdutos = new ArrayList<Produto>();
         venda = criarVendaComDto(vendaDto);
         vendaRepository.save(venda);
     }
@@ -38,13 +42,13 @@ public class VendaService {
         vendaRepository.deleteById(id);
     }
 
-    public void atualizarVenda(VendaDto vendaDto, Long id) {
-
+    public void atualizarVenda(VendaDto vendaDto, Long id) throws Exception {
         Optional<Venda> vendaOptional = vendaRepository.findById(id);
-        Venda venda = vendaOptional.get();
+        Venda vendaASerAtualizada = vendaOptional.get();
+        Venda venda = criarVendaComDto(vendaDto);
+        vendaASerAtualizada.setListaDeProdutos(venda.getListaDeProdutos());
 
-
-
+        vendaRepository.save(vendaASerAtualizada);
     }
 
     public Venda criarVendaComDto(VendaDto vendaDto) throws Exception {
