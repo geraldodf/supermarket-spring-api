@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,9 @@ public class Venda {
 
     @Column(name = "venda_data")
     private String vendaData;
+
+    @Column(name = "venda_valor")
+    private BigDecimal vendaValor;
 
     @ManyToMany
     @JoinTable(

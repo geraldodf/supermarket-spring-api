@@ -28,14 +28,14 @@ public class VendaService {
     }
 
     public Venda pegarVendaPeloId(Long id) {
-        Optional<Venda> vendaOptional =vendaRepository.findById(id);
+        Optional<Venda> vendaOptional = vendaRepository.findById(id);
         return vendaOptional.get();
     }
 
     public void criarVenda(VendaDto vendaDto) throws Exception {
-        Venda venda = new Venda();
-        venda = criarVendaComDto(vendaDto);
+        Venda venda = criarVendaComDto(vendaDto);
         vendaRepository.save(venda);
+
     }
 
     public void excluirVenda(Long id) {
@@ -57,13 +57,18 @@ public class VendaService {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
 
         vendaCriada.setVendaData(DataUtilitario.getHorarioEDataAtualString());
-        vendaDto.getIdProduto().forEach( p -> {
+        vendaDto.getIdProduto().forEach(p -> {
             try {
                 listaDeProdutos.add(produtoService.pegarUmProduto(p));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } );
+        });
+
+//        listaDeProdutos.forEach(produto -> {
+//            vendaCriada.setVendaValor(produto.getPrecoDeVenda().add(vendaCriada.getVendaValor()));
+//        });
 
         vendaCriada.setListaDeProdutos(listaDeProdutos);
 

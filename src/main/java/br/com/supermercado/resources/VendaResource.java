@@ -39,6 +39,5 @@ public class VendaResource {
     public void excluirVenda(@PathVariable("id") Long id) {
         vendaService.excluirVenda(id);
     }
-
-
 }
+
