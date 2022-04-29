@@ -22,7 +22,7 @@ public class Venda {
     private String vendaData;
 
     @Column(name = "venda_valor")
-    private BigDecimal vendaValor;
+    private BigDecimal vendaValor = new BigDecimal(0.0);
 
     @ManyToMany
     @JoinTable(

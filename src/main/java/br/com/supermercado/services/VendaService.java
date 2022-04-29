@@ -66,9 +66,9 @@ public class VendaService {
             }
         });
 
-//        listaDeProdutos.forEach(produto -> {
-//            vendaCriada.setVendaValor(produto.getPrecoDeVenda().add(vendaCriada.getVendaValor()));
-//        });
+        listaDeProdutos.forEach(produto -> {
+            vendaCriada.setVendaValor(vendaCriada.getVendaValor().add(produto.getPrecoDeVenda()));
+        });
 
         vendaCriada.setListaDeProdutos(listaDeProdutos);
 
