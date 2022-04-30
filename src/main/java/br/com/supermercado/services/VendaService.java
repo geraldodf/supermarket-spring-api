@@ -24,12 +24,18 @@ public class VendaService {
 
 
     public ArrayList<Venda> pegarTodasVendas() {
+
         return (ArrayList<Venda>) vendaRepository.findAll();
     }
 
-    public Venda pegarVendaPeloId(Long id) {
-        Optional<Venda> vendaOptional = vendaRepository.findById(id);
-        return vendaOptional.get();
+    public Venda pegarVendaPeloId(Long id) throws Exception {
+        try {
+            Optional<Venda> vendaOptional = vendaRepository.findById(id);
+            return vendaOptional.get();
+        } catch (Exception e) {
+            throw new Exception("Venda inexistente!");
+        }
+
     }
 
     public void criarVenda(VendaDto vendaDto) throws Exception {
@@ -60,7 +66,6 @@ public class VendaService {
         vendaDto.getIdProduto().forEach(p -> {
             try {
                 listaDeProdutos.add(produtoService.pegarUmProduto(p));
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

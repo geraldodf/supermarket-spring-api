@@ -21,7 +21,7 @@ public class VendaResource {
     }
 
     @GetMapping("/{id}")
-    public Venda pegarVendaPeloId(@PathVariable("id") Long id) {
+    public Venda pegarVendaPeloId(@PathVariable("id") Long id) throws Exception {
         return vendaService.pegarVendaPeloId(id);
     }
 
