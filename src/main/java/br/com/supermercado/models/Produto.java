@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity 
+@Entity
 @Table(name = "produtos")
 public class Produto {
 
@@ -25,7 +25,7 @@ public class Produto {
     @Column(name = "produto_preco_de_compra")
     private BigDecimal precoDeCompra;
 
-    @Column(name="produto_preco_de_venda")
+    @Column(name = "produto_preco_de_venda")
     private BigDecimal precoDeVenda;
 
     @Column(name = "lucro_liquido")

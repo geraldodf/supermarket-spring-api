@@ -79,4 +79,16 @@ public class VendaService {
 
         return vendaCriada;
     }
+
+    public void verificarVenda(Venda venda) throws Exception {
+        if (venda.getVendaValor() == null) {
+            throw new Exception("Não pode criar uma venda que não tenha um valor.");
+        }
+        if (venda.getVendaData() == null) {
+            throw new Exception("A Venda deve ter uma data válida!");
+        }
+        if (venda.getListaDeProdutos() == null) {
+            throw new Exception("A venda deve ter ao menos 1 produto.");
+        }
+    }
 }
