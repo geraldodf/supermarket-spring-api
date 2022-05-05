@@ -36,7 +36,7 @@ public class VendaResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluirVenda(@PathVariable("id") Long id) {
+    public void excluirVenda(@PathVariable("id") Long id) throws Exception {
         vendaService.excluirVenda(id);
     }
 }

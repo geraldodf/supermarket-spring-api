@@ -39,22 +39,45 @@ public class VendaService {
     }
 
     public void criarVenda(VendaDto vendaDto) throws Exception {
-        Venda venda = criarVendaComDto(vendaDto);
-        vendaRepository.save(venda);
+        try {
+            Venda venda = criarVendaComDto(vendaDto);
+            verificarVenda(venda);
+            vendaRepository.save(venda);
+        } catch (Exception e) {
+           throw new Exception("Erro ao criar a venda!");
+        }
 
     }
 
-    public void excluirVenda(Long id) {
-        vendaRepository.deleteById(id);
+    public void excluirVenda(Long id) throws Exception {
+        if(id != null) {
+            vendaRepository.deleteById(id);
+        }else {
+            throw new Exception("Venda não encontrada.");
+        }
     }
 
     public void atualizarVenda(VendaDto vendaDto, Long id) throws Exception {
-        Optional<Venda> vendaOptional = vendaRepository.findById(id);
-        Venda vendaASerAtualizada = vendaOptional.get();
-        Venda venda = criarVendaComDto(vendaDto);
-        vendaASerAtualizada.setListaDeProdutos(venda.getListaDeProdutos());
 
-        vendaRepository.save(vendaASerAtualizada);
+
+        try {
+            Optional<Venda> vendaOptional = vendaRepository.findById(id);
+            Venda vendaASerAtualizada = vendaOptional.get();
+
+            Venda venda = criarVendaComDto(vendaDto);
+            vendaASerAtualizada.setListaDeProdutos(venda.getListaDeProdutos());
+
+            venda.getListaDeProdutos().forEach(p -> {
+                vendaASerAtualizada.setVendaValor(vendaASerAtualizada.getVendaValor().add(p.getPrecoDeVenda()));
+            });
+
+            verificarVenda(vendaASerAtualizada);
+            vendaRepository.save(vendaASerAtualizada);
+        } catch (Exception e) {
+           throw new Exception("Erro ao atualizar o produto.");
+        }
+
+
     }
 
     public Venda criarVendaComDto(VendaDto vendaDto) throws Exception {
@@ -63,6 +86,7 @@ public class VendaService {
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
 
         vendaCriada.setVendaData(DataUtilitario.getHorarioEDataAtualString());
+
         vendaDto.getIdProduto().forEach(p -> {
             try {
                 listaDeProdutos.add(produtoService.pegarUmProduto(p));
@@ -71,12 +95,16 @@ public class VendaService {
             }
         });
 
-        listaDeProdutos.forEach(produto -> {
-            vendaCriada.setVendaValor(vendaCriada.getVendaValor().add(produto.getPrecoDeVenda()));
-        });
+        try {
+            listaDeProdutos.forEach(produto -> {
+                vendaCriada.setVendaValor(vendaCriada.getVendaValor().add(produto.getPrecoDeVenda()));
+            });
+        } catch (Exception e) {
+            throw new Exception("Erro ao adicionar produtos na venda");
+        }
 
         vendaCriada.setListaDeProdutos(listaDeProdutos);
-
+        verificarVenda(vendaCriada);
         return vendaCriada;
     }
 
