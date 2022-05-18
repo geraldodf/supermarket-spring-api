@@ -7,10 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class VendaServiceTest {
@@ -22,14 +25,13 @@ class VendaServiceTest {
     private VendaService vendaService;
 
     @Test
-    void busacPorTodasVendasDeveRetornalArrayVazio() {
+    void buscaPorTodasVendasDeveRetornalArrayVazio() {
         ArrayList<Venda> listaVazia = new ArrayList();
 
-        Mockito.when(vendaService.pegarTodasVendas()).thenReturn(listaVazia);
+        when(vendaService.pegarTodasVendas()).thenReturn(listaVazia);
         ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
 
         Assert.assertTrue(retorno.isEmpty());
-
     }
 
     @Test
@@ -37,31 +39,36 @@ class VendaServiceTest {
         ArrayList<Venda> lista = new ArrayList();
         lista.add(new Venda());
 
-        Mockito.when(vendaRepository.findAll()).thenReturn(lista);
+        when(vendaRepository.findAll()).thenReturn(lista);
         ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
 
-        Assert.assertFalse(retorno.isEmpty());
-
-
+        assertFalse(retorno.isEmpty());
     }
 
     @Test
-    void criarVenda() {
+    void deveRetornarTresVendasQuandoForSolicitadoPegarTodos(){
+        ArrayList<Venda> lista = new ArrayList();
+        lista.add(new Venda());
+        lista.add(new Venda());
+        lista.add(new Venda());
+
+        when(vendaRepository.findAll()).thenReturn(lista);
+        ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
+
+        Assert.assertTrue(lista.size() == retorno.size());
     }
 
     @Test
-    void excluirVenda() {
+    void buscarVendaPorIdRetornaUmaVenda() throws Exception {
+        Venda venda = new Venda();
+        when(vendaRepository.findById(1L)).thenReturn(java.util.Optional.of(venda));
+        Venda retorno = vendaService.pegarVendaPeloId(1L);
+        assertTrue(retorno != null);
     }
 
     @Test
-    void atualizarVenda() {
+    void buscarVendaSemIdRetornaException(){
+
     }
 
-    @Test
-    void criarVendaComDto() {
-    }
-
-    @Test
-    void verificarVenda() {
-    }
 }
