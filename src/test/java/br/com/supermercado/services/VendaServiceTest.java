@@ -10,9 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,4 +71,17 @@ class VendaServiceTest {
 
     }
 
+    @Test
+    void buscarVendaPorIdRetornaVenda() throws Exception {
+        when(vendaRepository.findById(656L)).thenReturn(Optional.of(new Venda()));
+        Optional<Venda> vendaOptional = vendaRepository.findById(656L);
+        Venda venda = vendaOptional.get();
+        Venda vendaRetorno = vendaService.pegarVendaPeloId(656L);
+        assertTrue(venda.getVendaValor() == vendaRetorno.getVendaValor());
+    }
+
+    @Test
+    void a(){
+
+    }
 }
