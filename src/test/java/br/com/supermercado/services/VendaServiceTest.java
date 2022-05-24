@@ -1,5 +1,7 @@
 package br.com.supermercado.services;
 
+import br.com.supermercado.Dto.VendaDto;
+import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.Venda;
 import br.com.supermercado.repositories.VendaRepository;
 import org.junit.Assert;
@@ -9,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -23,6 +26,7 @@ class VendaServiceTest {
 
     @InjectMocks
     private VendaService vendaService;
+    private ProdutoService produtoService;
 
     @Test
     void buscaPorTodasVendasDeveRetornalArrayVazio() {
@@ -46,7 +50,7 @@ class VendaServiceTest {
     }
 
     @Test
-    void deveRetornarTresVendasQuandoForSolicitadoPegarTodos(){
+    void deveRetornarTresVendasQuandoForSolicitadoPegarTodos() {
         ArrayList<Venda> lista = new ArrayList();
         lista.add(new Venda());
         lista.add(new Venda());
@@ -55,33 +59,75 @@ class VendaServiceTest {
         when(vendaRepository.findAll()).thenReturn(lista);
         ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
 
-        Assert.assertTrue(lista.size() == retorno.size());
+        Assert.assertEquals(lista.size(), retorno.size());
     }
 
     @Test
     void buscarVendaPorIdRetornaUmaVenda() throws Exception {
         Venda venda = new Venda();
-        when(vendaRepository.findById(1L)).thenReturn(java.util.Optional.of(venda));
-        Venda retorno = vendaService.pegarVendaPeloId(1L);
-        assertTrue(retorno != null);
+        Long id = 1L;
+        venda.setId(id);
+        when(vendaRepository.findById(id)).thenReturn(java.util.Optional.of(venda));
+        Venda retorno = vendaService.pegarVendaPeloId(id);
+        assertNotNull(retorno);
+        assertEquals(retorno.getId(), venda.getId());
     }
 
     @Test
     void buscarVendaSemIdRetornaException(){
-
+        String mensagemException = "Venda inexistente!";
+        Throwable retorno = assertThrows(Exception.class, () -> vendaService.pegarVendaPeloId(null), mensagemException);
+        assertTrue(retorno.getMessage().equals(mensagemException));
     }
 
     @Test
     void buscarVendaPorIdRetornaVenda() throws Exception {
+        Venda venda = new Venda();
+        venda.setVendaValor(BigDecimal.valueOf(9.99));
         when(vendaRepository.findById(656L)).thenReturn(Optional.of(new Venda()));
         Optional<Venda> vendaOptional = vendaRepository.findById(656L);
-        Venda venda = vendaOptional.get();
+        Venda venda1 = vendaOptional.get();
+        venda1.setVendaValor(BigDecimal.valueOf(9.99));
         Venda vendaRetorno = vendaService.pegarVendaPeloId(656L);
-        assertTrue(venda.getVendaValor() == vendaRetorno.getVendaValor());
+        assertEquals(venda.getVendaValor(), vendaRetorno.getVendaValor());
     }
 
     @Test
-    void a(){
+    void criarVendaComDtoDeveRetornaVenda() throws Exception {
+        ArrayList<Long> ids = new ArrayList<>();
+        Long idProdutos = 50L;
+        ids.add(idProdutos);
+        ids.add(idProdutos);
+        ids.add(idProdutos);
+        when(produtoService.pegarUmProduto(idProdutos)).thenReturn(new Produto());
+
+
+        VendaDto vendaDto = new VendaDto();
+        vendaDto.setIdProduto(ids);
+
+        Venda vendaCriadaComMetodo = vendaService.criarVendaComDto(vendaDto);
+
+
+        //Falta terminar esse teste
 
     }
+
+    @Test
+    void criacaoDeVendaComDtoDeveRetornarVenda() throws Exception {
+        VendaDto vendaDto = new VendaDto();
+        ArrayList<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        vendaDto.setIdProduto(ids);
+        Venda venda = vendaService.criarVendaComDto(vendaDto);
+        Produto produtoParaTeste = new Produto();
+        produtoParaTeste.setLucroLiquido(BigDecimal.valueOf(0.00));
+        produtoParaTeste.setPrecoDeVenda(BigDecimal.valueOf(0.00));
+        produtoParaTeste.setPrecoDeCompra(BigDecimal.valueOf(0.00));
+        produtoParaTeste.setDescricao("Produto Teste");
+        produtoParaTeste.setDataDeCriacao("Data Teste");
+        produtoParaTeste.setCodigo(0000L);
+        produtoParaTeste.setQuantidade(0L);
+        when(produtoService.pegarUmProduto(1L)).thenReturn(new Produto());
+    }
+
 }

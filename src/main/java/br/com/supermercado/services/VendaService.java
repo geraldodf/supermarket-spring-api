@@ -44,15 +44,15 @@ public class VendaService {
             verificarVenda(venda);
             vendaRepository.save(venda);
         } catch (Exception e) {
-           throw new Exception("Erro ao criar a venda!");
+            throw new Exception("Erro ao criar a venda!");
         }
 
     }
 
     public void excluirVenda(Long id) throws Exception {
-        if(id != null) {
+        if (id != null) {
             vendaRepository.deleteById(id);
-        }else {
+        } else {
             throw new Exception("Venda não encontrada.");
         }
     }
@@ -74,7 +74,7 @@ public class VendaService {
             verificarVenda(vendaASerAtualizada);
             vendaRepository.save(vendaASerAtualizada);
         } catch (Exception e) {
-           throw new Exception("Erro ao atualizar o produto.");
+            throw new Exception("Erro ao atualizar o produto.");
         }
 
 
