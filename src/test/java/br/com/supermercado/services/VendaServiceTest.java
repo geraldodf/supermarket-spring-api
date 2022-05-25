@@ -1,7 +1,5 @@
 package br.com.supermercado.services;
 
-import br.com.supermercado.Dto.VendaDto;
-import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.Venda;
 import br.com.supermercado.repositories.VendaRepository;
 import org.junit.Assert;
@@ -74,7 +72,7 @@ class VendaServiceTest {
     }
 
     @Test
-    void buscarVendaSemIdRetornaException(){
+    void buscarVendaSemIdRetornaException() {
         String mensagemException = "Venda inexistente!";
         Throwable retorno = assertThrows(Exception.class, () -> vendaService.pegarVendaPeloId(null), mensagemException);
         assertTrue(retorno.getMessage().equals(mensagemException));
@@ -90,44 +88,6 @@ class VendaServiceTest {
         venda1.setVendaValor(BigDecimal.valueOf(9.99));
         Venda vendaRetorno = vendaService.pegarVendaPeloId(656L);
         assertEquals(venda.getVendaValor(), vendaRetorno.getVendaValor());
-    }
-
-    @Test
-    void criarVendaComDtoDeveRetornaVenda() throws Exception {
-        ArrayList<Long> ids = new ArrayList<>();
-        Long idProdutos = 50L;
-        ids.add(idProdutos);
-        ids.add(idProdutos);
-        ids.add(idProdutos);
-        when(produtoService.pegarUmProduto(idProdutos)).thenReturn(new Produto());
-
-
-        VendaDto vendaDto = new VendaDto();
-        vendaDto.setIdProduto(ids);
-
-        Venda vendaCriadaComMetodo = vendaService.criarVendaComDto(vendaDto);
-
-
-        //Falta terminar esse teste
-
-    }
-
-    @Test
-    void criacaoDeVendaComDtoDeveRetornarVenda() throws Exception {
-        VendaDto vendaDto = new VendaDto();
-        ArrayList<Long> ids = new ArrayList<>();
-        ids.add(1L);
-        vendaDto.setIdProduto(ids);
-        Venda venda = vendaService.criarVendaComDto(vendaDto);
-        Produto produtoParaTeste = new Produto();
-        produtoParaTeste.setLucroLiquido(BigDecimal.valueOf(0.00));
-        produtoParaTeste.setPrecoDeVenda(BigDecimal.valueOf(0.00));
-        produtoParaTeste.setPrecoDeCompra(BigDecimal.valueOf(0.00));
-        produtoParaTeste.setDescricao("Produto Teste");
-        produtoParaTeste.setDataDeCriacao("Data Teste");
-        produtoParaTeste.setCodigo(0000L);
-        produtoParaTeste.setQuantidade(0L);
-        when(produtoService.pegarUmProduto(1L)).thenReturn(new Produto());
     }
 
 }
