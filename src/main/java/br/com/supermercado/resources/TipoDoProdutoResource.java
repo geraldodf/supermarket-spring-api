@@ -20,7 +20,7 @@ public class TipoDoProdutoResource {
     }
 
     @GetMapping("/{id}")
-    public TipoDoProduto pegarUmTipoDoProdutoPeloId(@PathVariable("id") Long id){
+    public TipoDoProduto pegarUmTipoDoProdutoPeloId(@PathVariable("id") Long id) {
         return tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(id);
     }
 
@@ -28,5 +28,16 @@ public class TipoDoProdutoResource {
     public TipoDoProduto criarTipoDoProduto(@RequestBody TipoDoProduto tipo) {
         return tipoDoProdutoService.criarTipoDoProduto(tipo);
     }
+
+    @PutMapping("/{id}")
+    public TipoDoProduto atualizarTipoDoProduto(@PathVariable("id") Long id, @RequestBody TipoDoProduto tipo) {
+        return tipoDoProdutoService.atualizarTipoDoProduto(id, tipo);
+    }
+
+    @DeleteMapping("/{id}")
+    public void excluirTipoDoProdutoPeloId(@PathVariable("id") Long id) {
+        tipoDoProdutoService.excluirTipoDoProdutoPeloId(id);
+    }
+
 
 }

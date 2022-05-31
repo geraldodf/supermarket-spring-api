@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TipoDoProdutoServiceRepository extends CrudRepository<TipoDoProduto, Long> {
+public interface TipoDoProdutoRepository extends CrudRepository<TipoDoProduto, Long> {
 
 
 
