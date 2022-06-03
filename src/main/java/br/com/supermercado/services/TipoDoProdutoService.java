@@ -18,8 +18,8 @@ public class TipoDoProdutoService {
         return (ArrayList<TipoDoProduto>) tipoDoProdutoRepository.findAll();
     }
 
-    public TipoDoProduto criarTipoDoProduto(TipoDoProduto tipo) {
-
+    public TipoDoProduto criarTipoDoProduto(TipoDoProduto tipo) throws Exception {
+        if (tipo.getNomeTipoDoProduto() == null) throw new Exception("Tipo não pode ser criado sem um nome.");
         return tipoDoProdutoRepository.save(tipo);
     }
 
@@ -28,10 +28,31 @@ public class TipoDoProdutoService {
         return retorno.get();
     }
 
-    public TipoDoProduto atualizarTipoDoProduto(Long id, TipoDoProduto tipo) {
-        Optional<TipoDoProduto> retornoOptional = tipoDoProdutoRepository.findById(id);
-        TipoDoProduto retorno = retornoOptional.get();
-        retorno.setNomeTipoDoProduto(tipo.getNomeTipoDoProduto());
+    public TipoDoProduto atualizarTipoDoProduto(Long id, TipoDoProduto tipo) throws Exception {
+        if(id == null) throw new Exception("Não é possivel atualizar um tipo sem especificar quem irá atualizar");
+        if (tipo.getNomeTipoDoProduto() == null) throw new Exception("Tipo não pode ser criado sem um nome.");
+
+
+        Optional<TipoDoProduto> retornoOptional = null;
+        try {
+            retornoOptional = tipoDoProdutoRepository.findById(id);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar tipo para ser atualizado!!");
+        }
+
+        TipoDoProduto retorno = null;
+        try {
+            retorno = retornoOptional.get();
+        } catch (Exception e) {
+            throw new Exception("Erro ao tratar tipo que irá ser atualizado ");
+        }
+
+        try {
+            retorno.setNomeTipoDoProduto(tipo.getNomeTipoDoProduto());
+        } catch (Exception e) {
+            throw new Exception("Erro ao atualizar o tipo!");
+        }
+
         return tipoDoProdutoRepository.save(retorno);
     }
 

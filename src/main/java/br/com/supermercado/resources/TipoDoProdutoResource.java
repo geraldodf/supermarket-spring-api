@@ -25,12 +25,12 @@ public class TipoDoProdutoResource {
     }
 
     @PostMapping
-    public TipoDoProduto criarTipoDoProduto(@RequestBody TipoDoProduto tipo) {
+    public TipoDoProduto criarTipoDoProduto(@RequestBody TipoDoProduto tipo) throws Exception {
         return tipoDoProdutoService.criarTipoDoProduto(tipo);
     }
 
     @PutMapping("/{id}")
-    public TipoDoProduto atualizarTipoDoProduto(@PathVariable("id") Long id, @RequestBody TipoDoProduto tipo) {
+    public TipoDoProduto atualizarTipoDoProduto(@PathVariable("id") Long id, @RequestBody TipoDoProduto tipo) throws Exception {
         return tipoDoProdutoService.atualizarTipoDoProduto(id, tipo);
     }
 
