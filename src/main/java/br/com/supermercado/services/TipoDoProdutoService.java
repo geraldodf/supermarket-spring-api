@@ -19,7 +19,8 @@ public class TipoDoProdutoService {
     }
 
     public TipoDoProduto criarTipoDoProduto(TipoDoProduto tipo) throws Exception {
-        if (tipo.getNomeTipoDoProduto() == null) throw new Exception("Tipo não pode ser criado sem um nome.");
+        if (tipo.getNomeTipoDoProduto() == null || tipo.getNomeTipoDoProduto().length() < 5)
+            throw new Exception("Tipo não pode ser criado sem um nome, ou com um nome com menos de 5 caracteres.");
         return tipoDoProdutoRepository.save(tipo);
     }
 
@@ -29,7 +30,7 @@ public class TipoDoProdutoService {
     }
 
     public TipoDoProduto atualizarTipoDoProduto(Long id, TipoDoProduto tipo) throws Exception {
-        if(id == null) throw new Exception("Não é possivel atualizar um tipo sem especificar quem irá atualizar");
+        if (id == null) throw new Exception("Não é possivel atualizar um tipo sem especificar quem irá atualizar");
         if (tipo.getNomeTipoDoProduto() == null) throw new Exception("Tipo não pode ser criado sem um nome.");
 
 
@@ -56,7 +57,15 @@ public class TipoDoProdutoService {
         return tipoDoProdutoRepository.save(retorno);
     }
 
-    public void excluirTipoDoProdutoPeloId(Long id) {
+    public void excluirTipoDoProdutoPeloId(Long id) throws Exception {
+        if (id == null)
+            throw new Exception("Para excluir um tipo deve ser especificado qual tipo será excluida, essa resposta não está chegando!");
         tipoDoProdutoRepository.deleteById(id);
+    }
+
+    public ArrayList<TipoDoProduto> pegarTipoDoProdutoPorNome(String nome) {
+        return tipoDoProdutoRepository.pesquisaPorNome(nome);
+
+
     }
 }

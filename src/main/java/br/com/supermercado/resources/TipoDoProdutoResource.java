@@ -24,6 +24,11 @@ public class TipoDoProdutoResource {
         return tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(id);
     }
 
+    @GetMapping("/nome-tipo-produto")
+    public ArrayList<TipoDoProduto> pegarTipoDoProdutoPorNome(@RequestParam(name = "nome") String nome){
+        return tipoDoProdutoService.pegarTipoDoProdutoPorNome(nome);
+    }
+
     @PostMapping
     public TipoDoProduto criarTipoDoProduto(@RequestBody TipoDoProduto tipo) throws Exception {
         return tipoDoProdutoService.criarTipoDoProduto(tipo);
@@ -35,7 +40,7 @@ public class TipoDoProdutoResource {
     }
 
     @DeleteMapping("/{id}")
-    public void excluirTipoDoProdutoPeloId(@PathVariable("id") Long id) {
+    public void excluirTipoDoProdutoPeloId(@PathVariable("id") Long id) throws Exception {
         tipoDoProdutoService.excluirTipoDoProdutoPeloId(id);
     }
 
