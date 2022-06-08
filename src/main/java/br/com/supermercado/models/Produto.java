@@ -1,12 +1,10 @@
 package br.com.supermercado.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
@@ -40,8 +38,8 @@ public class Produto {
     @Column(name = "produto_data_criacao")
     private String dataDeCriacao;
 
-    @ManyToMany(mappedBy = "listaDeProdutos")
-    @JsonIgnore
-    private List<Venda> listaDeVendas;
+    @ManyToOne
+    @JoinColumn(name = "tipo_do_produto_fk")
+    private TipoDoProduto tipoDoProduto;
 
 }
