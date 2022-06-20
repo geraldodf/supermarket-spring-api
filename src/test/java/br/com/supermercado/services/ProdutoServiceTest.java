@@ -126,9 +126,6 @@ class ProdutoServiceTest {
         error.checkThat(produto.getPrecoDeCompra(), is(BigDecimal.valueOf(1)));
         error.checkThat(produto.getPrecoDeVenda(), is(BigDecimal.valueOf(2)));
         Assert.assertEquals(produto.getLucroLiquido(), BigDecimal.valueOf(1));
-
-
-        System.out.println();
     }
 
 }

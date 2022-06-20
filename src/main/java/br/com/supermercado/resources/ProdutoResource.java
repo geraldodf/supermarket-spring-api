@@ -16,7 +16,7 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping
-    public ArrayList<Produto> pegarTodosProdutos() { // metodo que a requisição vai fazer
+    public ArrayList<Produto> pegarTodosProdutos() {
         return produtoService.pegarTodosProdutos();
     }
 
