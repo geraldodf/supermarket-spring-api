@@ -1,3 +1,5 @@
+use
+supermercadodb;
 create table produtos
 (
     produto_id              Integer NOT NULL auto_increment primary key,
@@ -45,9 +47,10 @@ ALTER TABLE produtos
 ALTER TABLE produtos
     add foreign key (tipo_do_produto_fk) references tipo_do_produto (tipo_do_produto_id);
 
-
-
-
-
+create table cargos
+(
+    cargo_id   Integer NOT NULL auto_increment primary key,
+    cargo_nome varchar(266)
+);
 
 
