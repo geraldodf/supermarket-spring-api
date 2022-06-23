@@ -15,32 +15,32 @@ public class CargoResource {
     private CargoService cargoService;
 
     @GetMapping
-    public ArrayList<Cargo> pegarTodosCargos(){
+    public ArrayList<Cargo> pegarTodosCargos() {
         return cargoService.pegarTodosCargos();
     }
 
     @GetMapping("/{id}")
-    public Cargo pegarCargoPeloId(@PathVariable ("id") Long id){
+    public Cargo pegarCargoPeloId(@PathVariable("id") Long id) throws Exception {
         return cargoService.pegarCargoPeloId(id);
     }
 
     @GetMapping("/pesquisa-por-nome")
-    public ArrayList<Cargo> pegarCargoPeloNome(@RequestParam (name = "nome") String nome){
+    public ArrayList<Cargo> pegarCargoPeloNome(@RequestParam(name = "nome") String nome) throws Exception {
         return cargoService.pegarCargoPeloNome(nome);
     }
 
     @PostMapping
-    public Cargo criarCargo(@RequestBody Cargo cargo){
+    public Cargo criarCargo(@RequestBody Cargo cargo) throws Exception {
         return cargoService.criarCargo(cargo);
     }
 
     @PutMapping("/{id}")
-    public Cargo atualizarCargo(@PathVariable ("id") Long id, @RequestBody Cargo cargo){
+    public Cargo atualizarCargo(@PathVariable("id") Long id, @RequestBody Cargo cargo) throws Exception {
         return cargoService.atualizarCargo(id, cargo);
     }
 
     @DeleteMapping("/{id}")
-    public void excluirCargo(@PathVariable ("id") Long id){
+    public void excluirCargo(@PathVariable("id") Long id) throws Exception {
         cargoService.excluirCargo(id);
     }
 
