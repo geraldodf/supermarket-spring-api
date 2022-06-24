@@ -1,5 +1,3 @@
-use
-supermercadodb;
 create table produtos
 (
     produto_id              Integer NOT NULL auto_increment primary key,
@@ -16,8 +14,7 @@ create table usuarios
 (
     usuario_id    Integer NOT NULL auto_increment primary key,
     usuario_nome  varchar(266),
-    usuario_cargo varchar(266),
-    usuario_senha bigint
+    usuario_senha varchar(266)
 );
 
 create table vendas
@@ -52,5 +49,9 @@ create table cargos
     cargo_id   Integer NOT NULL auto_increment primary key,
     cargo_nome varchar(266)
 );
+
+
+
+
 
 

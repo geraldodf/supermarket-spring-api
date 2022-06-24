@@ -19,11 +19,8 @@ public class Usuario {
     @Column(name = "usuario_nome")
     private String nome;
 
-    @Column(name = "usuario_cargo")
-    private String cargo;
-
     @Column(name = "usuario_senha")
-    private Long senha;
+    private String senha;
 
 
 }
