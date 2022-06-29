@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Setter
 public class ProdutoDto {
 
-    private Long id;
     private String descricao;
     private BigDecimal precoDeCompra;
     private BigDecimal precoDeVenda;
