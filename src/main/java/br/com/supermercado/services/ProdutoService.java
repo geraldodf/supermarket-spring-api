@@ -1,6 +1,7 @@
 package br.com.supermercado.services;
 
 import br.com.supermercado.Dto.ProdutoDto;
+import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+    @Autowired
+    private TipoDoProdutoService tipoDoProdutoService;
+
 
     public ArrayList<Produto> pegarTodosProdutos() {
         return (ArrayList<Produto>) produtoRepository.findAll();
@@ -33,7 +37,13 @@ public class ProdutoService {
         Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
-            if (produto.getQuantidade() != null && produto.getPrecoDeCompra() != null && produto.getPrecoDeVenda() != null && produto.getCodigo() != null && produto.getDescricao().length() >= 5) {
+            if (produto.getQuantidade() != null &&
+                    produto.getPrecoDeCompra() != null &&
+                    produto.getPrecoDeVenda() != null &&
+                    produto.getCodigo() != null &&
+                    produto.getDescricao().length() >= 5 &&
+                    produto.getTipoDoProduto() != null
+            ) {
                 produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
             } else {
@@ -114,8 +124,11 @@ public class ProdutoService {
         if (produto.getLucroLiquido() == null) {
             throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
         }
-        if (produto.getDataDeCriacao() == null){
+        if (produto.getDataDeCriacao() == null) {
             throw new Exception("Erro ao gerar a Data.");
+        }
+        if (produto.getTipoDoProduto() == null) {
+            throw new Exception("Tipo do produto inválido");
         }
     }
 
@@ -128,6 +141,10 @@ public class ProdutoService {
         produto.setPrecoDeVenda(produtoDto.getPrecoDeVenda());
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
+
+        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
+
+        produto.setTipoDoProduto(tipoDoProdutoOptional);
         return produto;
     }
 
