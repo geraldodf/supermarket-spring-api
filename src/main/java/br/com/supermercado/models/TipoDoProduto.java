@@ -1,5 +1,6 @@
 package br.com.supermercado.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class TipoDoProduto {
     private String nomeTipoDoProduto;
 
     @OneToMany(mappedBy = "tipoDoProduto")
+    @JsonIgnore
     private List<Produto> listaDeProdutos;
 
 

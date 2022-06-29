@@ -15,5 +15,6 @@ public class ProdutoDto {
     private BigDecimal precoDeVenda;
     private Long quantidade;
     private Long codigo;
+    private Long idTipoDoProduto;
 
 }
