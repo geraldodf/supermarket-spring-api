@@ -52,6 +52,3 @@ create table cargos
 
 
 
-
-
-

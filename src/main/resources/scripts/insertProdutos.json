@@ -1,0 +1,194 @@
+[
+  {
+    "descricao": "Feijão 1kg",
+    "precoDeCompra": 2.99,
+    "precoDeVenda": 4.99,
+    "quantidade": 50,
+    "codigo": 1,
+    "idTipoDoProduto": 1
+  },
+  {
+    "descricao": "Amendoin 600g",
+    "precoDeCompra": 0.99,
+    "precoDeVenda": 2.49,
+    "quantidade": 24,
+    "codigo": 2,
+    "idTipoDoProduto": 1
+  },
+  {
+    "descricao": "Barra Chocolate 110g Lacta",
+    "precoDeCompra": 2.49,
+    "precoDeVenda": 3.99,
+    "quantidade": 70,
+    "codigo": 3,
+    "idTipoDoProduto": 2
+  },
+  {
+    "descricao": "Bala Chocolate Pacote 80g ",
+    "precoDeCompra": 1.79,
+    "precoDeVenda": 2.99,
+    "quantidade": 200,
+    "codigo": 4,
+    "idTipoDoProduto": 2
+  },
+  {
+    "descricao": "Banana",
+    "precoDeCompra": 0.49,
+    "precoDeVenda": 1.49,
+    "quantidade": 500,
+    "codigo": 5,
+    "idTipoDoProduto": 3
+  },
+  {
+    "descricao": "Maça",
+    "precoDeCompra": 0.99,
+    "precoDeVenda": 2.29,
+    "quantidade": 120,
+    "codigo": 6,
+    "idTipoDoProduto": 3
+  },
+  {
+    "descricao": "Bolacha Recheada Daroz 70g",
+    "precoDeCompra": 0.89,
+    "precoDeVenda": 1.99,
+    "quantidade": 40,
+    "codigo": 7,
+    "idTipoDoProduto": 4
+  },
+  {
+    "descricao": "Biscoito Daroz Chocolate 50g",
+    "precoDeCompra": 1.29,
+    "precoDeVenda": 2.39,
+    "quantidade": 50,
+    "codigo": 8,
+    "idTipoDoProduto": 4
+  },
+  {
+    "descricao": "Miojo",
+    "precoDeCompra": 0.39,
+    "precoDeVenda": 1.29,
+    "quantidade": 200,
+    "codigo": 9,
+    "idTipoDoProduto": 5
+  },
+  {
+    "descricao": "Macarrão de Ovos Daroz",
+    "precoDeCompra": 0.89,
+    "precoDeVenda": 1.29,
+    "quantidade": 130,
+    "codigo": 10,
+    "idTipoDoProduto": 5
+  },
+  {
+    "descricao": "Orégano 15g",
+    "precoDeCompra": 1.29,
+    "precoDeVenda": 1.99,
+    "quantidade": 25,
+    "codigo": 11,
+    "idTipoDoProduto": 6
+  },
+  {
+    "descricao": "Tempero Completo S/Pimenta Daroz 50g",
+    "precoDeCompra": 3.49,
+    "precoDeVenda": 6.19,
+    "quantidade": 12,
+    "codigo": 12,
+    "idTipoDoProduto": 6
+  },
+  {
+    "descricao": "Iorgute de Morango c/ 6",
+    "precoDeCompra": 3.29,
+    "precoDeVenda": 5.99,
+    "quantidade": 22,
+    "codigo": 13,
+    "idTipoDoProduto": 7
+  },
+  {
+    "descricao": "Iorgute Chocolate c/ 2",
+    "precoDeCompra": 1.49,
+    "precoDeVenda": 3.49,
+    "quantidade": 42,
+    "codigo": 14,
+    "idTipoDoProduto": 7
+  },
+  {
+    "descricao": "Picanha",
+    "precoDeCompra": 50.00,
+    "precoDeVenda": 89.99,
+    "quantidade": 10,
+    "codigo": 15,
+    "idTipoDoProduto": 9
+  },
+  {
+    "descricao": "Filezinho Sassami",
+    "precoDeCompra": 6.99,
+    "precoDeVenda": 9.99,
+    "quantidade": 10,
+    "codigo": 16,
+    "idTipoDoProduto": 9
+  },
+  {
+    "descricao": "Queijo",
+    "precoDeCompra": 2.29,
+    "precoDeVenda": 5.69,
+    "quantidade": 22,
+    "codigo": 12133,
+    "idTipoDoProduto": 10
+  },
+  {
+    "descricao": "Presunto",
+    "precoDeCompra": 2.29,
+    "precoDeVenda": 3.99,
+    "quantidade": 12,
+    "codigo": 1324,
+    "idTipoDoProduto": 10
+  },
+  {
+    "descricao": "Creme Dental Colgate",
+    "precoDeCompra": 1.29,
+    "precoDeVenda": 2.99,
+    "quantidade": 100,
+    "codigo": 11243,
+    "idTipoDoProduto": 15
+  },
+  {
+    "descricao": "Shampoo Masculino 250ML",
+    "precoDeCompra": 11.29,
+    "precoDeVenda": 17.49,
+    "quantidade": 45,
+    "codigo": 412413,
+    "idTipoDoProduto": 15
+  },
+  {
+    "descricao": "Refrigerante de Cola 2L",
+    "precoDeCompra": 2.99,
+    "precoDeVenda": 5.99,
+    "quantidade": 56,
+    "codigo": 12414,
+    "idTipoDoProduto": 16
+  },
+  {
+    "descricao": "Refrigerante de Uva 1,5L",
+    "precoDeCompra": 2.29,
+    "precoDeVenda": 3.99,
+    "quantidade": 57,
+    "codigo": 214513,
+    "idTipoDoProduto": 16
+  },
+  {
+    "descricao": "Vinho Italiano 800ML",
+    "precoDeCompra": 80.00,
+    "precoDeVenda": 124.99,
+    "quantidade": 5,
+    "codigo": 23451,
+    "idTipoDoProduto": 17
+  },
+  {
+    "descricao": "Vinho Chileno Branco 750ML",
+    "precoDeCompra": 45.29,
+    "precoDeVenda": 79.99,
+    "quantidade": 12,
+    "codigo": 215123,
+    "idTipoDoProduto": 17
+  }
+]
