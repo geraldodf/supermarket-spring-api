@@ -1,7 +1,7 @@
 ## Supermercado Back-End
 
-Projeto qual eu foco meus estudos de todas as formas, aprimorando meu conhecimento de toda forma aprendido e implementando nesse projeto. Tenho ele como api consumida por meus 2 projetos front end.
+Projeto qual eu torno meu portfolio, com o intuito de mostrar minha experiência. Também foi totalmente criado do absoluto 0 por mim. Também tenho ele como api consumida por meus 2 projetos front end.
 
 Aqui eu aplico todos novos conhecimentos como, testes, padrões de projetos, boas práticas, e até mesmo programação funcional no Java.
 
-### Esse projeto não está finalizado, e está em constante mudança.
+### Esse projeto não está finalizado, estarei fazendo mudanças frequentemente e refatorações quando necessário.
