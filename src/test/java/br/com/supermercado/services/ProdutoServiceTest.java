@@ -1,7 +1,8 @@
 package br.com.supermercado.services;
 
-import br.com.supermercado.Dto.ProdutoDto;
+import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.models.Produto;
+import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -21,6 +23,9 @@ class ProdutoServiceTest {
 
     @InjectMocks
     private ProdutoService produtoService;
+
+    @Mock
+    private TipoDoProdutoService tipoDoProdutoService;
 
     @Mock
     private ProdutoRepository produtoRepository;
@@ -35,12 +40,18 @@ class ProdutoServiceTest {
     ProdutoDto produtoDto = new ProdutoDto();
 
     @Test
-    public void verificandoProduto() throws Exception {
+    public void criarProdutoRecebeDtoERetornaProdutoOk() throws Exception {
         produtoDto.setDescricao("Produto Teste");
         produtoDto.setCodigo(1L);
         produtoDto.setQuantidade(1L);
         produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
+        produtoDto.setIdTipoDoProduto(2L);
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
 
         Produto produto = produtoService.criarProduto(produtoDto);
 
@@ -116,7 +127,13 @@ class ProdutoServiceTest {
         produtoDto.setQuantidade(1L);
         produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
+        produtoDto.setIdTipoDoProduto(2L);
 
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
         Produto produto = produtoService.criandoProdutoComDto(produtoDto);
 
         Assert.assertEquals(produto.getCodigo(), 1, 0.00);

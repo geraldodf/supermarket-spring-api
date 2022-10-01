@@ -1,4 +1,4 @@
-package br.com.supermercado.Dto;
+package br.com.supermercado.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

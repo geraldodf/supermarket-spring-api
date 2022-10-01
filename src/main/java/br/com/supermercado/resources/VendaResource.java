@@ -1,6 +1,6 @@
 package br.com.supermercado.resources;
 
-import br.com.supermercado.Dto.VendaDto;
+import br.com.supermercado.dtos.VendaDto;
 import br.com.supermercado.models.Venda;
 import br.com.supermercado.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;

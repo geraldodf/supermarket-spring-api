@@ -43,4 +43,6 @@ public class Produto {
     @JoinColumn(name = "tipo_do_produto_fk")
     private TipoDoProduto tipoDoProduto;
 
+
+
 }

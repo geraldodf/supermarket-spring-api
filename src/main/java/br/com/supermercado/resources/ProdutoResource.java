@@ -1,6 +1,6 @@
 package br.com.supermercado.resources;
 
-import br.com.supermercado.Dto.ProdutoDto;
+import br.com.supermercado.dtos.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
@@ -50,7 +50,7 @@ public class ProdutoResource {
         produtoService.excluirProduto(id);
     }
 
-    @CrossOrigin(allowedHeaders = "*")
+    @CrossOrigin(allowedHeaders = "*")  
     @PutMapping("/{id}")
     public void atualizarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDto produtoDto) throws Exception {
         produtoService.atualizarProduto(id, produtoDto);

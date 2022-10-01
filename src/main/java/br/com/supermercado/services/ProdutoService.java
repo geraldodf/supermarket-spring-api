@@ -1,6 +1,6 @@
 package br.com.supermercado.services;
 
-import br.com.supermercado.Dto.ProdutoDto;
+import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +34,10 @@ public class ProdutoService {
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
-        Produto produto = criandoProdutoComDto(produtoDto);
+            Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
-            if (produto.getQuantidade() != null &&
-                    produto.getPrecoDeCompra() != null &&
-                    produto.getPrecoDeVenda() != null &&
-                    produto.getCodigo() != null &&
-                    produto.getDescricao().length() >= 5 &&
-                    produto.getTipoDoProduto() != null
+            if (verificarAtributosProdutoNaoNulo(produto)
             ) {
                 produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
@@ -72,8 +67,7 @@ public class ProdutoService {
         verificarProduto(produto);
 
         try {
-            if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
-                    produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+            if (verificarAtributosProdutoNaoNulo(produto)) {
 
                 produtoAAtualizar.setCodigo(produto.getCodigo());
                 produtoAAtualizar.setDescricao(produto.getDescricao());
@@ -133,6 +127,7 @@ public class ProdutoService {
     }
 
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) {
+
         Produto produto = new Produto();
         produto.setCodigo(produtoDto.getCodigo());
         produto.setDescricao(produtoDto.getDescricao());
@@ -147,5 +142,13 @@ public class ProdutoService {
         produto.setTipoDoProduto(tipoDoProdutoOptional);
         return produto;
     }
+
+    public boolean verificarAtributosProdutoNaoNulo(Produto produto) {
+        if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
+                produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+            return true;
+        } else return false;
+    }
+
 
 }

@@ -18,4 +18,6 @@ public class Cargo {
     @Column(name = "cargo_nome")
     private String nome;
 
+
+
 }

@@ -1,6 +1,6 @@
 package br.com.supermercado.services;
 
-import br.com.supermercado.Dto.VendaDto;
+import br.com.supermercado.dtos.VendaDto;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.Venda;
 import br.com.supermercado.repositories.ProdutoRepository;
