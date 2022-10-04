@@ -37,23 +37,33 @@ class ProdutoServiceTest {
     public void setup() {
     }
 
-    ProdutoDto produtoDto = new ProdutoDto();
 
-    @Test
-    public void criarProdutoRecebeDtoERetornaProdutoOk() throws Exception {
+//    private Produto criarProdutoParaTeste() {
+//
+//
+//    }
+
+    private ProdutoDto criarProdutoDtoParaTeste() {
+        ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Produto Teste");
         produtoDto.setCodigo(1L);
         produtoDto.setQuantidade(1L);
         produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
         produtoDto.setIdTipoDoProduto(2L);
+        return produtoDto;
+    }
+
+    @Test
+    public void criarProdutoRecebeDtoERetornaProdutoOk() throws Exception {
+
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
         tipo.setListaDeProdutos(null);
 
         Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
 
-        Produto produto = produtoService.criarProduto(produtoDto);
+        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
 
 
         Assert.assertEquals(produto.getCodigo(), 1, 0.00);
@@ -67,13 +77,7 @@ class ProdutoServiceTest {
 
     @Test
     public void verificandoDescricao() throws Exception {
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(1L);
-        produtoDto.setQuantidade(1L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
-
-        Produto produto = produtoService.criarProduto(produtoDto);
+        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
 
 
         Assert.assertEquals(produto.getDescricao(), "Produto Teste");
@@ -82,13 +86,7 @@ class ProdutoServiceTest {
     @Test
     public void verificandoQuantidade() throws Exception {
 
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(1L);
-        produtoDto.setQuantidade(1L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
-
-        Produto produto = produtoService.criarProduto(produtoDto);
+        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
 
         Assert.assertEquals(produto.getCodigo(), 1, 0.00);
     }
@@ -96,45 +94,26 @@ class ProdutoServiceTest {
     @Test
     public void verificandoPrecoDeCompra() throws Exception {
 
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(1L);
-        produtoDto.setQuantidade(1L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
 
-        Produto produto = produtoService.criarProduto(produtoDto);
+        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
 
-        Assert.assertSame(produto.getPrecoDeCompra(),BigDecimal.valueOf(1));
+        Assert.assertSame(produto.getPrecoDeCompra(), BigDecimal.valueOf(1));
     }
+
     @Test
     public void verificandoPrecoDeVenda() throws Exception {
-
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(1L);
-        produtoDto.setQuantidade(1L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
-
-        Produto produto = produtoService.criarProduto(produtoDto);
-
-        Assert.assertSame(produto.getPrecoDeVenda(),BigDecimal.valueOf(2));
+w        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
+        Assert.assertSame(produto.getPrecoDeVenda(), BigDecimal.valueOf(2));
     }
 
     @Test
     public void verificandoCriacaoDeProdutoComDto() {
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(1L);
-        produtoDto.setQuantidade(1L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2));
-        produtoDto.setIdTipoDoProduto(2L);
-
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
         tipo.setListaDeProdutos(null);
 
         Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
-        Produto produto = produtoService.criandoProdutoComDto(produtoDto);
+        Produto produto = produtoService.criandoProdutoComDto(criarProdutoDtoParaTeste());
 
         Assert.assertEquals(produto.getCodigo(), 1, 0.00);
         error.checkThat(produto.getDescricao(), is("Produto Teste"));
