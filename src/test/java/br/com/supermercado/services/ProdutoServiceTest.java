@@ -4,6 +4,7 @@ import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
+import br.com.supermercado.repositories.TipoDoProdutoRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,7 +29,10 @@ class ProdutoServiceTest {
     private TipoDoProdutoService tipoDoProdutoService;
 
     @Mock
-    private ProdutoRepository produtoRepository;
+    private TipoDoProdutoRepository tipoDoProdutoRepository;
+
+    @Mock
+    private ProdutoRepository ProdutoRepository;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -37,11 +41,6 @@ class ProdutoServiceTest {
     public void setup() {
     }
 
-
-//    private Produto criarProdutoParaTeste() {
-//
-//
-//    }
 
     private ProdutoDto criarProdutoDtoParaTeste() {
         ProdutoDto produtoDto = new ProdutoDto();
@@ -54,17 +53,18 @@ class ProdutoServiceTest {
         return produtoDto;
     }
 
+    private TipoDoProduto criarTipoDoProdutoParaTesteSemListaDeProdutos() {
+
+        return tipo;
+    }
+
     @Test
     public void criarProdutoRecebeDtoERetornaProdutoOk() throws Exception {
 
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Teste");
-        tipo.setListaDeProdutos(null);
-
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).
+                thenReturn(criarTipoDoProdutoParaTesteSemListaDeProdutos());
 
         Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
-
 
         Assert.assertEquals(produto.getCodigo(), 1, 0.00);
         error.checkThat(produto.getDescricao(), is("Produto Teste"));
@@ -76,35 +76,18 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoDescricao() throws Exception {
+    public void verificandoDescricaoDeProdutoCriado() throws Exception {
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
         Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
-
-
         Assert.assertEquals(produto.getDescricao(), "Produto Teste");
     }
 
-    @Test
-    public void verificandoQuantidade() throws Exception {
 
-        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
-
-        Assert.assertEquals(produto.getCodigo(), 1, 0.00);
-    }
-
-    @Test
-    public void verificandoPrecoDeCompra() throws Exception {
-
-
-        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
-
-        Assert.assertSame(produto.getPrecoDeCompra(), BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void verificandoPrecoDeVenda() throws Exception {
-w        Produto produto = produtoService.criarProduto(criarProdutoDtoParaTeste());
-        Assert.assertSame(produto.getPrecoDeVenda(), BigDecimal.valueOf(2));
-    }
 
     @Test
     public void verificandoCriacaoDeProdutoComDto() {

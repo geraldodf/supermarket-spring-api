@@ -1,8 +1,10 @@
 package br.com.supermercado.services;
 
 import br.com.supermercado.dtos.ProdutoDto;
+import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
@@ -34,7 +36,7 @@ public class ProdutoService {
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
-            Produto produto = criandoProdutoComDto(produtoDto);
+        Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
             if (verificarAtributosProdutoNaoNulo(produto)
@@ -101,28 +103,34 @@ public class ProdutoService {
 
     public void verificarProduto(Produto produto) throws Exception {
         if (produto.getCodigo() == null) {
-            throw new Exception("O produto deve ter um código! Verifique se o código foi informado e tente novamente.");
+            throw new ProdutoCodigoNuloException("O código está nulo.");
+        }
+        if (produto.getDescricao() == null) {
+            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produto.getDescricao().length() <= 5) {
-            throw new Exception("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres, verifique e tente novamente.");
+            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produto.getPrecoDeVenda() == null) {
-            throw new Exception("O produto deve ter um preço de venda! Verifique se o preço foi informado e tente novamente.");
+            //Está gerando NullPointer e não chegando aqui!
+            throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
         }
         if (produto.getPrecoDeCompra() == null) {
-            throw new Exception("O produto deve ter um preço de compra! Verifique se o preço foi informado e tente novamente.");
+            //Está gerando NullPointer e não chegando aqui!
+            throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
         }
         if (produto.getQuantidade() == null) {
-            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
+            throw new ProdutoQuantidadeNulaException("Quantidade deve ser listada.");
         }
         if (produto.getLucroLiquido() == null) {
-            throw new Exception("Quantidade deve ser listada! Verifique se a quantidade foi informada e tente novamente.");
+            throw new ProdutoLucroNuloException("Quantidade deve ser listada.");
         }
         if (produto.getDataDeCriacao() == null) {
-            throw new Exception("Erro ao gerar a Data.");
+            throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
         }
         if (produto.getTipoDoProduto() == null) {
-            throw new Exception("Tipo do produto inválido");
+            //Esta dando erro ao buscar tipo.
+            throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
         }
     }
 
@@ -140,6 +148,7 @@ public class ProdutoService {
         TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
         produto.setTipoDoProduto(tipoDoProdutoOptional);
+
         return produto;
     }
 
