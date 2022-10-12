@@ -134,7 +134,35 @@ public class ProdutoService {
         }
     }
 
-    public Produto criandoProdutoComDto(ProdutoDto produtoDto) {
+    public void verificarProdutoDto(ProdutoDto produtoDto) throws Exception {
+        if (produtoDto.getCodigo() == null) {
+            throw new ProdutoCodigoNuloException("O código está nulo.");
+        }
+        if (produtoDto.getCodigo() < 0) {
+            throw new ProdutoCodigoInvalidoException("O código fornecido é inválido.");
+        }
+        if (produtoDto.getDescricao() == null) {
+            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
+        }
+        if (produtoDto.getDescricao().length() <= 5) {
+            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
+        }
+        if (produtoDto.getPrecoDeVenda() == null) {
+            throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
+        }
+        if (produtoDto.getPrecoDeCompra() == null) {
+            throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
+        }
+        if (produtoDto.getQuantidade() == null) {
+            throw new ProdutoQuantidadeNulaException("Quantidade deve ser listada.");
+        }
+        if (produtoDto.getIdTipoDoProduto() == null) {
+            throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
+        }
+    }
+
+    public Produto criandoProdutoComDto(ProdutoDto produtoDto) throws Exception {
+        verificarProdutoDto(produtoDto);
 
         Produto produto = new Produto();
         produto.setCodigo(produtoDto.getCodigo());
