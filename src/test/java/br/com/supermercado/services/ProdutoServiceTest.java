@@ -4,6 +4,7 @@ import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.ProdutoCodigoNuloException;
 import br.com.supermercado.exceptions.ProdutoDescricaInvalidaException;
 import br.com.supermercado.exceptions.ProdutoDescricaoNulaException;
+import br.com.supermercado.exceptions.ProdutoQuantidadeNulaException;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
@@ -141,5 +142,18 @@ class ProdutoServiceTest {
         produtoDto.setIdTipoDoProduto(2L);
 
         Assert.assertThrows(ProdutoCodigoNuloException.class, () -> produtoService.criarProduto(produtoDto));
+    }
+
+    @Test
+    public void verificandoQtdDeveLancarProdutoCodigoNuloException() {
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setDescricao("Teste0");
+        produtoDto.setCodigo(12345L);
+        produtoDto.setQuantidade(null);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
+        produtoDto.setIdTipoDoProduto(2L);
+
+        Assert.assertThrows(ProdutoQuantidadeNulaException.class, () -> produtoService.criarProduto(produtoDto));
     }
 }
