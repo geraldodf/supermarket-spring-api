@@ -36,11 +36,11 @@ public class ProdutoService {
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
+        verificarProdutoDto(produtoDto);
         Produto produto = criandoProdutoComDto(produtoDto);
         verificarProduto(produto);
         try {
-            if (verificarAtributosProdutoNaoNulo(produto)
-            ) {
+            if (verificarAtributosProdutoNaoNulo(produto)) {
                 produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
             } else {
@@ -132,6 +132,9 @@ public class ProdutoService {
             //Esta dando erro ao buscar tipo.
             throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
         }
+        if(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()).doubleValue() != produto.getLucroLiquido().doubleValue()) {
+            throw new ProdutoLucroInconsistenteException("Valor do lucro está inconsistente.");
+        }
     }
 
     public void verificarProdutoDto(ProdutoDto produtoDto) throws Exception {
@@ -162,8 +165,6 @@ public class ProdutoService {
     }
 
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) throws Exception {
-        verificarProdutoDto(produtoDto);
-
         Produto produto = new Produto();
         produto.setCodigo(produtoDto.getCodigo());
         produto.setDescricao(produtoDto.getDescricao());

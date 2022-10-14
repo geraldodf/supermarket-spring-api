@@ -1,10 +1,7 @@
 package br.com.supermercado.services;
 
 import br.com.supermercado.dtos.ProdutoDto;
-import br.com.supermercado.exceptions.ProdutoCodigoNuloException;
-import br.com.supermercado.exceptions.ProdutoDescricaInvalidaException;
-import br.com.supermercado.exceptions.ProdutoDescricaoNulaException;
-import br.com.supermercado.exceptions.ProdutoQuantidadeNulaException;
+import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
@@ -22,7 +19,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.is;
 
@@ -50,6 +46,11 @@ class ProdutoServiceTest {
 
     @Test
     public void verificandoCriacaoDeProdutoComDto() throws Exception {
+
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Produto Teste");
         produtoDto.setCodigo(12345L);
@@ -58,22 +59,18 @@ class ProdutoServiceTest {
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
         produtoDto.setIdTipoDoProduto(2L);
 
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Teste");
-        tipo.setListaDeProdutos(null);
-
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
         Produto produto = produtoService.criandoProdutoComDto(produtoDto);
 
-        Assertions.assertEquals(produto.getCodigo(), 12345L, 0.00);
-        error.checkThat(produto.getDescricao(), is("Produto Teste"));
-        error.checkThat(produto.getCodigo(), is(12345L));
-        error.checkThat(produto.getQuantidade(), is(250L));
-        error.checkThat(produto.getPrecoDeCompra(), is(BigDecimal.valueOf(1.79)));
-        error.checkThat(produto.getPrecoDeVenda(), is(BigDecimal.valueOf(2.49)));
-        error.checkThat(produto.getLucroLiquido(), is(BigDecimal.valueOf(0.70)));
-        error.checkThat(produto.getDataDeCriacao(), is(DataUtilitario.getDataAtualComoString()));
-        error.checkThat(produto.getTipoDoProduto(), is(null));
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
+        Assertions.assertEquals(produto.getDescricao(), "Produto Teste");
+        Assertions.assertEquals(produto.getCodigo(), 12345L, 0);
+        Assertions.assertEquals(produto.getQuantidade(), 250L, 0);
+        Assertions.assertEquals(produto.getPrecoDeCompra(), BigDecimal.valueOf(1.79));
+        Assertions.assertEquals(produto.getPrecoDeVenda(), BigDecimal.valueOf(2.49));
+        Assertions.assertEquals(produto.getLucroLiquido().doubleValue(), 0.70);
+        Assertions.assertEquals(produto.getDataDeCriacao(), DataUtilitario.getDataAtualComoString());
+        Assertions.assertNull(produto.getTipoDoProduto());
     }
 
     @Test
@@ -115,6 +112,7 @@ class ProdutoServiceTest {
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
         produtoDto.setIdTipoDoProduto(2L);
 
+
         Assert.assertThrows(ProdutoDescricaInvalidaException.class, () -> produtoService.criarProduto(produtoDto));
     }
 
@@ -155,5 +153,49 @@ class ProdutoServiceTest {
         produtoDto.setIdTipoDoProduto(2L);
 
         Assert.assertThrows(ProdutoQuantidadeNulaException.class, () -> produtoService.criarProduto(produtoDto));
+    }
+
+    @Test
+    public void verificandoQtdNegativaNaoDeveGerarErro() throws Exception {
+
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setDescricao("Teste0");
+        produtoDto.setCodigo(12345L);
+        produtoDto.setQuantidade(-1L);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
+        produtoDto.setIdTipoDoProduto(2L);
+
+
+        Produto produto = produtoService.criarProduto(produtoDto);
+
+        Assertions.assertEquals(-1, produto.getQuantidade());
+    }
+
+    @Test
+    public void verificandoLucroDeveRetornarProdutoLucroInconsistenteException() throws Exception {
+
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setDescricao("Teste0");
+        produtoDto.setCodigo(12345L);
+        produtoDto.setQuantidade(2L);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
+        produtoDto.setIdTipoDoProduto(2L);
+
+        Produto produto = produtoService.criarProduto(produtoDto);
+        produto.setLucroLiquido(new BigDecimal(0.9));
+
+        Assert.assertThrows(ProdutoLucroInconsistenteException.class, () -> produtoService.verificarProduto(produto));
     }
 }
