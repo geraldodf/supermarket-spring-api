@@ -4,12 +4,10 @@ import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
-
 import java.util.ArrayList;
 import java.util.Optional;
 

@@ -112,7 +112,6 @@ class ProdutoServiceTest {
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
         produtoDto.setIdTipoDoProduto(2L);
 
-
         Assert.assertThrows(ProdutoDescricaInvalidaException.class, () -> produtoService.criarProduto(produtoDto));
     }
 
@@ -198,4 +197,27 @@ class ProdutoServiceTest {
 
         Assert.assertThrows(ProdutoLucroInconsistenteException.class, () -> produtoService.verificarProduto(produto));
     }
+
+    @Test
+    public void veririficandoLucroDeveSerNegativo() throws Exception{
+
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setDescricao("Teste0");
+        produtoDto.setCodigo(12345L);
+        produtoDto.setQuantidade(2L);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(2.79));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
+        produtoDto.setIdTipoDoProduto(2L);
+
+        Produto produto = produtoService.criarProduto(produtoDto);
+        System.out.println(produto.getLucroLiquido());
+
+        Assert.assertEquals(produto.getLucroLiquido(), -0.30);
+    }
+
 }

@@ -24,7 +24,6 @@ class VendaServiceTest {
 
     @InjectMocks
     private VendaService vendaService;
-    private ProdutoService produtoService;
 
     @Test
     void buscaPorTodasVendasDeveRetornalArrayVazio() {
