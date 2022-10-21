@@ -10,6 +10,7 @@ import br.com.supermercado.util.DataUtilitario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.experimental.theories.suppliers.TestedOn;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
@@ -18,7 +19,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.is;
 
@@ -45,7 +49,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoCriacaoDeProdutoComDto() throws Exception {
+    public void criarProdutoComDtoDeveRetornarProdutoComTodosAtributosOK() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -74,36 +78,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoRecebeDtoERetornaProdutoComTodosAtributosCorretos() throws Exception {
-        ProdutoDto produtoDto = new ProdutoDto();
-        produtoDto.setDescricao("Produto Teste");
-        produtoDto.setCodigo(12345L);
-        produtoDto.setQuantidade(250L);
-        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
-        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
-        produtoDto.setIdTipoDoProduto(2L);
-
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Tipo Teste");
-        tipo.setListaDeProdutos(null);
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
-
-        Produto produto = produtoService.criarProduto(produtoDto);
-
-        Assert.assertEquals(produto.getCodigo(), 12345L, 0.00);
-        error.checkThat(produto.getDescricao(), is("Produto Teste"));
-        error.checkThat(produto.getCodigo(), is(12345L));
-        error.checkThat(produto.getQuantidade(), is(250L));
-        error.checkThat(produto.getPrecoDeCompra(), is(BigDecimal.valueOf(1.79)));
-        error.checkThat(produto.getPrecoDeVenda(), is(BigDecimal.valueOf(2.49)));
-        error.checkThat(produto.getLucroLiquido(), is(BigDecimal.valueOf(0.70)));
-        error.checkThat(produto.getDataDeCriacao(), is(DataUtilitario.getDataAtualComoString()));
-        error.checkThat(produto.getTipoDoProduto(), is(null));
-
-    }
-
-    @Test
-    public void verificandoDescricaoDeveLancarProdutoDescricaoInvalidaException() {
+    public void criarProdutoDeveLancarProdutoDescricaoInvalidaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("F");
         produtoDto.setCodigo(12345L);
@@ -116,7 +91,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoDescricaoDeveLancarProdutoDescricaoNulaException() {
+    public void criarProdutoDeveLancarProdutoDescricaoNulaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao(null);
         produtoDto.setCodigo(12345L);
@@ -129,7 +104,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoCodigoDeveLancarProdutoCodigoNuloException() {
+    public void criarProdutoDeveLancarProdutoCodigoNuloException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste");
         produtoDto.setCodigo(null);
@@ -142,7 +117,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoQtdDeveLancarProdutoCodigoNuloException() {
+    public void criarProdutoDeveLancarProdutoQuantidadeNulaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
         produtoDto.setCodigo(12345L);
@@ -155,7 +130,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void verificandoQtdNegativaNaoDeveGerarErro() throws Exception {
+    public void criarProdutoQtdNegativaNaoDeveGerarErro() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -165,7 +140,7 @@ class ProdutoServiceTest {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
         produtoDto.setCodigo(12345L);
-        produtoDto.setQuantidade(-1L);
+        produtoDto.setQuantidade(-60L);
         produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
         produtoDto.setIdTipoDoProduto(2L);
@@ -173,11 +148,11 @@ class ProdutoServiceTest {
 
         Produto produto = produtoService.criarProduto(produtoDto);
 
-        Assertions.assertEquals(-1, produto.getQuantidade());
+        Assertions.assertEquals(-60, produto.getQuantidade());
     }
 
     @Test
-    public void verificandoLucroDeveRetornarProdutoLucroInconsistenteException() throws Exception {
+    public void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -199,7 +174,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void veririficandoLucroDeveSerNegativo() throws Exception{
+    public void criarProdutoDeveRetornarComLucroDeveSerNegativo() throws Exception{
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -218,6 +193,19 @@ class ProdutoServiceTest {
         System.out.println(produto.getLucroLiquido());
 
         Assert.assertEquals(produto.getLucroLiquido(), -0.30);
+    }
+
+    @Test
+    void deveRetornarListaDeProdutos(){
+        ArrayList<Produto> listaDeProdutos = new ArrayList();
+
+        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+
+        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0), listaDeProdutos.get(0));
+        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0).getId(), listaDeProdutos.get(0));
+        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0).getCodigo(), listaDeProdutos.get(0).getCodigo());
+        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), listaDeProdutos.size());
+        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), listaDeProdutos.size());
     }
 
 }
