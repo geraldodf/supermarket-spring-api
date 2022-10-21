@@ -192,20 +192,15 @@ class ProdutoServiceTest {
         Produto produto = produtoService.criarProduto(produtoDto);
         System.out.println(produto.getLucroLiquido());
 
-        Assert.assertEquals(produto.getLucroLiquido(), -0.30);
+        Assert.assertEquals(produto.getLucroLiquido(), -0.3);
     }
 
     @Test
-    void deveRetornarListaDeProdutos(){
+    void deveRetornarListaDeProdutosVazia(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
-
         Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
-
-        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0), listaDeProdutos.get(0));
-        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0).getId(), listaDeProdutos.get(0));
-        Assert.assertEquals(produtoService.pegarTodosProdutos().get(0).getCodigo(), listaDeProdutos.get(0).getCodigo());
         Assert.assertEquals(produtoService.pegarTodosProdutos().size(), listaDeProdutos.size());
-        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), listaDeProdutos.size());
+        Assert.assertEquals(produtoService.pegarTodosProdutos().isEmpty(), listaDeProdutos.isEmpty());
     }
 
 }
