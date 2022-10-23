@@ -192,15 +192,54 @@ class ProdutoServiceTest {
         Produto produto = produtoService.criarProduto(produtoDto);
         System.out.println(produto.getLucroLiquido());
 
-        Assert.assertEquals(produto.getLucroLiquido(), -0.3);
+        Assert.assertEquals(produto.getLucroLiquido().doubleValue(), -0,30);
     }
 
     @Test
     void deveRetornarListaDeProdutosVazia(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
-        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), listaDeProdutos.size());
-        Assert.assertEquals(produtoService.pegarTodosProdutos().isEmpty(), listaDeProdutos.isEmpty());
+        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), 0);
+        Assert.assertEquals(produtoService.pegarTodosProdutos().isEmpty(), true);
+    }
+
+    @Test
+    void deveRetornarListaDeProdutosComUmProduto(){
+        ArrayList<Produto> listaDeProdutos = new ArrayList();
+        listaDeProdutos.add(new Produto());
+        
+        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Assert.assertEquals( 1, produtoService.pegarTodosProdutos().size());
+        Assert.assertEquals( false, produtoService.pegarTodosProdutos().isEmpty());
+
+    }
+
+    @Test
+    void deveRetornarListaDeProdutosComDoisProdutos(){
+        ArrayList<Produto> listaDeProdutos = new ArrayList();
+        listaDeProdutos.add(new Produto());
+        listaDeProdutos.add(new Produto());
+
+        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Assert.assertEquals( 2, produtoService.pegarTodosProdutos().size());
+        Assert.assertEquals( false, produtoService.pegarTodosProdutos().isEmpty());
+
+    }
+
+    @Test
+    void deveRetornarListaDeProdutosComDoisProdutosEVerificandoDescricao(){
+        ArrayList<Produto> listaDeProdutos = new ArrayList();
+        listaDeProdutos.add(new Produto());
+        listaDeProdutos.add(new Produto());
+        Produto produto = new Produto();
+        produto.setDescricao("Teste Descricao");
+        listaDeProdutos.add(produto);
+
+        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Assert.assertEquals(2, produtoService.pegarTodosProdutos().size());
+        Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
+        Assert.assertEquals("Teste Descricao", produtoService.pegarTodosProdutos().get(2).getDescricao());
+
     }
 
 }
