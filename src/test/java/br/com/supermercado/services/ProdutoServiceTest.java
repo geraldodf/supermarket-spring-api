@@ -18,11 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 
@@ -49,7 +48,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoComDtoDeveRetornarProdutoComTodosAtributosOK() throws Exception {
+    void criarProdutoComDtoDeveRetornarProdutoComTodosAtributosOK() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -78,7 +77,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveLancarProdutoDescricaoInvalidaException() {
+    void criarProdutoDeveLancarProdutoDescricaoInvalidaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("F");
         produtoDto.setCodigo(12345L);
@@ -91,7 +90,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveLancarProdutoDescricaoNulaException() {
+    void criarProdutoDeveLancarProdutoDescricaoNulaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao(null);
         produtoDto.setCodigo(12345L);
@@ -104,7 +103,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveLancarProdutoCodigoNuloException() {
+    void criarProdutoDeveLancarProdutoCodigoNuloException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste");
         produtoDto.setCodigo(null);
@@ -117,7 +116,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveLancarProdutoQuantidadeNulaException() {
+    void criarProdutoDeveLancarProdutoQuantidadeNulaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
         produtoDto.setCodigo(12345L);
@@ -130,7 +129,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoQtdNegativaNaoDeveGerarErro() throws Exception {
+    void criarProdutoQtdNegativaNaoDeveGerarErro() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -152,7 +151,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
+    void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -174,7 +173,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    public void criarProdutoDeveRetornarComLucroDeveSerNegativo() throws Exception{
+    void criarProdutoDeveRetornarComLucroDeveSerNegativo() throws Exception{
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -196,7 +195,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void deveRetornarListaDeProdutosVazia(){
+    void pegarTodosProdutosDeveRetornarListaDeProdutosVazia(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
         Assert.assertEquals(produtoService.pegarTodosProdutos().size(), 0);
@@ -204,7 +203,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void deveRetornarListaDeProdutosComUmProduto(){
+    void pegarTodosProdutosDeveRetornarListaDeProdutosComUmProduto(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         listaDeProdutos.add(new Produto());
         
@@ -215,7 +214,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void deveRetornarListaDeProdutosComDoisProdutos(){
+    void pegarTodosProdutosDeveRetornarListaDeProdutosComDoisProdutos(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         listaDeProdutos.add(new Produto());
         listaDeProdutos.add(new Produto());
@@ -227,7 +226,7 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void deveRetornarListaDeProdutosComDoisProdutosEVerificandoDescricao(){
+    void pegarTodosProdutosDeveRetornarListaDeProdutosComDoisProdutosEVerificandoDescricao(){
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         listaDeProdutos.add(new Produto());
         listaDeProdutos.add(new Produto());
@@ -236,10 +235,29 @@ class ProdutoServiceTest {
         listaDeProdutos.add(produto);
 
         Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
-        Assert.assertEquals(2, produtoService.pegarTodosProdutos().size());
+        Assert.assertEquals(3, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
         Assert.assertEquals("Teste Descricao", produtoService.pegarTodosProdutos().get(2).getDescricao());
-
     }
+    
+    @Test
+    void pegarUmProdutoDeveRetornarProdutoVazio() throws Exception{
+        Long id = 3L;  
+          
+        Mockito.when(ProdutoRepository.findById(id)).thenReturn(Optional.of(new Produto()));
+        Assert.assertNotNull(produtoService.pegarUmProduto(id));
+    }
+
+    // @Test
+    // void pegarUmProdutoDeveRetornarProdutoEVerificarDescricao() throws Exception{
+    //     Long id = 3L;
+
+    //     Mockito.when(produtoService.pegarUmProduto(id)).thenReturn(new Produto());
+    //     Assert.assertEquals(1, produtoService.pegarTodosProdutos().size());
+    //     Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
+    // }
+
+
+
 
 }

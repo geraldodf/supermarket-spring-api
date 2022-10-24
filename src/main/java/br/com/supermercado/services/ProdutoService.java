@@ -25,12 +25,10 @@ public class ProdutoService {
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
-        try {
+       
             Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
             return produtoBuscadoPeloID.get();
-        } catch (Exception e) {
-            throw new Exception("Produto inválido! tente novamente.");
-        }
+       
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
