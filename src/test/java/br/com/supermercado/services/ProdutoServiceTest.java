@@ -38,7 +38,7 @@ class ProdutoServiceTest {
     private TipoDoProdutoRepository tipoDoProdutoRepository;
 
     @Mock
-    private ProdutoRepository ProdutoRepository;
+    private ProdutoRepository produtoRepository;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -207,7 +207,7 @@ class ProdutoServiceTest {
         ArrayList<Produto> listaDeProdutos = new ArrayList();
         listaDeProdutos.add(new Produto());
         
-        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProdutos);
         Assert.assertEquals( 1, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals( false, produtoService.pegarTodosProdutos().isEmpty());
 
@@ -219,7 +219,7 @@ class ProdutoServiceTest {
         listaDeProdutos.add(new Produto());
         listaDeProdutos.add(new Produto());
 
-        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProdutos);
         Assert.assertEquals( 2, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals( false, produtoService.pegarTodosProdutos().isEmpty());
 
@@ -234,7 +234,7 @@ class ProdutoServiceTest {
         produto.setDescricao("Teste Descricao");
         listaDeProdutos.add(produto);
 
-        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProdutos);
+        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProdutos);
         Assert.assertEquals(3, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
         Assert.assertEquals("Teste Descricao", produtoService.pegarTodosProdutos().get(2).getDescricao());
@@ -244,7 +244,7 @@ class ProdutoServiceTest {
     void pegarUmProdutoDeveRetornarProdutoVazio() throws Exception{
         Long id = 3L;  
           
-        Mockito.when(ProdutoRepository.findById(id)).thenReturn(Optional.of(new Produto()));
+        Mockito.when(produtoRepository.findById(id)).thenReturn(Optional.of(new Produto()));
         Assert.assertNotNull(produtoService.pegarUmProduto(id));
     }
 
