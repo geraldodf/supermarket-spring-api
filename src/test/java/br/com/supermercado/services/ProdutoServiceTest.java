@@ -248,14 +248,16 @@ class ProdutoServiceTest {
         Assert.assertNotNull(produtoService.pegarUmProduto(id));
     }
 
-    // @Test
-    // void pegarUmProdutoDeveRetornarProdutoEVerificarDescricao() throws Exception{
-    //     Long id = 3L;
+     @Test
+     void pegarUmProdutoDeveRetornarProdutoEVerificarDescricao() throws Exception{
+         Long id = 3L;
 
-    //     Mockito.when(produtoService.pegarUmProduto(id)).thenReturn(new Produto());
-    //     Assert.assertEquals(1, produtoService.pegarTodosProdutos().size());
-    //     Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
-    // }
+         Produto produto = new Produto();
+         produto.setDescricao("Produto Teste");
+         Mockito.when(produtoRepository.findById(id)).thenReturn(Optional.of(produto));
+        
+         Assert.assertEquals("Produto Teste", produtoService.pegarUmProduto(id).getDescricao());
+    }
 
 
 
