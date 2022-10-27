@@ -184,5 +184,10 @@ public class ProdutoService {
         } else return false;
     }
 
+    public ArrayList<Produto> pegarProdutosParaDoacao(int qtd) {
+        ArrayList<Produto> listaDeProdutos = produtoRepository.pegarProdutosParaDoacao(qtd);
+        return listaDeProdutos;
+    }
+
 
 }

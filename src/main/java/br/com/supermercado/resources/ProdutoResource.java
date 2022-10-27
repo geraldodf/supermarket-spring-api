@@ -55,4 +55,10 @@ public class ProdutoResource {
     public void atualizarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDto produtoDto) throws Exception {
         produtoService.atualizarProduto(id, produtoDto);
     }
+
+    //------------- DESAFIO
+    @GetMapping("/doacao/{qtd}")
+    public ArrayList<Produto> pegarProdutosParaDoacao(@PathVariable("qtd") int qtd){
+        return produtoService.pegarProdutosParaDoacao(qtd);
+    }
 }

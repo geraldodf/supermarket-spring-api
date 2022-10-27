@@ -15,4 +15,7 @@ public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigo, '') LIKE %?1%")
     public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
 
+    @Query("SELECT p FROM Produto p WHERE p.quantidade > 10")
+    public ArrayList<Produto> pegarProdutosParaDoacao(int qtd);
+
 }
