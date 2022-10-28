@@ -1,14 +1,18 @@
 package br.com.supermercado.services;
 
+import br.com.supermercado.dtos.DoacaoDto;
 import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import antlr.collections.List;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -19,16 +23,15 @@ public class ProdutoService {
     @Autowired
     private TipoDoProdutoService tipoDoProdutoService;
 
-
     public ArrayList<Produto> pegarTodosProdutos() {
         return (ArrayList<Produto>) produtoRepository.findAll();
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
-       
-            Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
-            return produtoBuscadoPeloID.get();
-       
+
+        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+        return produtoBuscadoPeloID.get();
+
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
@@ -102,17 +105,19 @@ public class ProdutoService {
             throw new ProdutoCodigoNuloException("O código está nulo.");
         }
         if (produto.getDescricao() == null) {
-            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaoNulaException(
+                    "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produto.getDescricao().length() <= 5) {
-            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaInvalidaException(
+                    "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produto.getPrecoDeVenda() == null) {
-            //Está gerando NullPointer e não chegando aqui!
+            // Está gerando NullPointer e não chegando aqui!
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
         }
         if (produto.getPrecoDeCompra() == null) {
-            //Está gerando NullPointer e não chegando aqui!
+            // Está gerando NullPointer e não chegando aqui!
             throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
         }
         if (produto.getQuantidade() == null) {
@@ -125,10 +130,11 @@ public class ProdutoService {
             throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
         }
         if (produto.getTipoDoProduto() == null) {
-            //Esta dando erro ao buscar tipo.
+            // Esta dando erro ao buscar tipo.
             throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
         }
-        if(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()).doubleValue() != produto.getLucroLiquido().doubleValue()) {
+        if (produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()).doubleValue() != produto.getLucroLiquido()
+                .doubleValue()) {
             throw new ProdutoLucroInconsistenteException("Valor do lucro está inconsistente.");
         }
     }
@@ -141,10 +147,12 @@ public class ProdutoService {
             throw new ProdutoCodigoInvalidoException("O código fornecido é inválido.");
         }
         if (produtoDto.getDescricao() == null) {
-            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaoNulaException(
+                    "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getDescricao().length() <= 5) {
-            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaInvalidaException(
+                    "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getPrecoDeVenda() == null) {
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
@@ -170,7 +178,8 @@ public class ProdutoService {
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
 
-        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
+        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService
+                .pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
         produto.setTipoDoProduto(tipoDoProdutoOptional);
 
@@ -181,13 +190,42 @@ public class ProdutoService {
         if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
                 produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
             return true;
-        } else return false;
+        } else
+            return false;
     }
 
-    public ArrayList<Produto> pegarProdutosParaDoacao(int qtd) {
+    public DoacaoDto pegarProdutosParaDoacao(int qtd) {
+
+        Produto p1 = new Produto();
+        Produto p2 = new Produto();
+        Produto p3 = new Produto();
+        Produto p4 = new Produto();
+        Produto p5 = new Produto();
+        p1.setDescricao("Sei la");
+        p2.setDescricao("ai sim");
+        p3.setDescricao("Aurora");
+        p4.setDescricao("Boa");
+        p5.setDescricao("Dado");
+
+        ArrayList<Produto> teste = new ArrayList<>();
+        teste.add(p1);
+        teste.add(p2);
+        teste.add(p3);
+        teste.add(p4);
+        teste.add(p5);
+        teste.add(p5);
+
+        DoacaoDto doacoes = new DoacaoDto();
+
         ArrayList<Produto> listaDeProdutos = produtoRepository.pegarProdutosParaDoacao(qtd);
-        return listaDeProdutos;
-    }
+        ArrayList<Produto> listaDeProdutosAteFRetorno = new ArrayList<>();
 
+
+        char a = 'A';
+        int c = 0;
+        ArrayList<Produto> listaA = (ArrayList<Produto>) teste.stream().filter(p -> p.getDescricao().indexOf(a) == c).collect(Collectors.toList());
+
+        return null;
+    }
 
 }

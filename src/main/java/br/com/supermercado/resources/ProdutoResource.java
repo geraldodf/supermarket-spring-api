@@ -58,7 +58,8 @@ public class ProdutoResource {
 
     //------------- DESAFIO
     @GetMapping("/doacao/{qtd}")
-    public ArrayList<Produto> pegarProdutosParaDoacao(@PathVariable("qtd") int qtd){
+    public DoacaoDto pegarProdutosParaDoacao(@PathVariable("qtd") int qtd){
+        DoacaoDto
         return produtoService.pegarProdutosParaDoacao(qtd);
     }
 }
