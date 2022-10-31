@@ -14,6 +14,7 @@ import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -194,38 +195,54 @@ public class ProdutoService {
             return false;
     }
 
-    public DoacaoDto pegarProdutosParaDoacao(int qtd) {
+    public DoacaoDto pegarProdutosParaDoacao() {
 
-        Produto p1 = new Produto();
-        Produto p2 = new Produto();
-        Produto p3 = new Produto();
-        Produto p4 = new Produto();
-        Produto p5 = new Produto();
-        p1.setDescricao("Sei la");
-        p2.setDescricao("ai sim");
-        p3.setDescricao("Aurora");
-        p4.setDescricao("Boa");
-        p5.setDescricao("Dado");
+        ArrayList<Produto> todosProdutos = (ArrayList<Produto>) produtoRepository.findAll();
+        DoacaoDto doacao = new DoacaoDto();
 
-        ArrayList<Produto> teste = new ArrayList<>();
-        teste.add(p1);
-        teste.add(p2);
-        teste.add(p3);
-        teste.add(p4);
-        teste.add(p5);
-        teste.add(p5);
+        ArrayList<Produto> listaRetornoAteF = new ArrayList<>();
+        ArrayList<Produto> listaRetornoAteO = new ArrayList<>();
+        ArrayList<Produto> listaRetornoAteZ = new ArrayList<>();
+        ArrayList<Produto> listaFiltrada = new ArrayList<>();
 
-        DoacaoDto doacoes = new DoacaoDto();
+        char letraFiltrada = 'A';
 
-        ArrayList<Produto> listaDeProdutos = produtoRepository.pegarProdutosParaDoacao(qtd);
-        ArrayList<Produto> listaDeProdutosAteFRetorno = new ArrayList<>();
+        while (letraFiltrada != 'G') {
+            listaFiltrada = filtrarProdutosPorLetraInicial(letraFiltrada, todosProdutos);
+            listaFiltrada.forEach(p -> listaRetornoAteF.add(p));
 
+            letraFiltrada++;
+        }
 
-        char a = 'A';
-        int c = 0;
-        ArrayList<Produto> listaA = (ArrayList<Produto>) teste.stream().filter(p -> p.getDescricao().indexOf(a) == c).collect(Collectors.toList());
+        doacao.setListaDeProdutosAteF(listaRetornoAteF);
 
-        return null;
+        while (letraFiltrada != 'P') {
+            listaFiltrada = filtrarProdutosPorLetraInicial(letraFiltrada, todosProdutos);
+            listaFiltrada.forEach(p -> listaRetornoAteO.add(p));
+
+            letraFiltrada++;
+        }
+
+        doacao.setListaDeProdutosAteO(listaRetornoAteO);
+
+        while (letraFiltrada != 'Z') {
+            listaFiltrada = filtrarProdutosPorLetraInicial(letraFiltrada, todosProdutos);
+            listaFiltrada.forEach(p -> listaRetornoAteZ.add(p));
+
+            letraFiltrada++;
+        }
+
+        doacao.setListaDeProdutosAteZ(listaRetornoAteZ);
+
+        return doacao;
+    }
+
+    public ArrayList<Produto> filtrarProdutosPorLetraInicial(char letraInicial, ArrayList<Produto> listaParaFiltrar) {
+
+        ArrayList<Produto> listaParaRetornar = (ArrayList<Produto>) listaParaFiltrar.stream()
+                .filter(p -> p.getDescricao().indexOf(letraInicial) == 0).collect(Collectors.toList());
+
+        return listaParaRetornar;
     }
 
 }

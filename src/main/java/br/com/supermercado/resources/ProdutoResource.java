@@ -1,5 +1,6 @@
 package br.com.supermercado.resources;
 
+import br.com.supermercado.dtos.DoacaoDto;
 import br.com.supermercado.dtos.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +58,8 @@ public class ProdutoResource {
     }
 
     //------------- DESAFIO
-    @GetMapping("/doacao/{qtd}")
-    public DoacaoDto pegarProdutosParaDoacao(@PathVariable("qtd") int qtd){
-        DoacaoDto
-        return produtoService.pegarProdutosParaDoacao(qtd);
+    @GetMapping("/doacao")
+    public DoacaoDto pegarProdutosParaDoacao(){
+        return produtoService.pegarProdutosParaDoacao();
     }
 }

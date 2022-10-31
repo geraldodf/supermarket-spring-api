@@ -1,6 +1,5 @@
 package br.com.supermercado.models;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,6 +42,16 @@ public class Produto {
     @JoinColumn(name = "tipo_do_produto_fk")
     private TipoDoProduto tipoDoProduto;
 
+    @Override
+    public String toString() {
 
+        return ("Descrição: " + this.descricao + "\n" 
+        // +
+        //         "Preço: " + this.precoDeVenda + "\n" +
+        //         "Quantidade: " + this.quantidade + "\n" +
+        //         "Código: " + this.codigo + "\n" +
+        //         "Data: " + this.dataDeCriacao + "\n"
+                );
+    }
 
 }
