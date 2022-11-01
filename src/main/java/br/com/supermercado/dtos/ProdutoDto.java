@@ -15,4 +15,5 @@ public class ProdutoDto {
     private Long quantidade;
     private Long codigo;
     private Long idTipoDoProduto;
+    private String dataValidade;
 }

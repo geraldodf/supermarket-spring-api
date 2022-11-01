@@ -62,4 +62,5 @@ public class ProdutoResource {
     public DoacaoDto pegarProdutosParaDoacao(){
         return produtoService.pegarProdutosParaDoacao();
     }
+       
 }

@@ -42,6 +42,9 @@ public class Produto {
     @JoinColumn(name = "tipo_do_produto_fk")
     private TipoDoProduto tipoDoProduto;
 
+    @Column(name = "data_validade")
+    private String dataValidade; 
+
     @Override
     public String toString() {
 
