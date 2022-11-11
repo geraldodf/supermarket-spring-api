@@ -1,15 +1,20 @@
 package br.com.supermercado.services;
 
+import br.com.supermercado.dtos.DoacaoDto;
 import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import antlr.collections.List;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -24,6 +29,10 @@ public class ProdutoService {
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
+
+        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+        return produtoBuscadoPeloID.get();
+
 
         Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
@@ -105,10 +114,12 @@ public class ProdutoService {
         }
         if (produtoDto.getDescricao() == null) {
             throw new ProdutoDescricaoNulaException(
+                    
                     "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getDescricao().length() <= 5) {
             throw new ProdutoDescricaInvalidaException(
+                    
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getPrecoDeVenda() == null) {
@@ -128,6 +139,7 @@ public class ProdutoService {
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) throws Exception {
         Produto produto = new Produto();
         produto.setCodigo(produtoDto.getCodigo());
+        produto.setDataValidade(produtoDto.getDataValidade());
         produto.setDescricao(produtoDto.getDescricao());
         produto.setQuantidade(produtoDto.getQuantidade());
         produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
@@ -135,12 +147,10 @@ public class ProdutoService {
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
 
-        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService
-                .pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
+        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
         produto.setTipoDoProduto(tipoDoProdutoOptional);
 
         return produto;
     }
-
 }

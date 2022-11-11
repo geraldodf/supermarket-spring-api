@@ -16,3 +16,4 @@ public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
 
 }
+

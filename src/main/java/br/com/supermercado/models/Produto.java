@@ -42,7 +42,7 @@ public class Produto {
     @JoinColumn(name = "tipo_do_produto_fk")
     private TipoDoProduto tipoDoProduto;
 
-    @Override
+     @Override
     public String toString() {
 
         return ("Descrição: " + this.descricao + "\n"
