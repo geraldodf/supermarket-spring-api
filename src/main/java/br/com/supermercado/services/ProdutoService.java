@@ -1,13 +1,11 @@
 package br.com.supermercado.services;
 
-import br.com.supermercado.dtos.DoacaoDto;
 import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import antlr.collections.List;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
@@ -32,11 +30,6 @@ public class ProdutoService {
 
         Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
-
-
-        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
-        return produtoBuscadoPeloID.get();
-
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
@@ -139,7 +132,6 @@ public class ProdutoService {
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) throws Exception {
         Produto produto = new Produto();
         produto.setCodigo(produtoDto.getCodigo());
-        produto.setDataValidade(produtoDto.getDataValidade());
         produto.setDescricao(produtoDto.getDescricao());
         produto.setQuantidade(produtoDto.getQuantidade());
         produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
