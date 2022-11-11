@@ -22,7 +22,8 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/pesquisa-por-descricao")
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao) throws Exception {
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao)
+            throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
 
@@ -50,15 +51,10 @@ public class ProdutoResource {
         produtoService.excluirProduto(id);
     }
 
-    @CrossOrigin(allowedHeaders = "*")  
+    @CrossOrigin(allowedHeaders = "*")
     @PutMapping("/{id}")
     public void atualizarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDto produtoDto) throws Exception {
         produtoService.atualizarProduto(id, produtoDto);
     }
 
-    //------------- DESAFIO
-    @GetMapping("/doacao/{qtd}")
-    public ArrayList<Produto> pegarProdutosParaDoacao(@PathVariable("qtd") int qtd){
-        return produtoService.pegarProdutosParaDoacao(qtd);
-    }
 }

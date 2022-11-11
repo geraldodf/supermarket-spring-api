@@ -19,24 +19,23 @@ public class ProdutoService {
     @Autowired
     private TipoDoProdutoService tipoDoProdutoService;
 
-
     public ArrayList<Produto> pegarTodosProdutos() {
         return (ArrayList<Produto>) produtoRepository.findAll();
     }
 
     public Produto pegarUmProduto(Long id) throws Exception {
-       
-            Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
-            return produtoBuscadoPeloID.get();
-       
+
+        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+        return produtoBuscadoPeloID.get();
+
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
         verificarProdutoDto(produtoDto);
         Produto produto = criandoProdutoComDto(produtoDto);
-        verificarProduto(produto);
+        produto.verificarProduto(produto);
         try {
-            if (verificarAtributosProdutoNaoNulo(produto)) {
+            if (produto.verificarAtributosProdutoNaoNulo(produto)) {
                 produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
             } else {
@@ -62,10 +61,10 @@ public class ProdutoService {
         Optional<Produto> resposta = produtoRepository.findById(id);
         Produto produtoAAtualizar = resposta.get();
         Produto produto = criandoProdutoComDto(produtoDto);
-        verificarProduto(produto);
+        produto.verificarProduto(produto);
 
         try {
-            if (verificarAtributosProdutoNaoNulo(produto)) {
+            if (produto.verificarAtributosProdutoNaoNulo(produto)) {
 
                 produtoAAtualizar.setCodigo(produto.getCodigo());
                 produtoAAtualizar.setDescricao(produto.getDescricao());
@@ -97,42 +96,6 @@ public class ProdutoService {
         return produtoRepository.pesquisaPorDescricao(descricao);
     }
 
-    public void verificarProduto(Produto produto) throws Exception {
-        if (produto.getCodigo() == null) {
-            throw new ProdutoCodigoNuloException("O código está nulo.");
-        }
-        if (produto.getDescricao() == null) {
-            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
-        }
-        if (produto.getDescricao().length() <= 5) {
-            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
-        }
-        if (produto.getPrecoDeVenda() == null) {
-            //Está gerando NullPointer e não chegando aqui!
-            throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
-        }
-        if (produto.getPrecoDeCompra() == null) {
-            //Está gerando NullPointer e não chegando aqui!
-            throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
-        }
-        if (produto.getQuantidade() == null) {
-            throw new ProdutoQuantidadeNulaException("Quantidade deve ser listada.");
-        }
-        if (produto.getLucroLiquido() == null) {
-            throw new ProdutoLucroNuloException("Quantidade deve ser listada.");
-        }
-        if (produto.getDataDeCriacao() == null) {
-            throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
-        }
-        if (produto.getTipoDoProduto() == null) {
-            //Esta dando erro ao buscar tipo.
-            throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
-        }
-        if(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()).doubleValue() != produto.getLucroLiquido().doubleValue()) {
-            throw new ProdutoLucroInconsistenteException("Valor do lucro está inconsistente.");
-        }
-    }
-
     public void verificarProdutoDto(ProdutoDto produtoDto) throws Exception {
         if (produtoDto.getCodigo() == null) {
             throw new ProdutoCodigoNuloException("O código está nulo.");
@@ -141,10 +104,12 @@ public class ProdutoService {
             throw new ProdutoCodigoInvalidoException("O código fornecido é inválido.");
         }
         if (produtoDto.getDescricao() == null) {
-            throw new ProdutoDescricaoNulaException("A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaoNulaException(
+                    "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getDescricao().length() <= 5) {
-            throw new ProdutoDescricaInvalidaException("Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
+            throw new ProdutoDescricaInvalidaException(
+                    "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getPrecoDeVenda() == null) {
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
@@ -170,24 +135,12 @@ public class ProdutoService {
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
 
-        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
+        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService
+                .pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
         produto.setTipoDoProduto(tipoDoProdutoOptional);
 
         return produto;
     }
-
-    public boolean verificarAtributosProdutoNaoNulo(Produto produto) {
-        if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
-                produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
-            return true;
-        } else return false;
-    }
-
-    public ArrayList<Produto> pegarProdutosParaDoacao(int qtd) {
-        ArrayList<Produto> listaDeProdutos = produtoRepository.pegarProdutosParaDoacao(qtd);
-        return listaDeProdutos;
-    }
-
 
 }
