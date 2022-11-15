@@ -6,13 +6,10 @@ import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import antlr.collections.List;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -35,9 +32,9 @@ public class ProdutoService {
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
         verificarProdutoDto(produtoDto);
         Produto produto = criandoProdutoComDto(produtoDto);
-        produto.verificarProduto(produto);
+        produto.verificarProduto();
         try {
-            if (produto.verificarAtributosProdutoNaoNulo(produto)) {
+            if (produto.verificarAtributosProdutoNaoNulo()) {
                 produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
                 produtoRepository.save(produto);
             } else {
@@ -63,10 +60,10 @@ public class ProdutoService {
         Optional<Produto> resposta = produtoRepository.findById(id);
         Produto produtoAAtualizar = resposta.get();
         Produto produto = criandoProdutoComDto(produtoDto);
-        produto.verificarProduto(produto);
+        produto.verificarProduto();
 
         try {
-            if (produto.verificarAtributosProdutoNaoNulo(produto)) {
+            if (produto.verificarAtributosProdutoNaoNulo()) {
 
                 produtoAAtualizar.setCodigo(produto.getCodigo());
                 produtoAAtualizar.setDescricao(produto.getDescricao());

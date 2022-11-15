@@ -42,7 +42,7 @@ public class Produto {
     @JoinColumn(name = "tipo_do_produto_fk")
     private TipoDoProduto tipoDoProduto;
 
-     @Override
+    @Override
     public String toString() {
 
         return ("Descrição: " + this.descricao + "\n"
@@ -53,49 +53,47 @@ public class Produto {
                 "Data: " + this.dataDeCriacao + "\n");
     }
 
-    public void verificarProduto(Produto produto) throws Exception {
-        if (produto.getCodigo() == null) {
+    public void verificarProduto() throws Exception {
+        if (this.codigo == null) {
             throw new ProdutoCodigoNuloException("O código está nulo.");
         }
-        if (produto.getDescricao() == null) {
+        if (this.descricao == null) {
             throw new ProdutoDescricaoNulaException(
                     "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (produto.getDescricao().length() <= 5) {
+        if (this.descricao.length() <= 5) {
             throw new ProdutoDescricaInvalidaException(
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (produto.getPrecoDeVenda() == null) {
+        if (this.precoDeCompra == null) {
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
         }
-        if (produto.getPrecoDeCompra() == null) {
+        if (this.precoDeCompra == null) {
             throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
         }
-        if (produto.getQuantidade() == null) {
+        if (this.quantidade == null) {
             throw new ProdutoQuantidadeNulaException("Quantidade deve ser listada.");
         }
-        if (produto.getLucroLiquido() == null) {
+        if (this.lucroLiquido == null) {
             throw new ProdutoLucroNuloException("Quantidade deve ser listada.");
         }
-        if (produto.getDataDeCriacao() == null) {
+        if (this.dataDeCriacao == null) {
             throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
         }
-        if (produto.getTipoDoProduto() == null) {
+        if (this.tipoDoProduto == null) {
             throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
         }
-        if (produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()).doubleValue() != produto.getLucroLiquido()
-                .doubleValue()) {
+        if (this.precoDeVenda.subtract(this.precoDeCompra).doubleValue() != this.lucroLiquido.doubleValue()) {
             throw new ProdutoLucroInconsistenteException("Valor do lucro está inconsistente.");
         }
     }
 
-    public boolean verificarAtributosProdutoNaoNulo(Produto produto) {
-        if (produto.getQuantidade() != null && produto.getPrecoDeVenda() != null && produto.getLucroLiquido() != null &&
-                produto.getPrecoDeCompra() != null && produto.getCodigo() != null && produto.getDescricao() != null) {
+    public boolean verificarAtributosProdutoNaoNulo() {
+        if (this.quantidade != null && this.precoDeVenda != null && this.lucroLiquido != null &&
+                this.precoDeCompra != null && this.codigo != null && this.descricao != null) {
             return true;
         } else
             return false;
     }
-
 
 }

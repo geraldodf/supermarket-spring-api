@@ -149,8 +149,8 @@ class ProdutoServiceTest {
         Assertions.assertEquals(-60, produto.getQuantidade());
     }
 
-    // @Test
-    // void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
+    @Test
+    void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
 
         TipoDoProduto tipo = new TipoDoProduto();
         tipo.setNomeTipoDoProduto("Teste");
@@ -168,7 +168,7 @@ class ProdutoServiceTest {
         Produto produto = produtoService.criarProduto(produtoDto);
         produto.setLucroLiquido(new BigDecimal(0.9));
 
-        Assert.assertThrows(ProdutoLucroInconsistenteException.class, () -> produtoService.verificarProduto(produto));
+        Assert.assertThrows(ProdutoLucroInconsistenteException.class, () -> produto.verificarProduto());
     }
 
     @Test
@@ -267,6 +267,7 @@ class ProdutoServiceTest {
         Assert.assertEquals(false, produtoRepository.pesquisaPorDescricao(descricao).isEmpty());
         Assert.assertEquals(1, produtoRepository.pesquisaPorDescricao(descricao).size());
     }
+
     @Test
     void pegarProdutosPorDescricaoDeveRetornarListaComDoisProdutosEVerificarAsDescricoes() throws Exception {
         String descricao = "Teste";
@@ -284,6 +285,7 @@ class ProdutoServiceTest {
         Assert.assertEquals("Teste 1", produtoRepository.pesquisaPorDescricao(descricao).get(0).getDescricao());
         Assert.assertEquals("Teste 2", produtoRepository.pesquisaPorDescricao(descricao).get(1).getDescricao());
     }
+
     @Test
     void pegarProdutosPorCodigoDeveRetornarListaDeProdutoVazio() throws Exception {
         Long codigo = 1010L;
@@ -304,6 +306,7 @@ class ProdutoServiceTest {
         Assert.assertEquals(false, produtoRepository.pesquisaPorCodigo(codigo).isEmpty());
         Assert.assertEquals(1, produtoRepository.pesquisaPorCodigo(codigo).size());
     }
+
     @Test
     void pegarProdutosPorCodigoDeveRetornarListaComDoisProdutosEVerificarAsQtd() throws Exception {
         Long codigo = 1010L;
@@ -317,9 +320,9 @@ class ProdutoServiceTest {
 
         Mockito.when(produtoRepository.pesquisaPorCodigo(codigo)).thenReturn(listaDeProdutos);
         Assert.assertEquals(false, produtoRepository.pesquisaPorCodigo(codigo).isEmpty());
-        Assert.assertEquals( 2, produtoRepository.pesquisaPorCodigo(codigo).size());
-        Assert.assertEquals( 1L, produtoRepository.pesquisaPorCodigo(codigo).get(0).getQuantidade(), 0);
-        Assert.assertEquals( 2L, produtoRepository.pesquisaPorCodigo(codigo).get(1).getQuantidade(), 0);
+        Assert.assertEquals(2, produtoRepository.pesquisaPorCodigo(codigo).size());
+        Assert.assertEquals(1L, produtoRepository.pesquisaPorCodigo(codigo).get(0).getQuantidade(), 0);
+        Assert.assertEquals(2L, produtoRepository.pesquisaPorCodigo(codigo).get(1).getQuantidade(), 0);
     }
 
 }
