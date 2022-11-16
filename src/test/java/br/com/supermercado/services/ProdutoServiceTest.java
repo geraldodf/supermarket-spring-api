@@ -10,7 +10,6 @@ import br.com.supermercado.util.DataUtilitario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.experimental.theories.suppliers.TestedOn;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
@@ -18,12 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
-
-import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 class ProdutoServiceTest {
