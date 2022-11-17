@@ -57,6 +57,9 @@ public class Produto {
         if (this.codigo == null) {
             throw new ProdutoCodigoNuloException("O código está nulo.");
         }
+        if (this.codigo < 0) {
+            throw new ProdutoCodigoInvalidoException("O código está nulo.");
+        }
         if (this.descricao == null) {
             throw new ProdutoDescricaoNulaException(
                     "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
@@ -65,7 +68,7 @@ public class Produto {
             throw new ProdutoDescricaInvalidaException(
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (this.precoDeCompra == null) {
+        if (this.precoDeVenda == null) {
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
         }
         if (this.precoDeCompra == null) {
@@ -75,7 +78,7 @@ public class Produto {
             throw new ProdutoQuantidadeNulaException("Quantidade deve ser listada.");
         }
         if (this.lucroLiquido == null) {
-            throw new ProdutoLucroNuloException("Quantidade deve ser listada.");
+            throw new ProdutoLucroNuloException("Lucro está nulo, houve problema.");
         }
         if (this.dataDeCriacao == null) {
             throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
