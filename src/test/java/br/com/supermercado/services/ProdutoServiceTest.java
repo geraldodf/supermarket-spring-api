@@ -86,6 +86,19 @@ class ProdutoServiceTest {
     }
 
     @Test
+    void criarProdutoDeveLancarProdutoDescricaoInvalidaExceptionCom5Caracteres() {
+        ProdutoDto produtoDto = new ProdutoDto();
+        produtoDto.setDescricao("Teste");
+        produtoDto.setCodigo(12345L);
+        produtoDto.setQuantidade(250L);
+        produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
+        produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
+        produtoDto.setIdTipoDoProduto(2L);
+
+        Assert.assertThrows(ProdutoDescricaInvalidaException.class, () -> produtoService.criarProduto(produtoDto));
+    }
+
+    @Test
     void criarProdutoDeveLancarProdutoDescricaoNulaException() {
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao(null);
@@ -112,16 +125,26 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void criarProdutoDeveLancarProdutoQuantidadeNulaException() {
+    void criarProdutoNaoDeveExcecaoComQuantidadeNegativa() throws Exception {
+
+        TipoDoProduto tipo = new TipoDoProduto();
+        tipo.setNomeTipoDoProduto("Teste");
+        tipo.setListaDeProdutos(null);
+
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
         produtoDto.setCodigo(12345L);
-        produtoDto.setQuantidade(null);
+        produtoDto.setQuantidade(-20L);
         produtoDto.setPrecoDeCompra(BigDecimal.valueOf(1.79));
         produtoDto.setPrecoDeVenda(BigDecimal.valueOf(2.49));
         produtoDto.setIdTipoDoProduto(2L);
 
-        Assert.assertThrows(ProdutoQuantidadeNulaException.class, () -> produtoService.criarProduto(produtoDto));
+        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+
+        Produto produto = produtoService.criarProduto(produtoDto);
+
+        Assert.assertEquals(produto.getQuantidade(), -20L, 0);
+
     }
 
     @Test
