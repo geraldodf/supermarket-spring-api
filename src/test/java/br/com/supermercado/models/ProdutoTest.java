@@ -9,7 +9,7 @@ import br.com.supermercado.exceptions.*;
 import br.com.supermercado.exceptions.ProdutoDescricaInvalidaException;
 
 @SpringBootTest
-class ProdutoTeste {
+class ProdutoTest {
 
     @Test
     void verificarProdutoDeveRetornarOk() throws Exception {
