@@ -5,6 +5,8 @@ import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
@@ -104,12 +106,12 @@ public class ProdutoService {
         }
         if (produtoDto.getDescricao() == null) {
             throw new ProdutoDescricaoNulaException(
-                    
+
                     "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getDescricao().length() <= 5) {
             throw new ProdutoDescricaInvalidaException(
-                    
+
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
         if (produtoDto.getPrecoDeVenda() == null) {
@@ -136,10 +138,17 @@ public class ProdutoService {
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
         produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
 
-        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
+        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService
+                .pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
         produto.setTipoDoProduto(tipoDoProdutoOptional);
 
         return produto;
+    }
+
+    public Iterable<Produto> pesquisaPaginada(int numeroPagina) {
+        Pageable pagina = PageRequest.of(numeroPagina, 15);
+        return produtoRepository.findAll(pagina);
+
     }
 }

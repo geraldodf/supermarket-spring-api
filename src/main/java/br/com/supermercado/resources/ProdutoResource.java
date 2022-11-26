@@ -28,6 +28,12 @@ public class ProdutoResource {
     }
 
     @CrossOrigin(allowedHeaders = "*")
+    @GetMapping("/pagina/{numeroPagina}")
+    public Iterable<Produto> pesquisaPaginada(@PathVariable int numeroPagina) throws Exception {
+        return produtoService.pesquisaPaginada(numeroPagina);
+    }
+
+    @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/pesquisa-por-codigo")
     public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
