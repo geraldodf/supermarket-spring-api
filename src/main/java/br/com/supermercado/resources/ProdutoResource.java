@@ -2,10 +2,12 @@ package br.com.supermercado.resources;
 
 import br.com.supermercado.dtos.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.services.ProdutoService;
 import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/produtos")
 @RestController
@@ -28,9 +30,10 @@ public class ProdutoResource {
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/pagina/{numeroPagina}")
-    public Iterable<Produto> pesquisaPaginada(@PathVariable int numeroPagina) throws Exception {
-        return produtoService.pesquisaPaginada(numeroPagina);
+    @GetMapping("/pagina")
+    public List<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
+
+        return produtoService.pesquisaPaginada(pageable);
     }
 
     @CrossOrigin(allowedHeaders = "*")

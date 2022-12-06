@@ -5,13 +5,14 @@ import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -146,9 +147,9 @@ public class ProdutoService {
         return produto;
     }
 
-    public Iterable<Produto> pesquisaPaginada(int numeroPagina) {
-        Pageable pagina = PageRequest.of(numeroPagina, 15);
-        return produtoRepository.findAll(pagina);
-
+    public List<Produto> pesquisaPaginada(Pageable pageable) {
+        Page<Produto> page = produtoRepository.findAll(pageable);
+        List<Produto> paginaParaRetornar = page.getContent();
+        return paginaParaRetornar;
     }
 }
