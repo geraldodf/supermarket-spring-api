@@ -6,7 +6,9 @@ import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
@@ -152,4 +154,6 @@ public class ProdutoService {
         List<Produto> paginaParaRetornar = page.getContent();
         return paginaParaRetornar;
     }
+
+   
 }
