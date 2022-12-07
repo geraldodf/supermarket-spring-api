@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends PagingAndSortingRepository<Produto, Long> {
@@ -15,5 +16,6 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigo, '') LIKE %?1%")
     public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
 
-}
+    List<Produto> findAllByDescricao(String descricao);
 
+}

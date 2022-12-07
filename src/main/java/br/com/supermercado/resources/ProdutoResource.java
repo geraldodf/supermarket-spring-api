@@ -34,6 +34,11 @@ public class ProdutoResource {
     public List<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
         return produtoService.pesquisaPaginada(pageable);
     }
+    @CrossOrigin(allowedHeaders = "*")
+    @GetMapping("/teste")
+    public List<Produto> teste(@RequestParam(name = "descricao") String descricao) throws Exception {
+        return produtoService.teste(descricao);
+    }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/pesquisa-por-codigo")

@@ -155,5 +155,9 @@ public class ProdutoService {
         return paginaParaRetornar;
     }
 
-   
+    public List<Produto> teste(String descricao) {
+       
+        return produtoRepository.findAllByDescricao(descricao);
+    }
+
 }
