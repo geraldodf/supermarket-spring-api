@@ -155,9 +155,9 @@ public class ProdutoService {
         return paginaParaRetornar;
     }
 
-    public List<Produto> teste(String descricao) {
-       
-        return produtoRepository.findAllByDescricao(descricao);
+    public List<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
+
+        return (List<Produto>) produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable).getContent();
     }
 
 }
