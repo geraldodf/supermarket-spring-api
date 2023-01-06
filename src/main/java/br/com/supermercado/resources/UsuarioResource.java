@@ -4,7 +4,6 @@ import br.com.supermercado.models.Usuario;
 import br.com.supermercado.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 
 @RestController
@@ -35,7 +34,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{id}")
-    public void atualizarUsuario(@PathVariable("id") Long id,@RequestBody Usuario usuario) throws Exception {
+    public void atualizarUsuario(@PathVariable("id") Long id, @RequestBody Usuario usuario) throws Exception {
         usuarioService.atualizarUsuario(id, usuario);
     }
 
@@ -43,6 +42,5 @@ public class UsuarioResource {
     public void excuirUsuario(@PathVariable("id") Long id) throws Exception {
         usuarioService.excuirUsuario(id);
     }
-
 
 }
