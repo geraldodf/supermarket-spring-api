@@ -22,5 +22,5 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
     List<Produto> findAllByDescricao(String descricao);
 
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
-    Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageeable);
+    Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
 }

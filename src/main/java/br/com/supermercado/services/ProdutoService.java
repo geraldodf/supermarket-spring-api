@@ -6,15 +6,12 @@ import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -32,6 +29,34 @@ public class ProdutoService {
 
         Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
+    }
+
+    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
+        if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
+            throw new Exception("Produto inexistente! verifique e tente novamente.");
+        }
+        return produtoRepository.pesquisaPorCodigo(codigo);
+    }
+
+    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) throws Exception {
+        if (produtoRepository.pesquisaPorDescricao(descricao) == null) {
+            throw new Exception("Produto inexistente! verifique e tente novamente.");
+        }
+        return produtoRepository.pesquisaPorDescricao(descricao);
+    }
+
+    public Page<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
+        Page<Produto> page;
+        try {
+            page = produtoRepository.findAll(pageable);
+        } catch (Exception e) {
+            throw new Exception("Erro ao fazer consulta no banco de dados.");
+        }
+        return page;
+    }
+
+    public Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
+        return produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable);
     }
 
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
@@ -86,20 +111,6 @@ public class ProdutoService {
         }
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
-        if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
-            throw new Exception("Produto inexistente! verifique e tente novamente.");
-        }
-        return produtoRepository.pesquisaPorCodigo(codigo);
-    }
-
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) throws Exception {
-        if (produtoRepository.pesquisaPorDescricao(descricao) == null) {
-            throw new Exception("Produto inexistente! verifique e tente novamente.");
-        }
-        return produtoRepository.pesquisaPorDescricao(descricao);
-    }
-
     public void verificarProdutoDto(ProdutoDto produtoDto) throws Exception {
         if (produtoDto.getCodigo() == null) {
             throw new ProdutoCodigoNuloException("O código está nulo.");
@@ -147,17 +158,6 @@ public class ProdutoService {
         produto.setTipoDoProduto(tipoDoProdutoOptional);
 
         return produto;
-    }
-
-    public List<Produto> pesquisaPaginada(Pageable pageable) {
-        Page<Produto> page = produtoRepository.findAll(pageable);
-        List<Produto> paginaParaRetornar = page.getContent();
-        return paginaParaRetornar;
-    }
-
-    public List<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
-
-        return (List<Produto>) produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable).getContent();
     }
 
 }

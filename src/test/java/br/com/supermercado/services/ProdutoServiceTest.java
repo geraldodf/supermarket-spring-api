@@ -6,7 +6,6 @@ import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
 import br.com.supermercado.repositories.TipoDoProdutoRepository;
-import br.com.supermercado.util.DataUtilitario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,6 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -42,8 +45,6 @@ class ProdutoServiceTest {
     @Before
     public void setup() {
     }
-
-    
 
     @Test
     void criarProdutoDeveLancarProdutoDescricaoInvalidaException() {
@@ -97,7 +98,6 @@ class ProdutoServiceTest {
         Assert.assertThrows(ProdutoCodigoNuloException.class, () -> produtoService.criarProduto(produtoDto));
     }
 
-    
     @Test
     void criarProdutoQtdNegativaNaoDeveLancarException() throws Exception {
 
@@ -293,6 +293,14 @@ class ProdutoServiceTest {
         Assert.assertEquals(2, produtoRepository.pesquisaPorCodigo(codigo).size());
         Assert.assertEquals(1L, produtoRepository.pesquisaPorCodigo(codigo).get(0).getQuantidade(), 0);
         Assert.assertEquals(2L, produtoRepository.pesquisaPorCodigo(codigo).get(1).getQuantidade(), 0);
+    }
+
+    @Test
+    void pegarTodoProdutosPaginadosDeveRetornarListDeProdutoOK() throws Exception {
+        Pageable pageable = PageRequest.of(1, 5, Direction.ASC);
+
+        produtoService.pesquisaPaginada(pageable);  
+
     }
 
 }

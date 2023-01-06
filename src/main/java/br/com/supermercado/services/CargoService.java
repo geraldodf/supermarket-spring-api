@@ -4,7 +4,6 @@ import br.com.supermercado.models.Cargo;
 import br.com.supermercado.repositories.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -20,7 +19,8 @@ public class CargoService {
 
     public Cargo pegarCargoPeloId(Long id) throws Exception {
 
-        if (id == null) throw new Exception("O id do cargo não pode ser nulo! Id não foi recebido.");
+        if (id == null)
+            throw new Exception("O id do cargo não pode ser nulo! Id não foi recebido.");
 
         Optional<Cargo> cargoOptional = null;
         try {
@@ -32,7 +32,9 @@ public class CargoService {
     }
 
     public ArrayList<Cargo> pegarCargoPeloNome(String nome) throws Exception {
-        if (nome == null && nome == "") throw new Exception("Deve ser especificado o nome ou alguma inicial!");
+        if (nome == null || nome == "") {
+            throw new Exception("Deve ser especificado o nome ou alguma inicial!");
+        }
         try {
             cargoRepository.pesquisaPorNome(nome);
         } catch (Exception e) {
@@ -51,7 +53,6 @@ public class CargoService {
         }
         return cargo;
     }
-
 
     public Cargo atualizarCargo(Long id, Cargo cargo) throws Exception {
         Optional<Cargo> cargoOptional = null;
@@ -76,7 +77,6 @@ public class CargoService {
 
         return cargoParaAtualizar;
     }
-
 
     public void excluirCargo(Long id) throws Exception {
 

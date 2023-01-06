@@ -3,7 +3,6 @@ package br.com.supermercado.services;
 import br.com.supermercado.dtos.VendaDto;
 import br.com.supermercado.models.Produto;
 import br.com.supermercado.models.Venda;
-import br.com.supermercado.repositories.ProdutoRepository;
 import br.com.supermercado.repositories.VendaRepository;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ public class VendaService {
     private VendaRepository vendaRepository;
     @Autowired
     private ProdutoService produtoService;
-    @Autowired
-    private ProdutoRepository produtoRepository;
 
 
     public ArrayList<Venda> pegarTodasVendas() {

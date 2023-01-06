@@ -3,6 +3,8 @@ package br.com.supermercado.services;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.repositories.TipoDoProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -67,5 +69,9 @@ public class TipoDoProdutoService {
         return tipoDoProdutoRepository.pesquisaPorNome(nome);
 
 
+    }
+
+    public Page<TipoDoProduto> pegarTiposDoProdutoPaginado(Pageable pageable) {
+        return tipoDoProdutoRepository.findAll(pageable);
     }
 }
