@@ -5,6 +5,7 @@ import br.com.supermercado.services.TipoDoProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -33,10 +34,10 @@ public class TipoDoProdutoResource {
         return tipoDoProdutoService.pegarTipoDoProdutoPorNome(nome);
     }
 
-    @GetMapping("/pag")
+    @GetMapping("/pag-com-sort")
     @CrossOrigin(allowedHeaders = "*")
-    public Page<TipoDoProduto> pegarTiposDoProdutoPaginado(Pageable pageable){
-        return tipoDoProdutoService.pegarTiposDoProdutoPaginado(pageable);
+    public ArrayList<TipoDoProduto> pegarTiposDoProdutoComSort(Sort sort){
+        return tipoDoProdutoService.pegarTiposDoProdutoComSort(sort);
     }
 
     @PostMapping

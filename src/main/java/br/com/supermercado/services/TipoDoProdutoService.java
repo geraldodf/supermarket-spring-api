@@ -5,6 +5,7 @@ import br.com.supermercado.repositories.TipoDoProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class TipoDoProdutoService {
 
     }
 
-    public Page<TipoDoProduto> pegarTiposDoProdutoPaginado(Pageable pageable) {
-        return tipoDoProdutoRepository.findAll(pageable);
+    public ArrayList<TipoDoProduto> pegarTiposDoProdutoComSort(Sort sort) {
+        return (ArrayList<TipoDoProduto>)tipoDoProdutoRepository.findAll(sort);
     }
 }
