@@ -59,6 +59,13 @@ public class ProdutoService {
         return produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable);
     }
 
+    // public ArrayList<Produto> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
+    //     ArrayList<TipoDoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
+    //     TipoDoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
+    //     return produtoRepository.pesquisaPorTipoPaginada(tipoDoProdutoParaBusca.getId());
+    // }
+
+
     public Produto criarProduto(ProdutoDto produtoDto) throws Exception {
         verificarProdutoDto(produtoDto);
         Produto produto = criandoProdutoComDto(produtoDto);
@@ -160,4 +167,5 @@ public class ProdutoService {
         return produto;
     }
 
+   
 }

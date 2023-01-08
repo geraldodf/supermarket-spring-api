@@ -23,24 +23,31 @@ public class ProdutoResource {
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/pesquisa-por-descricao")
+    @GetMapping("/name")
     public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao)
             throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/pag")
+    @GetMapping("/produtos")
     public Page<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
         return produtoService.pesquisaPaginada(pageable);
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/pagDesc")
+    @GetMapping("/produtos-descricao")
     public Page<Produto> pesquisaPorDescricaoPaginada(@RequestParam(name = "descricao") String descricao,
             Pageable pageable) throws Exception {
         return produtoService.pesquisaPorDescricaoPaginada(descricao, pageable);
     }
+
+    // @CrossOrigin(allowedHeaders = "*")
+    // @GetMapping("/produtos-tipo")
+    // public ArrayList<Produto> pesquisaPorTipoPaginada(@RequestParam(name = "nomeTipo") String nomeTipo,
+    //         Pageable pageable) throws Exception {
+    //     return produtoService.pesquisaPorTipoPaginada(nomeTipo, pageable);
+    // }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/pesquisa-por-codigo")

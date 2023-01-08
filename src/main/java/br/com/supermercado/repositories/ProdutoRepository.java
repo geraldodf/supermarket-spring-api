@@ -1,7 +1,6 @@
 package br.com.supermercado.repositories;
 
 import br.com.supermercado.models.Produto;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +22,8 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
 
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
     Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
+
+
+    // @Query("SELECT p FROM Produto p WHERE p.getTipoDoProduto().getId() = idTipo")
+    // ArrayList<Produto> pesquisaPorTipoPaginada(Long idTipo);
 }

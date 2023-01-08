@@ -3,8 +3,6 @@ package br.com.supermercado.resources;
 import br.com.supermercado.models.TipoDoProduto;
 import br.com.supermercado.services.TipoDoProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -28,15 +26,15 @@ public class TipoDoProdutoResource {
         return tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(id);
     }
 
-    @GetMapping("/nome-tipo-produto")
+    @GetMapping("/name")
     @CrossOrigin(allowedHeaders = "*")
-    public ArrayList<TipoDoProduto> pegarTipoDoProdutoPorNome(@RequestParam(name = "nome") String nome){
+    public ArrayList<TipoDoProduto> pegarTipoDoProdutoPorNome(@RequestParam(name = "nome") String nome) {
         return tipoDoProdutoService.pegarTipoDoProdutoPorNome(nome);
     }
 
-    @GetMapping("/pag-com-sort")
+    @GetMapping("/tipos")
     @CrossOrigin(allowedHeaders = "*")
-    public ArrayList<TipoDoProduto> pegarTiposDoProdutoComSort(Sort sort){
+    public ArrayList<TipoDoProduto> pegarTiposDoProdutoComSort(Sort sort) {
         return tipoDoProdutoService.pegarTiposDoProdutoComSort(sort);
     }
 
@@ -48,7 +46,8 @@ public class TipoDoProdutoResource {
 
     @PutMapping("/{id}")
     @CrossOrigin(allowedHeaders = "*")
-    public TipoDoProduto atualizarTipoDoProduto(@PathVariable("id") Long id, @RequestBody TipoDoProduto tipo) throws Exception {
+    public TipoDoProduto atualizarTipoDoProduto(@PathVariable("id") Long id, @RequestBody TipoDoProduto tipo)
+            throws Exception {
         return tipoDoProdutoService.atualizarTipoDoProduto(id, tipo);
     }
 
@@ -58,4 +57,4 @@ public class TipoDoProdutoResource {
         tipoDoProdutoService.excluirTipoDoProdutoPeloId(id);
     }
 
-    }
+}
