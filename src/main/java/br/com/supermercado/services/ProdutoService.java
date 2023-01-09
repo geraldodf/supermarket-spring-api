@@ -60,9 +60,9 @@ public class ProdutoService {
     }
 
     // public ArrayList<Produto> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
-    //     ArrayList<TipoDoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
-    //     TipoDoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
-    //     return produtoRepository.pesquisaPorTipoPaginada(tipoDoProdutoParaBusca.getId());
+    //     // ArrayList<TipoDoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
+    //     // TipoDoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
+    //     return null;
     // }
 
 

@@ -65,8 +65,6 @@ public class TipoDoProdutoService {
 
     public ArrayList<TipoDoProduto> pegarTipoDoProdutoPorNome(String nome) {
         return tipoDoProdutoRepository.pesquisaPorNome(nome);
-
-
     }
 
     public ArrayList<TipoDoProduto> pegarTiposDoProdutoComSort(Sort sort) {
