@@ -23,10 +23,9 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
     Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
 
-    public String bugAquiDescomentado(); 
+    // @Query("SELECT * FROM Produto p WHERE p.getTipoDoProduto().getId() = :id")
+    // ArrayList<Produto> pesquisaPorTipoPaginada(Long id, Pageable pageable);
 
-    //fixme
+    
 
-    // @Query("SELECT p FROM Produto p WHERE p.getTipoDoProduto().getId() = idTipo")
-    // ArrayList<Produto> pesquisaPorTipoPaginada(Long idTipo);
 }
