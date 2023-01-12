@@ -10,20 +10,20 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tipo_do_produto")
-public class TipoDoProduto {
+@Table(name = "tipo_produto")
+public class TipoProduto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tipo_do_produto_id")
+    @Column(name = "tipo_produto_id")
     private Long id;
 
-    @Column(name = "nome_tipo_do_produto")
-    private String nomeTipoDoProduto;
+    @Column(name = "nome_tipo_produto")
+    private String nomeTipoProduto;
 
-    @OneToMany(mappedBy = "tipoDoProduto")
+    @OneToMany(mappedBy = "tipoProduto")
     @JsonIgnore
-    private List<Produto> listaDeProdutos;
+    private List<Produto> listaProdutos;
 
 
 }

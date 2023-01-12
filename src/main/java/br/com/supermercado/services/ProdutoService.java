@@ -2,7 +2,7 @@ package br.com.supermercado.services;
 
 import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
-import br.com.supermercado.models.TipoDoProduto;
+import br.com.supermercado.models.TipoProduto;
 import br.com.supermercado.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
     @Autowired
-    private TipoDoProdutoService tipoDoProdutoService;
+    private TipoProdutoService tipoProdutoService;
 
     public ArrayList<Produto> pegarTodosProdutos() {
         return (ArrayList<Produto>) produtoRepository.findAll();
@@ -60,8 +60,8 @@ public class ProdutoService {
     }
 
     // public ArrayList<Produto> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
-    //     ArrayList<TipoDoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
-    //     TipoDoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
+    //     ArrayList<TipoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
+    //     TipoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
     //     return produtoRepository.pesquisaPorTipoPaginada(tipoDoProdutoParaBusca.getId(), pageable);
     // }
         //fixme
@@ -73,7 +73,7 @@ public class ProdutoService {
         produto.verificarProduto();
         try {
             if (produto.verificarAtributosProdutoNaoNulo()) {
-                produto.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
+                produto.setLucroLiquido(produto.getPrecoVenda().subtract(produto.getPrecoCompra()));
                 produtoRepository.save(produto);
             } else {
                 throw new Exception();
@@ -103,12 +103,12 @@ public class ProdutoService {
         try {
             if (produto.verificarAtributosProdutoNaoNulo()) {
 
-                produtoAAtualizar.setCodigo(produto.getCodigo());
+                produtoAAtualizar.setCodigoBarras(produto.getCodigoBarras());
                 produtoAAtualizar.setDescricao(produto.getDescricao());
-                produtoAAtualizar.setPrecoDeVenda(produto.getPrecoDeVenda());
-                produtoAAtualizar.setPrecoDeCompra(produto.getPrecoDeCompra());
+                produtoAAtualizar.setPrecoVenda(produto.getPrecoVenda());
+                produtoAAtualizar.setPrecoCompra(produto.getPrecoCompra());
                 produtoAAtualizar.setQuantidade(produto.getQuantidade());
-                produtoAAtualizar.setLucroLiquido(produto.getPrecoDeVenda().subtract(produto.getPrecoDeCompra()));
+                produtoAAtualizar.setLucroLiquido(produto.getPrecoVenda().subtract(produto.getPrecoCompra()));
                 produtoRepository.save(produtoAAtualizar);
 
             } else {
@@ -152,18 +152,18 @@ public class ProdutoService {
 
     public Produto criandoProdutoComDto(ProdutoDto produtoDto) throws Exception {
         Produto produto = new Produto();
-        produto.setCodigo(produtoDto.getCodigo());
+        produto.setCodigoBarras(produtoDto.getCodigo());
         produto.setDescricao(produtoDto.getDescricao());
         produto.setQuantidade(produtoDto.getQuantidade());
-        produto.setPrecoDeCompra(produtoDto.getPrecoDeCompra());
-        produto.setPrecoDeVenda(produtoDto.getPrecoDeVenda());
+        produto.setPrecoCompra(produtoDto.getPrecoDeCompra());
+        produto.setPrecoVenda(produtoDto.getPrecoDeVenda());
         produto.setLucroLiquido(produtoDto.getPrecoDeVenda().subtract(produtoDto.getPrecoDeCompra()));
-        produto.setDataDeCriacao(DataUtilitario.getDataAtualComoString());
+        produto.setDataCriacao(DataUtilitario.getDataAtualComoString());
 
-        TipoDoProduto tipoDoProdutoOptional = tipoDoProdutoService
+        TipoProduto tipoProdutoOptional = tipoProdutoService
                 .pegarUmTipoDoProdutoPeloId(produtoDto.getIdTipoDoProduto());
 
-        produto.setTipoDoProduto(tipoDoProdutoOptional);
+        produto.setTipoProduto(tipoProdutoOptional);
 
         return produto;
     }

@@ -18,14 +18,14 @@ class ProdutoTest {
 
         produto.verificarProduto();
 
-        Assert.assertEquals(123L, produto.getCodigo(), 0);
-        Assert.assertEquals("Hoje", produto.getDataDeCriacao());
+        Assert.assertEquals(123L, produto.getCodigoBarras(), 0);
+        Assert.assertEquals("Hoje", produto.getDataCriacao());
         Assert.assertEquals("Teste Descricao", produto.getDescricao());
         Assert.assertEquals(BigDecimal.valueOf(1.00), produto.getLucroLiquido());
-        Assert.assertEquals(BigDecimal.valueOf(3.00), produto.getPrecoDeVenda());
-        Assert.assertEquals(BigDecimal.valueOf(2.00), produto.getPrecoDeCompra());
+        Assert.assertEquals(BigDecimal.valueOf(3.00), produto.getPrecoVenda());
+        Assert.assertEquals(BigDecimal.valueOf(2.00), produto.getPrecoCompra());
         Assert.assertEquals(10L, produto.getQuantidade(), 0);
-        Assert.assertNotNull(produto.getTipoDoProduto());
+        Assert.assertNotNull(produto.getTipoProduto());
     }
 
     @Test
@@ -58,21 +58,21 @@ class ProdutoTest {
     @Test
     void verificarProdutoDeveLancarProdutoCodigoNuloException() {
         Produto produto = produtoCriado();
-        produto.setCodigo(null);
+        produto.setCodigoBarras(null);
         Assert.assertThrows(ProdutoCodigoNuloException.class, () -> produto.verificarProduto());
     }
 
     @Test
     void verificarProdutoDeveLancarProdutoCodigoInvalidoException() {
         Produto produto = produtoCriado();
-        produto.setCodigo(-213L);
+        produto.setCodigoBarras(-213L);
         Assert.assertThrows(ProdutoCodigoInvalidoException.class, () -> produto.verificarProduto());
     }
 
     @Test
     void verificarProdutoDeveLancarProdutoDataDeCriacaoNulaException() {
         Produto produto = produtoCriado();
-        produto.setDataDeCriacao(null);
+        produto.setDataCriacao(null);
         Assert.assertThrows(ProdutoDataDeCriacaoNulaException.class, () -> produto.verificarProduto());
 
     }
@@ -94,14 +94,14 @@ class ProdutoTest {
     @Test
     void verificarProdutoDeveLancarProdutoPrecoDeCompraNuloException() {
         Produto produto = produtoCriado();
-        produto.setPrecoDeCompra(null);
+        produto.setPrecoCompra(null);
         Assert.assertThrows(ProdutoPrecoDeCompraNuloException.class, () -> produto.verificarProduto());
     }
 
     @Test
     void verificarProdutoDeveLancarProdutoPrecoDeVendaNuloException() {
         Produto produto = produtoCriado();
-        produto.setPrecoDeVenda(null);
+        produto.setPrecoVenda(null);
         Assert.assertThrows(ProdutoPrecoDeVendaNuloException.class, () -> produto.verificarProduto());
     }
 
@@ -120,14 +120,14 @@ class ProdutoTest {
 
     Produto produtoCriado() {
         Produto produto = new Produto();
-        produto.setCodigo(123L);
-        produto.setDataDeCriacao("Hoje");
+        produto.setCodigoBarras(123L);
+        produto.setDataCriacao("Hoje");
         produto.setDescricao("Teste Descricao");
         produto.setLucroLiquido(BigDecimal.valueOf(1.00));
-        produto.setPrecoDeCompra(BigDecimal.valueOf(2.00));
-        produto.setPrecoDeVenda(BigDecimal.valueOf(3.00));
+        produto.setPrecoCompra(BigDecimal.valueOf(2.00));
+        produto.setPrecoVenda(BigDecimal.valueOf(3.00));
         produto.setQuantidade(10L);
-        produto.setTipoDoProduto(new TipoDoProduto());
+        produto.setTipoProduto(new TipoProduto());
         return produto;
     }
 }

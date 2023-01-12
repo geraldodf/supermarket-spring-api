@@ -65,7 +65,7 @@ public class VendaService {
             vendaASerAtualizada.setListaDeProdutos(venda.getListaDeProdutos());
 
             venda.getListaDeProdutos().forEach(p -> {
-                vendaASerAtualizada.setVendaValor(vendaASerAtualizada.getVendaValor().add(p.getPrecoDeVenda()));
+                vendaASerAtualizada.setVendaValor(vendaASerAtualizada.getVendaValor().add(p.getPrecoVenda()));
             });
 
             verificarVenda(vendaASerAtualizada);
@@ -94,7 +94,7 @@ public class VendaService {
 
         try {
             listaDeProdutos.forEach(produto -> {
-                vendaCriada.setVendaValor(vendaCriada.getVendaValor().add(produto.getPrecoDeVenda()));
+                vendaCriada.setVendaValor(vendaCriada.getVendaValor().add(produto.getPrecoVenda()));
             });
         } catch (Exception e) {
             throw new Exception("Erro ao adicionar produtos na venda");

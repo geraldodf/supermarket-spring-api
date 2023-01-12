@@ -15,7 +15,7 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
     @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
     public ArrayList<Produto> pesquisaPorDescricao(String descricao);
 
-    @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigo, '') LIKE %?1%")
+    @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigoBarras, '') LIKE %?1%")
     public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
 
     List<Produto> findAllByDescricao(String descricao);

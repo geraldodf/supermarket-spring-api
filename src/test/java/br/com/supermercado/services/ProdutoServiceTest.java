@@ -3,9 +3,9 @@ package br.com.supermercado.services;
 import br.com.supermercado.dtos.ProdutoDto;
 import br.com.supermercado.exceptions.*;
 import br.com.supermercado.models.Produto;
-import br.com.supermercado.models.TipoDoProduto;
+import br.com.supermercado.models.TipoProduto;
 import br.com.supermercado.repositories.ProdutoRepository;
-import br.com.supermercado.repositories.TipoDoProdutoRepository;
+import br.com.supermercado.repositories.TipoProdutoRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -31,10 +31,10 @@ class ProdutoServiceTest {
     private ProdutoService produtoService;
 
     @Mock
-    private TipoDoProdutoService tipoDoProdutoService;
+    private TipoProdutoService tipoProdutoService;
 
     @Mock
-    private TipoDoProdutoRepository tipoDoProdutoRepository;
+    private TipoProdutoRepository tipoProdutoRepository;
 
     @Mock
     private ProdutoRepository produtoRepository;
@@ -101,10 +101,10 @@ class ProdutoServiceTest {
     @Test
     void criarProdutoQtdNegativaNaoDeveLancarException() throws Exception {
 
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Teste");
-        tipo.setListaDeProdutos(null);
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        TipoProduto tipo = new TipoProduto();
+        tipo.setNomeTipoProduto("Teste");
+        tipo.setListaProdutos(null);
+        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
 
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
@@ -122,10 +122,10 @@ class ProdutoServiceTest {
     @Test
     void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
 
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Teste");
-        tipo.setListaDeProdutos(null);
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        TipoProduto tipo = new TipoProduto();
+        tipo.setNomeTipoProduto("Teste");
+        tipo.setListaProdutos(null);
+        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
 
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");
@@ -144,10 +144,10 @@ class ProdutoServiceTest {
     @Test
     void criarProdutoDeveRetornarComLucroDeveSerNegativo() throws Exception {
 
-        TipoDoProduto tipo = new TipoDoProduto();
-        tipo.setNomeTipoDoProduto("Teste");
-        tipo.setListaDeProdutos(null);
-        Mockito.when(tipoDoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        TipoProduto tipo = new TipoProduto();
+        tipo.setNomeTipoProduto("Teste");
+        tipo.setListaProdutos(null);
+        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
 
         ProdutoDto produtoDto = new ProdutoDto();
         produtoDto.setDescricao("Teste0");

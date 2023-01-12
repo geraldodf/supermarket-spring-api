@@ -20,44 +20,44 @@ public class Produto {
     @Column(name = "produto_descricao")
     private String descricao;
 
-    @Column(name = "produto_preco_de_compra")
-    private BigDecimal precoDeCompra;
+    @Column(name = "produto_preco_compra")
+    private BigDecimal precoCompra;
 
-    @Column(name = "produto_preco_de_venda")
-    private BigDecimal precoDeVenda;
+    @Column(name = "produto_preco_venda")
+    private BigDecimal precoVenda;
 
-    @Column(name = "lucro_liquido")
+    @Column(name = "produto_lucro_liquido")
     private BigDecimal lucroLiquido;
 
     @Column(name = "produto_quantidade")
     private Long quantidade;
 
-    @Column(name = "produto_codigo")
-    private Long codigo;
+    @Column(name = "produto_codigo_barras")
+    private Long codigoBarras;
 
     @Column(name = "produto_data_criacao")
-    private String dataDeCriacao;
+    private String dataCriacao;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_do_produto_fk")
-    private TipoDoProduto tipoDoProduto;
+    @JoinColumn(name = "tipo_produto_fk")
+    private TipoProduto tipoProduto;
 
     @Override
     public String toString() {
 
         return ("Descrição: " + this.descricao + "\n"
                 +
-                "Preço: " + this.precoDeVenda + "\n" +
+                "Preço: " + this.precoVenda + "\n" +
                 "Quantidade: " + this.quantidade + "\n" +
-                "Código: " + this.codigo + "\n" +
-                "Data: " + this.dataDeCriacao + "\n");
+                "Código: " + this.codigoBarras + "\n" +
+                "Data: " + this.dataCriacao + "\n");
     }
 
     public void verificarProduto() throws Exception {
-        if (this.codigo == null) {
+        if (this.codigoBarras == null) {
             throw new ProdutoCodigoNuloException("O código está nulo.");
         }
-        if (this.codigo < 0) {
+        if (this.codigoBarras < 0) {
             throw new ProdutoCodigoInvalidoException("O código está nulo.");
         }
         if (this.descricao == null) {
@@ -68,10 +68,10 @@ public class Produto {
             throw new ProdutoDescricaInvalidaException(
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (this.precoDeVenda == null) {
+        if (this.precoVenda == null) {
             throw new ProdutoPrecoDeVendaNuloException("O produto deve ter um preço de venda.");
         }
-        if (this.precoDeCompra == null) {
+        if (this.precoCompra == null) {
             throw new ProdutoPrecoDeCompraNuloException("O produto deve ter um preço de compra.");
         }
         if (this.quantidade == null) {
@@ -80,20 +80,20 @@ public class Produto {
         if (this.lucroLiquido == null) {
             throw new ProdutoLucroNuloException("Lucro está nulo, houve problema.");
         }
-        if (this.dataDeCriacao == null) {
+        if (this.dataCriacao == null) {
             throw new ProdutoDataDeCriacaoNulaException("Erro ao gerar a Data.");
         }
-        if (this.tipoDoProduto == null) {
+        if (this.tipoProduto == null) {
             throw new ProdutoTipoDoProdutoNuloException("Tipo do produto inválido");
         }
-        if (this.precoDeVenda.subtract(this.precoDeCompra).doubleValue() != this.lucroLiquido.doubleValue()) {
+        if (this.precoVenda.subtract(this.precoCompra).doubleValue() != this.lucroLiquido.doubleValue()) {
             throw new ProdutoLucroInconsistenteException("Valor do lucro está inconsistente.");
         }
     }
 
     public boolean verificarAtributosProdutoNaoNulo() {
-        if (this.quantidade != null && this.precoDeVenda != null && this.lucroLiquido != null &&
-                this.precoDeCompra != null && this.codigo != null && this.descricao != null) {
+        if (this.quantidade != null && this.precoVenda != null && this.lucroLiquido != null &&
+                this.precoCompra != null && this.codigoBarras != null && this.descricao != null) {
             return true;
         } else
             return false;
