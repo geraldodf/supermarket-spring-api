@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>br.com.supermercado</groupId>
-	<artifactId>supermercado-api</artifactId>
+	<artifactId>supermarket-api</artifactId>
 	<version>0.0.1</version>
 	<name>supermercado-api</name>
 	<description>Sistema para supermercados</description>
