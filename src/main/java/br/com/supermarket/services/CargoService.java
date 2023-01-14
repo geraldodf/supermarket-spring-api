@@ -1,7 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.models.Role;
-import br.com.supermarket.repositories.CargoRepository;
+import br.com.supermarket.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ import java.util.Optional;
 public class CargoService {
 
     @Autowired
-    private CargoRepository cargoRepository;
+    private RoleRepository roleRepository;
 
     public ArrayList<Role> pegarTodosCargos() {
-        return (ArrayList<Role>) cargoRepository.findAll();
+        return (ArrayList<Role>) roleRepository.findAll();
     }
 
     public Role pegarCargoPeloId(Long id) throws Exception {
@@ -24,7 +24,7 @@ public class CargoService {
 
         Optional<Role> cargoOptional = null;
         try {
-            cargoOptional = cargoRepository.findById(id);
+            cargoOptional = roleRepository.findById(id);
         } catch (Exception e) {
             throw new Exception("Erro ao buscar cargo por ID");
         }
@@ -36,18 +36,18 @@ public class CargoService {
             throw new Exception("Deve ser especificado o nome ou alguma inicial!");
         }
         try {
-            cargoRepository.pesquisaPorNome(nome);
+            roleRepository.searchByName(nome);
         } catch (Exception e) {
             throw new Exception("Erro ao pesquisar cargo por nome!");
         }
-        return cargoRepository.pesquisaPorNome(nome);
+        return roleRepository.searchByName(nome);
     }
 
     public Role criarCargo(Role role) throws Exception {
         if (role.getName() == null || role.getName().length() <= 3)
             throw new Exception("O nome do role deve ser especificado e ter no mínimo 3 caracteres");
         try {
-            cargoRepository.save(role);
+            roleRepository.save(role);
         } catch (Exception e) {
             throw new Exception("Erro ao salvar role no banco de dados");
         }
@@ -57,7 +57,7 @@ public class CargoService {
     public Role atualizarCargo(Long id, Role role) throws Exception {
         Optional<Role> cargoOptional = null;
         try {
-            cargoOptional = cargoRepository.findById(id);
+            cargoOptional = roleRepository.findById(id);
         } catch (Exception e) {
             throw new Exception("Erro ao pesquisar produto para ser alterado!");
         }
@@ -70,7 +70,7 @@ public class CargoService {
         roleParaAtualizar.setName(role.getName());
 
         try {
-            cargoRepository.save(roleParaAtualizar);
+            roleRepository.save(roleParaAtualizar);
         } catch (Exception e) {
             throw new Exception("Erro ao salvar o novo role no banco de dados!");
         }
@@ -81,7 +81,7 @@ public class CargoService {
     public void excluirCargo(Long id) throws Exception {
 
         try {
-            cargoRepository.deleteById(id);
+            roleRepository.deleteById(id);
         } catch (Exception e) {
             throw new Exception("Product não foi excluido! Verifique a credencial e tente novamente!");
         }

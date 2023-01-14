@@ -1,7 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.models.Sale;
-import br.com.supermarket.repositories.VendaRepository;
+import br.com.supermarket.repositories.SaleRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class SaleServiceTest {
 
     @Mock
-    private VendaRepository vendaRepository;
+    private SaleRepository saleRepository;
 
     @InjectMocks
     private VendaService vendaService;
@@ -40,7 +40,7 @@ class SaleServiceTest {
         ArrayList<Sale> lista = new ArrayList();
         lista.add(new Sale());
 
-        when(vendaRepository.findAll()).thenReturn(lista);
+        when(saleRepository.findAll()).thenReturn(lista);
         ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
 
         assertFalse(retorno.isEmpty());
@@ -53,7 +53,7 @@ class SaleServiceTest {
         lista.add(new Sale());
         lista.add(new Sale());
 
-        when(vendaRepository.findAll()).thenReturn(lista);
+        when(saleRepository.findAll()).thenReturn(lista);
         ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
 
         Assert.assertEquals(lista.size(), retorno.size());
@@ -64,7 +64,7 @@ class SaleServiceTest {
         Sale sale = new Sale();
         Long id = 1L;
         sale.setId(id);
-        when(vendaRepository.findById(id)).thenReturn(java.util.Optional.of(sale));
+        when(saleRepository.findById(id)).thenReturn(java.util.Optional.of(sale));
         Sale retorno = vendaService.pegarVendaPeloId(id);
         assertNotNull(retorno);
         assertEquals(retorno.getId(), sale.getId());
@@ -81,8 +81,8 @@ class SaleServiceTest {
     void buscarVendaPorIdRetornaVenda() throws Exception {
         Sale sale = new Sale();
         sale.setSaleValue(BigDecimal.valueOf(9.99));
-        when(vendaRepository.findById(656L)).thenReturn(Optional.of(new Sale()));
-        Optional<Sale> vendaOptional = vendaRepository.findById(656L);
+        when(saleRepository.findById(656L)).thenReturn(Optional.of(new Sale()));
+        Optional<Sale> vendaOptional = saleRepository.findById(656L);
         Sale sale1 = vendaOptional.get();
         sale1.setSaleValue(BigDecimal.valueOf(9.99));
         Sale saleRetorno = vendaService.pegarVendaPeloId(656L);

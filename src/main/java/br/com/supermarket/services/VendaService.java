@@ -3,7 +3,7 @@ package br.com.supermarket.services;
 import br.com.supermarket.dtos.SaleDto;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.Sale;
-import br.com.supermarket.repositories.VendaRepository;
+import br.com.supermarket.repositories.SaleRepository;
 import br.com.supermarket.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ import java.util.Optional;
 public class VendaService {
 
     @Autowired
-    private VendaRepository vendaRepository;
+    private SaleRepository saleRepository;
     @Autowired
     private ProdutoService produtoService;
 
 
     public ArrayList<Sale> pegarTodasVendas() {
 
-        return (ArrayList<Sale>) vendaRepository.findAll();
+        return (ArrayList<Sale>) saleRepository.findAll();
     }
 
     public Sale pegarVendaPeloId(Long id) throws Exception {
         try {
-            Optional<Sale> vendaOptional = vendaRepository.findById(id);
+            Optional<Sale> vendaOptional = saleRepository.findById(id);
             return vendaOptional.get();
         } catch (Exception e) {
             throw new Exception("Sale inexistente!");
@@ -39,7 +39,7 @@ public class VendaService {
         try {
             Sale sale = criarVendaComDto(saleDto);
             verificarVenda(sale);
-            vendaRepository.save(sale);
+            saleRepository.save(sale);
         } catch (Exception e) {
             throw new Exception("Erro ao criar a venda!");
         }
@@ -48,7 +48,7 @@ public class VendaService {
 
     public void excluirVenda(Long id) throws Exception {
         if (id != null) {
-            vendaRepository.deleteById(id);
+            saleRepository.deleteById(id);
         } else {
             throw new Exception("Sale não encontrada.");
         }
@@ -58,7 +58,7 @@ public class VendaService {
 
 
         try {
-            Optional<Sale> vendaOptional = vendaRepository.findById(id);
+            Optional<Sale> vendaOptional = saleRepository.findById(id);
             Sale saleASerAtualizada = vendaOptional.get();
 
             Sale sale = criarVendaComDto(saleDto);
@@ -69,7 +69,7 @@ public class VendaService {
             });
 
             verificarVenda(saleASerAtualizada);
-            vendaRepository.save(saleASerAtualizada);
+            saleRepository.save(saleASerAtualizada);
         } catch (Exception e) {
             throw new Exception("Erro ao atualizar o produto.");
         }

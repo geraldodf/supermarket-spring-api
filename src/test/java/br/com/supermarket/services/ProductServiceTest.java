@@ -4,8 +4,8 @@ import br.com.supermarket.dtos.ProductDto;
 import br.com.supermarket.exceptions.*;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductType;
-import br.com.supermarket.repositories.ProdutoRepository;
-import br.com.supermarket.repositories.TipoProdutoRepository;
+import br.com.supermarket.repositories.ProductRepository;
+import br.com.supermarket.repositories.ProductTypeRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,10 +34,10 @@ class ProductServiceTest {
     private TipoProdutoService tipoProdutoService;
 
     @Mock
-    private TipoProdutoRepository tipoProdutoRepository;
+    private ProductTypeRepository productTypeRepository;
 
     @Mock
-    private ProdutoRepository produtoRepository;
+    private ProductRepository productRepository;
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
@@ -176,7 +176,7 @@ class ProductServiceTest {
         ArrayList<Product> listaDeProducts = new ArrayList();
         listaDeProducts.add(new Product());
 
-        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProducts);
+        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
         Assert.assertEquals(1, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
 
@@ -188,7 +188,7 @@ class ProductServiceTest {
         listaDeProducts.add(new Product());
         listaDeProducts.add(new Product());
 
-        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProducts);
+        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
         Assert.assertEquals(2, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
 
@@ -203,7 +203,7 @@ class ProductServiceTest {
         product.setDescription("Teste Descricao");
         listaDeProducts.add(product);
 
-        Mockito.when(produtoRepository.findAll()).thenReturn(listaDeProducts);
+        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
         Assert.assertEquals(3, produtoService.pegarTodosProdutos().size());
         Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
         Assert.assertEquals("Teste Descricao", produtoService.pegarTodosProdutos().get(2).getDescription());
@@ -213,7 +213,7 @@ class ProductServiceTest {
     void pegarUmProdutoPeloIdDeveRetornarProdutoVazio() throws Exception {
         Long id = 3L;
 
-        Mockito.when(produtoRepository.findById(id)).thenReturn(Optional.of(new Product()));
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(new Product()));
         Assert.assertNotNull(produtoService.pegarUmProduto(id));
     }
 
@@ -222,9 +222,9 @@ class ProductServiceTest {
         String descricao = "Teste";
         ArrayList<Product> listaDeProducts = new ArrayList<>();
 
-        Mockito.when(produtoRepository.pesquisaPorDescricao(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(true, produtoRepository.pesquisaPorDescricao(descricao).isEmpty());
-        Assert.assertEquals(0, produtoRepository.pesquisaPorDescricao(descricao).size());
+        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
+        Assert.assertEquals(true, productRepository.searchByDescription(descricao).isEmpty());
+        Assert.assertEquals(0, productRepository.searchByDescription(descricao).size());
     }
 
     @Test
@@ -233,9 +233,9 @@ class ProductServiceTest {
         ArrayList<Product> listaDeProducts = new ArrayList<>();
         listaDeProducts.add(new Product());
 
-        Mockito.when(produtoRepository.pesquisaPorDescricao(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, produtoRepository.pesquisaPorDescricao(descricao).isEmpty());
-        Assert.assertEquals(1, produtoRepository.pesquisaPorDescricao(descricao).size());
+        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
+        Assert.assertEquals(false, productRepository.searchByDescription(descricao).isEmpty());
+        Assert.assertEquals(1, productRepository.searchByDescription(descricao).size());
     }
 
     @Test
@@ -249,11 +249,11 @@ class ProductServiceTest {
         listaDeProducts.add(p1);
         listaDeProducts.add(p2);
 
-        Mockito.when(produtoRepository.pesquisaPorDescricao(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, produtoRepository.pesquisaPorDescricao(descricao).isEmpty());
-        Assert.assertEquals(2, produtoRepository.pesquisaPorDescricao(descricao).size());
-        Assert.assertEquals("Teste 1", produtoRepository.pesquisaPorDescricao(descricao).get(0).getDescription());
-        Assert.assertEquals("Teste 2", produtoRepository.pesquisaPorDescricao(descricao).get(1).getDescription());
+        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
+        Assert.assertEquals(false, productRepository.searchByDescription(descricao).isEmpty());
+        Assert.assertEquals(2, productRepository.searchByDescription(descricao).size());
+        Assert.assertEquals("Teste 1", productRepository.searchByDescription(descricao).get(0).getDescription());
+        Assert.assertEquals("Teste 2", productRepository.searchByDescription(descricao).get(1).getDescription());
     }
 
     @Test
@@ -261,9 +261,9 @@ class ProductServiceTest {
         Long codigo = 1010L;
         ArrayList<Product> listaDeProducts = new ArrayList<>();
 
-        Mockito.when(produtoRepository.pesquisaPorCodigo(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(true, produtoRepository.pesquisaPorCodigo(codigo).isEmpty());
-        Assert.assertEquals(0, produtoRepository.pesquisaPorCodigo(codigo).size());
+        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
+        Assert.assertEquals(true, productRepository.searchByBarCode(codigo).isEmpty());
+        Assert.assertEquals(0, productRepository.searchByBarCode(codigo).size());
     }
 
     @Test
@@ -272,9 +272,9 @@ class ProductServiceTest {
         ArrayList<Product> listaDeProducts = new ArrayList<>();
         listaDeProducts.add(new Product());
 
-        Mockito.when(produtoRepository.pesquisaPorCodigo(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, produtoRepository.pesquisaPorCodigo(codigo).isEmpty());
-        Assert.assertEquals(1, produtoRepository.pesquisaPorCodigo(codigo).size());
+        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
+        Assert.assertEquals(false, productRepository.searchByBarCode(codigo).isEmpty());
+        Assert.assertEquals(1, productRepository.searchByBarCode(codigo).size());
     }
 
     @Test
@@ -288,11 +288,11 @@ class ProductServiceTest {
         listaDeProducts.add(p1);
         listaDeProducts.add(p2);
 
-        Mockito.when(produtoRepository.pesquisaPorCodigo(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, produtoRepository.pesquisaPorCodigo(codigo).isEmpty());
-        Assert.assertEquals(2, produtoRepository.pesquisaPorCodigo(codigo).size());
-        Assert.assertEquals(1L, produtoRepository.pesquisaPorCodigo(codigo).get(0).getQuantity(), 0);
-        Assert.assertEquals(2L, produtoRepository.pesquisaPorCodigo(codigo).get(1).getQuantity(), 0);
+        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
+        Assert.assertEquals(false, productRepository.searchByBarCode(codigo).isEmpty());
+        Assert.assertEquals(2, productRepository.searchByBarCode(codigo).size());
+        Assert.assertEquals(1L, productRepository.searchByBarCode(codigo).get(0).getQuantity(), 0);
+        Assert.assertEquals(2L, productRepository.searchByBarCode(codigo).get(1).getQuantity(), 0);
     }
 
     @Test

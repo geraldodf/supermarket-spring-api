@@ -1,7 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.models.ProductType;
-import br.com.supermarket.repositories.TipoProdutoRepository;
+import br.com.supermarket.repositories.ProductTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,20 +12,20 @@ import java.util.Optional;
 public class TipoProdutoService {
 
     @Autowired
-    private TipoProdutoRepository tipoProdutoRepository;
+    private ProductTypeRepository productTypeRepository;
 
     public ArrayList<ProductType> pegarTodosTiposDosProdutos() {
-        return (ArrayList<ProductType>) tipoProdutoRepository.findAll();
+        return (ArrayList<ProductType>) productTypeRepository.findAll();
     }
 
     public ProductType criarTipoDoProduto(ProductType tipo) throws Exception {
         if (tipo.getNameProductType() == null || tipo.getNameProductType().length() < 5)
             throw new Exception("Tipo não pode ser criado sem um nome, ou com um nome com menos de 5 caracteres.");
-        return tipoProdutoRepository.save(tipo);
+        return productTypeRepository.save(tipo);
     }
 
     public ProductType pegarUmTipoDoProdutoPeloId(Long id) {
-        Optional<ProductType> retorno = tipoProdutoRepository.findById(id);
+        Optional<ProductType> retorno = productTypeRepository.findById(id);
         return retorno.get();
     }
 
@@ -36,7 +36,7 @@ public class TipoProdutoService {
 
         Optional<ProductType> retornoOptional = null;
         try {
-            retornoOptional = tipoProdutoRepository.findById(id);
+            retornoOptional = productTypeRepository.findById(id);
         } catch (Exception e) {
             throw new Exception("Erro ao buscar tipo para ser atualizado!!");
         }
@@ -54,20 +54,20 @@ public class TipoProdutoService {
             throw new Exception("Erro ao atualizar o tipo!");
         }
 
-        return tipoProdutoRepository.save(retorno);
+        return productTypeRepository.save(retorno);
     }
 
     public void excluirTipoDoProdutoPeloId(Long id) throws Exception {
         if (id == null)
             throw new Exception("Para excluir um tipo deve ser especificado qual tipo será excluida, essa resposta não está chegando!");
-        tipoProdutoRepository.deleteById(id);
+        productTypeRepository.deleteById(id);
     }
 
     public ArrayList<ProductType> pegarTipoDoProdutoPorNome(String nome) {
-        return tipoProdutoRepository.pesquisaPorNome(nome);
+        return productTypeRepository.searchByName(nome);
     }
 
     public ArrayList<ProductType> pegarTiposDoProdutoComSort(Sort sort) {
-        return (ArrayList<ProductType>) tipoProdutoRepository.findAll(sort);
+        return (ArrayList<ProductType>) productTypeRepository.findAll(sort);
     }
 }

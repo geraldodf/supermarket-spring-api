@@ -4,12 +4,13 @@ import br.com.supermarket.dtos.ProductDto;
 import br.com.supermarket.exceptions.*;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductType;
+import br.com.supermarket.repositories.ProductRepository;
 import br.com.supermarket.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import br.com.supermarket.repositories.ProdutoRepository;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -17,38 +18,38 @@ import java.util.Optional;
 public class ProdutoService {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private ProductRepository productRepository;
     @Autowired
     private TipoProdutoService tipoProdutoService;
 
     public ArrayList<Product> pegarTodosProdutos() {
-        return (ArrayList<Product>) produtoRepository.findAll();
+        return (ArrayList<Product>) productRepository.findAll();
     }
 
     public Product pegarUmProduto(Long id) throws Exception {
 
-        Optional<Product> produtoBuscadoPeloID = produtoRepository.findById(id);
+        Optional<Product> produtoBuscadoPeloID = productRepository.findById(id);
         return produtoBuscadoPeloID.get();
     }
 
     public ArrayList<Product> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
-        if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
+        if (productRepository.searchByBarCode(codigo) == null) {
             throw new Exception("Product inexistente! verifique e tente novamente.");
         }
-        return produtoRepository.pesquisaPorCodigo(codigo);
+        return productRepository.searchByBarCode(codigo);
     }
 
     public ArrayList<Product> pesquisaProdutoPorDescricao(String descricao) throws Exception {
-        if (produtoRepository.pesquisaPorDescricao(descricao) == null) {
+        if (productRepository.searchByDescription(descricao) == null) {
             throw new Exception("Product inexistente! verifique e tente novamente.");
         }
-        return produtoRepository.pesquisaPorDescricao(descricao);
+        return productRepository.searchByDescription(descricao);
     }
 
     public Page<Product> pesquisaPaginada(Pageable pageable) throws Exception {
         Page<Product> page;
         try {
-            page = produtoRepository.findAll(pageable);
+            page = productRepository.findAll(pageable);
         } catch (Exception e) {
             throw new Exception("Erro ao fazer consulta no banco de dados.");
         }
@@ -56,7 +57,7 @@ public class ProdutoService {
     }
 
     public Page<Product> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
-        return produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable);
+        return productRepository.searchByDescriptionPaged(descricao, pageable);
     }
 
     // public ArrayList<Product> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
@@ -74,7 +75,7 @@ public class ProdutoService {
         try {
             if (product.verifyProductAttributesNoNull()) {
                 product.setNetProfit(product.getPriceSale().subtract(product.getPriceBuy()));
-                produtoRepository.save(product);
+                productRepository.save(product);
             } else {
                 throw new Exception();
             }
@@ -85,17 +86,17 @@ public class ProdutoService {
     }
 
     public void excluirProduto(Long id) throws Exception {
-        if (produtoRepository.pesquisaPorCodigo(id) == null) {
+        if (productRepository.searchByBarCode(id) == null) {
             throw new Exception("Product inexistente! verifique e tente novamente.");
         }
-        produtoRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 
     public void atualizarProduto(Long id, ProductDto productDto) throws Exception {
         if (id == null) {
             throw new Exception("Product inexistente!");
         }
-        Optional<Product> resposta = produtoRepository.findById(id);
+        Optional<Product> resposta = productRepository.findById(id);
         Product productAAtualizar = resposta.get();
         Product product = criandoProdutoComDto(productDto);
         product.autoVerify();
@@ -109,7 +110,7 @@ public class ProdutoService {
                 productAAtualizar.setPriceBuy(product.getPriceBuy());
                 productAAtualizar.setQuantity(product.getQuantity());
                 productAAtualizar.setNetProfit(product.getPriceSale().subtract(product.getPriceBuy()));
-                produtoRepository.save(productAAtualizar);
+                productRepository.save(productAAtualizar);
 
             } else {
                 throw new Exception();

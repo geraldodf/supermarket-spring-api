@@ -1,7 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.models.User;
-import br.com.supermarket.repositories.UsuarioRepository;
+import br.com.supermarket.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ import java.util.Optional;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
 
     public ArrayList<User> pegarTodosUsuarios() throws Exception {
         try {
-            return (ArrayList<User>) usuarioRepository.findAll();
+            return (ArrayList<User>) userRepository.findAll();
         } catch (Exception e) {
             throw new Exception("Erro! tente novamente.");
         }
@@ -26,7 +26,7 @@ public class UsuarioService {
 
     public User pegarUmUsuario(Long id) throws Exception {
         try {
-            Optional<User> usuarioPeloId = usuarioRepository.findById(id);
+            Optional<User> usuarioPeloId = userRepository.findById(id);
             return usuarioPeloId.get();
         } catch (Exception e) {
             throw new Exception("User inválido! verifique e tente novamente.");
@@ -37,7 +37,7 @@ public class UsuarioService {
         verificarUsuario(user);
         if (user.getPassword().length() > 5 && user.getName().length() >= 3) {
             try {
-                usuarioRepository.save(user);
+                userRepository.save(user);
             } catch (Exception e) {
                 throw new Exception("Não foi possivel criar esse user, verifique os atributos e tente novamente.");
             }
@@ -47,12 +47,12 @@ public class UsuarioService {
     public void atualizarUsuario(Long id, User user) throws Exception {
         verificarUsuario(user);
         try {
-            Optional<User> usuarioOptional = usuarioRepository.findById(id);
+            Optional<User> usuarioOptional = userRepository.findById(id);
             if (user.getName().length() > 3 && user.getPassword().length() > 5) {
                 User userParaAtualizar = usuarioOptional.get();
                 userParaAtualizar.setName(user.getName());
                 userParaAtualizar.setPassword(user.getPassword());
-                usuarioRepository.save(userParaAtualizar);
+                userRepository.save(userParaAtualizar);
             }
         } catch (Exception e) {
             throw new Exception("Ocorreu um erro ao atualizar o usuário! verifique os dados e tente novamente.");
@@ -61,7 +61,7 @@ public class UsuarioService {
 
     public void excuirUsuario(Long id) throws Exception {
         try {
-            usuarioRepository.deleteById(id);
+            userRepository.deleteById(id);
         } catch (Exception e) {
             throw new Exception("Erro ao excluir o produto! verifique e tente novamente");
         }
@@ -70,7 +70,7 @@ public class UsuarioService {
 
     public ArrayList<User> pegarUsuarioPorNome(String nome) throws Exception {
         try {
-            ArrayList<User> users = (ArrayList<User>) usuarioRepository.pesquisaPorNome(nome);
+            ArrayList<User> users = (ArrayList<User>) userRepository.searchByName(nome);
             return users;
         } catch (Exception e) {
             throw new Exception("Usuário inválido! verifique e tente novamente.");

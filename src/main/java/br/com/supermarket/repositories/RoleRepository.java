@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface CargoRepository extends CrudRepository<Role, Long> {
+public interface RoleRepository extends CrudRepository<Role, Long> {
 
     @Query("SELECT c FROM Role c WHERE CONCAT(c.name, '') LIKE %?1%")
-    public ArrayList<Role> pesquisaPorNome(String nome);
+    public ArrayList<Role> searchByName(String name);
 
 }

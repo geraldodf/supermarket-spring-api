@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface ProdutoRepository extends PagingAndSortingRepository<Product, Long> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
-    public ArrayList<Product> pesquisaPorDescricao(String descricao);
+    public ArrayList<Product> searchByDescription(String description);
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.barCode, '') LIKE %?1%")
-    public ArrayList<Product> pesquisaPorCodigo(Long codigo);
+    public ArrayList<Product> searchByBarCode(Long barCode);
 
-    List<Product> findAllByDescricao(String descricao);
+    List<Product> findAllByDescription(String description);
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
-    Page<Product> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
+    Page<Product> searchByDescriptionPaged(String description, Pageable pageable);
 
     // @Query("SELECT * FROM Product p WHERE p.tipoDoProduto.id = :id")
     // ArrayList<Product> pesquisaPorTipoPaginada(Long id, Pageable pageable);
