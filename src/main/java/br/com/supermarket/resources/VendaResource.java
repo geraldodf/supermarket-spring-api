@@ -1,7 +1,7 @@
 package br.com.supermarket.resources;
 
 import br.com.supermarket.dtos.SaleDto;
-import br.com.supermarket.models.Venda;
+import br.com.supermarket.models.Sale;
 import br.com.supermarket.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +16,12 @@ public class VendaResource {
     private VendaService vendaService;
 
     @GetMapping
-    public ArrayList<Venda> pegarTodasVendas() {
+    public ArrayList<Sale> pegarTodasVendas() {
         return vendaService.pegarTodasVendas();
     }
 
     @GetMapping("/{id}")
-    public Venda pegarVendaPeloId(@PathVariable("id") Long id) throws Exception {
+    public Sale pegarVendaPeloId(@PathVariable("id") Long id) throws Exception {
         return vendaService.pegarVendaPeloId(id);
     }
 

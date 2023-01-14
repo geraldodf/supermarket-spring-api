@@ -1,6 +1,6 @@
 package br.com.supermarket.repositories;
 
-import br.com.supermarket.models.Produto;
+import br.com.supermarket.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface ProdutoRepository extends PagingAndSortingRepository<Produto, Long> {
+public interface ProdutoRepository extends PagingAndSortingRepository<Product, Long> {
 
-    @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
-    public ArrayList<Produto> pesquisaPorDescricao(String descricao);
+    @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
+    public ArrayList<Product> pesquisaPorDescricao(String descricao);
 
-    @Query("SELECT p FROM Produto p WHERE CONCAT(p.codigoBarras, '') LIKE %?1%")
-    public ArrayList<Produto> pesquisaPorCodigo(Long codigo);
+    @Query("SELECT p FROM Product p WHERE CONCAT(p.barCode, '') LIKE %?1%")
+    public ArrayList<Product> pesquisaPorCodigo(Long codigo);
 
-    List<Produto> findAllByDescricao(String descricao);
+    List<Product> findAllByDescricao(String descricao);
 
-    @Query("SELECT p FROM Produto p WHERE CONCAT(p.descricao, '') LIKE %?1%")
-    Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
+    Page<Product> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable);
 
-    // @Query("SELECT * FROM Produto p WHERE p.tipoDoProduto.id = :id")
-    // ArrayList<Produto> pesquisaPorTipoPaginada(Long id, Pageable pageable);
+    // @Query("SELECT * FROM Product p WHERE p.tipoDoProduto.id = :id")
+    // ArrayList<Product> pesquisaPorTipoPaginada(Long id, Pageable pageable);
 
     
 

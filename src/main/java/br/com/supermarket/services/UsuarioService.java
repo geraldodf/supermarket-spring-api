@@ -1,6 +1,6 @@
 package br.com.supermarket.services;
 
-import br.com.supermarket.models.Usuario;
+import br.com.supermarket.models.User;
 import br.com.supermarket.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,44 +15,44 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
 
-    public ArrayList<Usuario> pegarTodosUsuarios() throws Exception {
+    public ArrayList<User> pegarTodosUsuarios() throws Exception {
         try {
-            return (ArrayList<Usuario>) usuarioRepository.findAll();
+            return (ArrayList<User>) usuarioRepository.findAll();
         } catch (Exception e) {
             throw new Exception("Erro! tente novamente.");
         }
     }
 
 
-    public Usuario pegarUmUsuario(Long id) throws Exception {
+    public User pegarUmUsuario(Long id) throws Exception {
         try {
-            Optional<Usuario> usuarioPeloId = usuarioRepository.findById(id);
+            Optional<User> usuarioPeloId = usuarioRepository.findById(id);
             return usuarioPeloId.get();
         } catch (Exception e) {
-            throw new Exception("Usuario inválido! verifique e tente novamente.");
+            throw new Exception("User inválido! verifique e tente novamente.");
         }
     }
 
-    public void criarUsuario(Usuario usuario) throws Exception {
-        verificarUsuario(usuario);
-        if (usuario.getSenha().length() > 5 && usuario.getNome().length() >= 3) {
+    public void criarUsuario(User user) throws Exception {
+        verificarUsuario(user);
+        if (user.getPassword().length() > 5 && user.getName().length() >= 3) {
             try {
-                usuarioRepository.save(usuario);
+                usuarioRepository.save(user);
             } catch (Exception e) {
-                throw new Exception("Não foi possivel criar esse usuario, verifique os atributos e tente novamente.");
+                throw new Exception("Não foi possivel criar esse user, verifique os atributos e tente novamente.");
             }
         }
     }
 
-    public void atualizarUsuario(Long id, Usuario usuario) throws Exception {
-        verificarUsuario(usuario);
+    public void atualizarUsuario(Long id, User user) throws Exception {
+        verificarUsuario(user);
         try {
-            Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-            if (usuario.getNome().length() > 3 && usuario.getSenha().length() > 5) {
-                Usuario usuarioParaAtualizar = usuarioOptional.get();
-                usuarioParaAtualizar.setNome(usuario.getNome());
-                usuarioParaAtualizar.setSenha(usuario.getSenha());
-                usuarioRepository.save(usuarioParaAtualizar);
+            Optional<User> usuarioOptional = usuarioRepository.findById(id);
+            if (user.getName().length() > 3 && user.getPassword().length() > 5) {
+                User userParaAtualizar = usuarioOptional.get();
+                userParaAtualizar.setName(user.getName());
+                userParaAtualizar.setPassword(user.getPassword());
+                usuarioRepository.save(userParaAtualizar);
             }
         } catch (Exception e) {
             throw new Exception("Ocorreu um erro ao atualizar o usuário! verifique os dados e tente novamente.");
@@ -68,10 +68,10 @@ public class UsuarioService {
 
     }
 
-    public ArrayList<Usuario> pegarUsuarioPorNome(String nome) throws Exception {
+    public ArrayList<User> pegarUsuarioPorNome(String nome) throws Exception {
         try {
-            ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuarioRepository.pesquisaPorNome(nome);
-            return usuarios;
+            ArrayList<User> users = (ArrayList<User>) usuarioRepository.pesquisaPorNome(nome);
+            return users;
         } catch (Exception e) {
             throw new Exception("Usuário inválido! verifique e tente novamente.");
         }
@@ -79,12 +79,12 @@ public class UsuarioService {
     }
 
 
-    public void verificarUsuario(Usuario usuario) throws Exception {
-        if (usuario.getNome().length() <= 3) {
-            throw new Exception("Usuario precisa possuir um nome com mais de 3 caracteres! Verifique se o nome foi indicado e tente novamente.");
+    public void verificarUsuario(User user) throws Exception {
+        if (user.getName().length() <= 3) {
+            throw new Exception("User precisa possuir um nome com mais de 3 caracteres! Verifique se o nome foi indicado e tente novamente.");
         }
-        if (usuario.getSenha().length() > 999) {
-            throw new Exception("Usuario precisa possuir uma senha com pelo menos 4 números ! Verifique se a senha foi indicada e tente novamente.");
+        if (user.getPassword().length() > 999) {
+            throw new Exception("User precisa possuir uma senha com pelo menos 4 números ! Verifique se a senha foi indicada e tente novamente.");
         }
     }
 }

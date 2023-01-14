@@ -1,11 +1,11 @@
 package br.com.supermarket.resources;
 
 import br.com.supermarket.dtos.ProductDto;
+import br.com.supermarket.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import br.com.supermarket.models.Produto;
 import br.com.supermarket.services.ProdutoService;
 import java.util.ArrayList;
 
@@ -18,47 +18,47 @@ public class ProdutoResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping
-    public ArrayList<Produto> pegarTodosProdutos() {
+    public ArrayList<Product> pegarTodosProdutos() {
         return produtoService.pegarTodosProdutos();
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/name")
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao)
+    public ArrayList<Product> pesquisaProdutoPorDescricao(@RequestParam(name = "descricao") String descricao)
             throws Exception {
         return produtoService.pesquisaProdutoPorDescricao(descricao);
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/produtos")
-    public Page<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
+    public Page<Product> pesquisaPaginada(Pageable pageable) throws Exception {
         return produtoService.pesquisaPaginada(pageable);
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/produtos-descricao")
-    public Page<Produto> pesquisaPorDescricaoPaginada(@RequestParam(name = "descricao") String descricao,
-            Pageable pageable) throws Exception {
+    public Page<Product> pesquisaPorDescricaoPaginada(@RequestParam(name = "descricao") String descricao,
+                                                      Pageable pageable) throws Exception {
         return produtoService.pesquisaPorDescricaoPaginada(descricao, pageable);
     }
 
     // @CrossOrigin(allowedHeaders = "*")
     // @GetMapping("/produtos-tipo")
-    // public ArrayList<Produto> pesquisaPorTipoPaginada(@RequestParam(name = "nomeTipo") String nomeTipo,
+    // public ArrayList<Product> pesquisaPorTipoPaginada(@RequestParam(name = "nomeTipo") String nomeTipo,
     //         Pageable pageable) throws Exception {
     //     return produtoService.pesquisaPorTipoPaginada(nomeTipo, pageable);
     // }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/pesquisa-por-codigo")
-    public ArrayList<Produto> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
+    public ArrayList<Product> pesquisarProdutoPorCodigo(@RequestParam(name = "codigo") Long codigo) throws Exception {
         return produtoService.pesquisaProdutoPorCodigo(codigo);
 
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/{id}")
-    public Produto pegarUmProduto(@PathVariable("id") Long id) throws Exception {
+    public Product pegarUmProduto(@PathVariable("id") Long id) throws Exception {
         return produtoService.pegarUmProduto(id);
     }
 

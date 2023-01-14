@@ -13,7 +13,7 @@ create table produtos
     produto_data_criacao    varchar(266)
 );
 
-create table usuarios
+create table users
 (
     usuario_id    Integer NOT NULL auto_increment primary key,
     usuario_nome  varchar(266),

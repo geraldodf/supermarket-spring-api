@@ -2,13 +2,13 @@ package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.ProductDto;
 import br.com.supermarket.exceptions.*;
-import br.com.supermarket.models.TipoProduto;
+import br.com.supermarket.models.Product;
+import br.com.supermarket.models.ProductType;
 import br.com.supermarket.util.DataUtilitario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import br.com.supermarket.models.Produto;
 import br.com.supermarket.repositories.ProdutoRepository;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -21,32 +21,32 @@ public class ProdutoService {
     @Autowired
     private TipoProdutoService tipoProdutoService;
 
-    public ArrayList<Produto> pegarTodosProdutos() {
-        return (ArrayList<Produto>) produtoRepository.findAll();
+    public ArrayList<Product> pegarTodosProdutos() {
+        return (ArrayList<Product>) produtoRepository.findAll();
     }
 
-    public Produto pegarUmProduto(Long id) throws Exception {
+    public Product pegarUmProduto(Long id) throws Exception {
 
-        Optional<Produto> produtoBuscadoPeloID = produtoRepository.findById(id);
+        Optional<Product> produtoBuscadoPeloID = produtoRepository.findById(id);
         return produtoBuscadoPeloID.get();
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
+    public ArrayList<Product> pesquisaProdutoPorCodigo(Long codigo) throws Exception {
         if (produtoRepository.pesquisaPorCodigo(codigo) == null) {
-            throw new Exception("Produto inexistente! verifique e tente novamente.");
+            throw new Exception("Product inexistente! verifique e tente novamente.");
         }
         return produtoRepository.pesquisaPorCodigo(codigo);
     }
 
-    public ArrayList<Produto> pesquisaProdutoPorDescricao(String descricao) throws Exception {
+    public ArrayList<Product> pesquisaProdutoPorDescricao(String descricao) throws Exception {
         if (produtoRepository.pesquisaPorDescricao(descricao) == null) {
-            throw new Exception("Produto inexistente! verifique e tente novamente.");
+            throw new Exception("Product inexistente! verifique e tente novamente.");
         }
         return produtoRepository.pesquisaPorDescricao(descricao);
     }
 
-    public Page<Produto> pesquisaPaginada(Pageable pageable) throws Exception {
-        Page<Produto> page;
+    public Page<Product> pesquisaPaginada(Pageable pageable) throws Exception {
+        Page<Product> page;
         try {
             page = produtoRepository.findAll(pageable);
         } catch (Exception e) {
@@ -55,117 +55,117 @@ public class ProdutoService {
         return page;
     }
 
-    public Page<Produto> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
+    public Page<Product> pesquisaPorDescricaoPaginada(String descricao, Pageable pageable) {
         return produtoRepository.pesquisaPorDescricaoPaginada(descricao, pageable);
     }
 
-    // public ArrayList<Produto> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
-    //     ArrayList<TipoProduto> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
-    //     TipoProduto tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
+    // public ArrayList<Product> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
+    //     ArrayList<ProductType> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
+    //     ProductType tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
     //     return produtoRepository.pesquisaPorTipoPaginada(tipoDoProdutoParaBusca.getId(), pageable);
     // }
         //fixme
 
 
-    public Produto criarProduto(ProductDto productDto) throws Exception {
+    public Product criarProduto(ProductDto productDto) throws Exception {
         verificarProdutoDto(productDto);
-        Produto produto = criandoProdutoComDto(productDto);
-        produto.verificarProduto();
+        Product product = criandoProdutoComDto(productDto);
+        product.autoVerify();
         try {
-            if (produto.verificarAtributosProdutoNaoNulo()) {
-                produto.setLucroLiquido(produto.getPrecoVenda().subtract(produto.getPrecoCompra()));
-                produtoRepository.save(produto);
+            if (product.verifyProductAttributesNoNull()) {
+                product.setNetProfit(product.getPriceSale().subtract(product.getPriceBuy()));
+                produtoRepository.save(product);
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
-            throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
+            throw new Exception("Product está com algum atributo inválido! Tente novamente.");
         }
-        return produto;
+        return product;
     }
 
     public void excluirProduto(Long id) throws Exception {
         if (produtoRepository.pesquisaPorCodigo(id) == null) {
-            throw new Exception("Produto inexistente! verifique e tente novamente.");
+            throw new Exception("Product inexistente! verifique e tente novamente.");
         }
         produtoRepository.deleteById(id);
     }
 
     public void atualizarProduto(Long id, ProductDto productDto) throws Exception {
         if (id == null) {
-            throw new Exception("Produto inexistente!");
+            throw new Exception("Product inexistente!");
         }
-        Optional<Produto> resposta = produtoRepository.findById(id);
-        Produto produtoAAtualizar = resposta.get();
-        Produto produto = criandoProdutoComDto(productDto);
-        produto.verificarProduto();
+        Optional<Product> resposta = produtoRepository.findById(id);
+        Product productAAtualizar = resposta.get();
+        Product product = criandoProdutoComDto(productDto);
+        product.autoVerify();
 
         try {
-            if (produto.verificarAtributosProdutoNaoNulo()) {
+            if (product.verifyProductAttributesNoNull()) {
 
-                produtoAAtualizar.setCodigoBarras(produto.getCodigoBarras());
-                produtoAAtualizar.setDescricao(produto.getDescricao());
-                produtoAAtualizar.setPrecoVenda(produto.getPrecoVenda());
-                produtoAAtualizar.setPrecoCompra(produto.getPrecoCompra());
-                produtoAAtualizar.setQuantidade(produto.getQuantidade());
-                produtoAAtualizar.setLucroLiquido(produto.getPrecoVenda().subtract(produto.getPrecoCompra()));
-                produtoRepository.save(produtoAAtualizar);
+                productAAtualizar.setBarCode(product.getBarCode());
+                productAAtualizar.setDescription(product.getDescription());
+                productAAtualizar.setPriceSale(product.getPriceSale());
+                productAAtualizar.setPriceBuy(product.getPriceBuy());
+                productAAtualizar.setQuantity(product.getQuantity());
+                productAAtualizar.setNetProfit(product.getPriceSale().subtract(product.getPriceBuy()));
+                produtoRepository.save(productAAtualizar);
 
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
-            throw new Exception("Produto está com algum atributo inválido! Tente novamente.");
+            throw new Exception("Product está com algum atributo inválido! Tente novamente.");
         }
     }
 
     public void verificarProdutoDto(ProductDto productDto) throws Exception {
-        if (productDto.getCodigo() == null) {
+        if (productDto.getBarCode() == null) {
             throw new ProductNullBarcodeException("O código está nulo.");
         }
-        if (productDto.getCodigo() < 0) {
+        if (productDto.getBarCode() < 0) {
             throw new ProductInvalidBarcodeException("O código fornecido é inválido.");
         }
-        if (productDto.getDescricao() == null) {
+        if (productDto.getDescription() == null) {
             throw new ProductDescriptionNullException(
 
                     "A descrição do produto está nula! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (productDto.getDescricao().length() <= 5) {
+        if (productDto.getDescription().length() <= 5) {
             throw new ProductDescriptionInvalidException(
 
                     "Descrição inválida! A descrição do produto deve ter no mínimo 5 caracteres.");
         }
-        if (productDto.getPrecoDeVenda() == null) {
+        if (productDto.getPriceSale() == null) {
             throw new ProductSalePriceNullException("O produto deve ter um preço de venda.");
         }
-        if (productDto.getPrecoDeCompra() == null) {
+        if (productDto.getPriceBuy() == null) {
             throw new ProductPurchasePriceNullException("O produto deve ter um preço de compra.");
         }
-        if (productDto.getQuantidade() == null) {
+        if (productDto.getQuantity() == null) {
             throw new ProductQuantityNullException("Quantidade deve ser listada.");
         }
-        if (productDto.getIdTipoDoProduto() == null) {
+        if (productDto.getIdProductType() == null) {
             throw new TypeProductNullException("Tipo do produto inválido");
         }
     }
 
-    public Produto criandoProdutoComDto(ProductDto productDto) throws Exception {
-        Produto produto = new Produto();
-        produto.setCodigoBarras(productDto.getCodigo());
-        produto.setDescricao(productDto.getDescricao());
-        produto.setQuantidade(productDto.getQuantidade());
-        produto.setPrecoCompra(productDto.getPrecoDeCompra());
-        produto.setPrecoVenda(productDto.getPrecoDeVenda());
-        produto.setLucroLiquido(productDto.getPrecoDeVenda().subtract(productDto.getPrecoDeCompra()));
-        produto.setDataCriacao(DataUtilitario.getDataAtualComoString());
+    public Product criandoProdutoComDto(ProductDto productDto) throws Exception {
+        Product product = new Product();
+        product.setBarCode(productDto.getBarCode());
+        product.setDescription(productDto.getDescription());
+        product.setQuantity(productDto.getQuantity());
+        product.setPriceBuy(productDto.getPriceBuy());
+        product.setPriceSale(productDto.getPriceSale());
+        product.setNetProfit(productDto.getPriceSale().subtract(productDto.getPriceBuy()));
+        product.setCreationDate(DataUtilitario.getDataAtualComoString());
 
-        TipoProduto tipoProdutoOptional = tipoProdutoService
-                .pegarUmTipoDoProdutoPeloId(productDto.getIdTipoDoProduto());
+        ProductType productTypeOptional = tipoProdutoService
+                .pegarUmTipoDoProdutoPeloId(productDto.getIdProductType());
 
-        produto.setTipoProduto(tipoProdutoOptional);
+        product.setProductType(productTypeOptional);
 
-        return produto;
+        return product;
     }
 
    

@@ -1,6 +1,6 @@
 package br.com.supermarket.repositories;
 
-import br.com.supermarket.models.Usuario;
+import br.com.supermarket.models.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
+public interface UsuarioRepository extends CrudRepository<User, Long> {
 
-    @Query("SELECT p FROM Usuario p WHERE CONCAT(p.nome, '') LIKE %?1%")
-    public List<Usuario> pesquisaPorNome(String nome);
+    @Query("SELECT p FROM User p WHERE CONCAT(p.name, '') LIKE %?1%")
+    public List<User> pesquisaPorNome(String nome);
 
 
 }

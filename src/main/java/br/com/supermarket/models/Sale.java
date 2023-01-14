@@ -2,7 +2,6 @@ package br.com.supermarket.models;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "vendas")
-public class Venda {
+public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +18,10 @@ public class Venda {
     private Long id;
 
     @Column(name = "venda_data")
-    private String vendaData;
+    private String saleDate;
 
     @Column(name = "venda_valor")
-    private BigDecimal vendaValor = new BigDecimal(0.0);
+    private BigDecimal saleValue = new BigDecimal(0.0);
 
     @ManyToMany
     @JoinTable(
@@ -30,6 +29,6 @@ public class Venda {
             joinColumns = @JoinColumn(name = "vendafk"),
             inverseJoinColumns = @JoinColumn(name = "produtofk")
     )
-    private List<Produto> listaDeProdutos;
+    private List<Product> productList;
 
 }

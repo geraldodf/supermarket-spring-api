@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "tipo_produto")
-public class TipoProduto {
+public class ProductType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,11 @@ public class TipoProduto {
     private Long id;
 
     @Column(name = "nome_tipo_produto")
-    private String nomeTipoProduto;
+    private String nameProductType;
 
     @OneToMany(mappedBy = "tipoProduto")
     @JsonIgnore
-    private List<Produto> listaProdutos;
+    private List<Product> ProductList;
 
 
 }

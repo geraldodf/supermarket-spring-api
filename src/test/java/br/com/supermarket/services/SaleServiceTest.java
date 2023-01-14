@@ -1,6 +1,6 @@
 package br.com.supermarket.services;
 
-import br.com.supermarket.models.Venda;
+import br.com.supermarket.models.Sale;
 import br.com.supermarket.repositories.VendaRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VendaServiceTest {
+class SaleServiceTest {
 
     @Mock
     private VendaRepository vendaRepository;
@@ -27,66 +27,66 @@ class VendaServiceTest {
 
     @Test
     void buscaPorTodasVendasDeveRetornalArrayVazio() {
-        ArrayList<Venda> listaVazia = new ArrayList();
+        ArrayList<Sale> listaVazia = new ArrayList();
 
         when(vendaService.pegarTodasVendas()).thenReturn(listaVazia);
-        ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
+        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
 
         Assert.assertTrue(retorno.isEmpty());
     }
 
     @Test
     void buscaPorTodasVendasDeveRetornalArray() {
-        ArrayList<Venda> lista = new ArrayList();
-        lista.add(new Venda());
+        ArrayList<Sale> lista = new ArrayList();
+        lista.add(new Sale());
 
         when(vendaRepository.findAll()).thenReturn(lista);
-        ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
+        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
 
         assertFalse(retorno.isEmpty());
     }
 
     @Test
     void deveRetornarTresVendasQuandoForSolicitadoPegarTodos() {
-        ArrayList<Venda> lista = new ArrayList();
-        lista.add(new Venda());
-        lista.add(new Venda());
-        lista.add(new Venda());
+        ArrayList<Sale> lista = new ArrayList();
+        lista.add(new Sale());
+        lista.add(new Sale());
+        lista.add(new Sale());
 
         when(vendaRepository.findAll()).thenReturn(lista);
-        ArrayList<Venda> retorno = vendaService.pegarTodasVendas();
+        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
 
         Assert.assertEquals(lista.size(), retorno.size());
     }
 
     @Test
     void buscarVendaPorIdRetornaUmaVenda() throws Exception {
-        Venda venda = new Venda();
+        Sale sale = new Sale();
         Long id = 1L;
-        venda.setId(id);
-        when(vendaRepository.findById(id)).thenReturn(java.util.Optional.of(venda));
-        Venda retorno = vendaService.pegarVendaPeloId(id);
+        sale.setId(id);
+        when(vendaRepository.findById(id)).thenReturn(java.util.Optional.of(sale));
+        Sale retorno = vendaService.pegarVendaPeloId(id);
         assertNotNull(retorno);
-        assertEquals(retorno.getId(), venda.getId());
+        assertEquals(retorno.getId(), sale.getId());
     }
 
     @Test
     void buscarVendaSemIdRetornaException() {
-        String mensagemException = "Venda inexistente!";
+        String mensagemException = "Sale inexistente!";
         Throwable retorno = assertThrows(Exception.class, () -> vendaService.pegarVendaPeloId(null), mensagemException);
         assertTrue(retorno.getMessage().equals(mensagemException));
     }
 
     @Test
     void buscarVendaPorIdRetornaVenda() throws Exception {
-        Venda venda = new Venda();
-        venda.setVendaValor(BigDecimal.valueOf(9.99));
-        when(vendaRepository.findById(656L)).thenReturn(Optional.of(new Venda()));
-        Optional<Venda> vendaOptional = vendaRepository.findById(656L);
-        Venda venda1 = vendaOptional.get();
-        venda1.setVendaValor(BigDecimal.valueOf(9.99));
-        Venda vendaRetorno = vendaService.pegarVendaPeloId(656L);
-        assertEquals(venda.getVendaValor(), vendaRetorno.getVendaValor());
+        Sale sale = new Sale();
+        sale.setSaleValue(BigDecimal.valueOf(9.99));
+        when(vendaRepository.findById(656L)).thenReturn(Optional.of(new Sale()));
+        Optional<Sale> vendaOptional = vendaRepository.findById(656L);
+        Sale sale1 = vendaOptional.get();
+        sale1.setSaleValue(BigDecimal.valueOf(9.99));
+        Sale saleRetorno = vendaService.pegarVendaPeloId(656L);
+        assertEquals(sale.getSaleValue(), saleRetorno.getSaleValue());
     }
 
 }

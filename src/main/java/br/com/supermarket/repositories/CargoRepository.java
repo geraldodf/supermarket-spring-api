@@ -1,15 +1,15 @@
 package br.com.supermarket.repositories;
 
-import br.com.supermarket.models.Cargo;
+import br.com.supermarket.models.Role;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface CargoRepository extends CrudRepository<Cargo, Long> {
+public interface CargoRepository extends CrudRepository<Role, Long> {
 
-    @Query("SELECT c FROM Cargo c WHERE CONCAT(c.nome, '') LIKE %?1%")
-    public ArrayList<Cargo> pesquisaPorNome(String nome);
+    @Query("SELECT c FROM Role c WHERE CONCAT(c.name, '') LIKE %?1%")
+    public ArrayList<Role> pesquisaPorNome(String nome);
 
 }

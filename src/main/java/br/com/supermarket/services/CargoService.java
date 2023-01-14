@@ -1,6 +1,6 @@
 package br.com.supermarket.services;
 
-import br.com.supermarket.models.Cargo;
+import br.com.supermarket.models.Role;
 import br.com.supermarket.repositories.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +13,16 @@ public class CargoService {
     @Autowired
     private CargoRepository cargoRepository;
 
-    public ArrayList<Cargo> pegarTodosCargos() {
-        return (ArrayList<Cargo>) cargoRepository.findAll();
+    public ArrayList<Role> pegarTodosCargos() {
+        return (ArrayList<Role>) cargoRepository.findAll();
     }
 
-    public Cargo pegarCargoPeloId(Long id) throws Exception {
+    public Role pegarCargoPeloId(Long id) throws Exception {
 
         if (id == null)
             throw new Exception("O id do cargo não pode ser nulo! Id não foi recebido.");
 
-        Optional<Cargo> cargoOptional = null;
+        Optional<Role> cargoOptional = null;
         try {
             cargoOptional = cargoRepository.findById(id);
         } catch (Exception e) {
@@ -31,7 +31,7 @@ public class CargoService {
         return cargoOptional.get();
     }
 
-    public ArrayList<Cargo> pegarCargoPeloNome(String nome) throws Exception {
+    public ArrayList<Role> pegarCargoPeloNome(String nome) throws Exception {
         if (nome == null || nome == "") {
             throw new Exception("Deve ser especificado o nome ou alguma inicial!");
         }
@@ -43,39 +43,39 @@ public class CargoService {
         return cargoRepository.pesquisaPorNome(nome);
     }
 
-    public Cargo criarCargo(Cargo cargo) throws Exception {
-        if (cargo.getNome() == null || cargo.getNome().length() <= 3)
-            throw new Exception("O nome do cargo deve ser especificado e ter no mínimo 3 caracteres");
+    public Role criarCargo(Role role) throws Exception {
+        if (role.getName() == null || role.getName().length() <= 3)
+            throw new Exception("O nome do role deve ser especificado e ter no mínimo 3 caracteres");
         try {
-            cargoRepository.save(cargo);
+            cargoRepository.save(role);
         } catch (Exception e) {
-            throw new Exception("Erro ao salvar cargo no banco de dados");
+            throw new Exception("Erro ao salvar role no banco de dados");
         }
-        return cargo;
+        return role;
     }
 
-    public Cargo atualizarCargo(Long id, Cargo cargo) throws Exception {
-        Optional<Cargo> cargoOptional = null;
+    public Role atualizarCargo(Long id, Role role) throws Exception {
+        Optional<Role> cargoOptional = null;
         try {
             cargoOptional = cargoRepository.findById(id);
         } catch (Exception e) {
             throw new Exception("Erro ao pesquisar produto para ser alterado!");
         }
 
-        Cargo cargoParaAtualizar = cargoOptional.get();
+        Role roleParaAtualizar = cargoOptional.get();
 
-        if (cargo.getNome() == null || cargo.getNome().length() <= 3)
-            throw new Exception("O nome do cargo deve ser especificado e ter no mínimo 3 caracteres");
+        if (role.getName() == null || role.getName().length() <= 3)
+            throw new Exception("O nome do role deve ser especificado e ter no mínimo 3 caracteres");
 
-        cargoParaAtualizar.setNome(cargo.getNome());
+        roleParaAtualizar.setName(role.getName());
 
         try {
-            cargoRepository.save(cargoParaAtualizar);
+            cargoRepository.save(roleParaAtualizar);
         } catch (Exception e) {
-            throw new Exception("Erro ao salvar o novo cargo no banco de dados!");
+            throw new Exception("Erro ao salvar o novo role no banco de dados!");
         }
 
-        return cargoParaAtualizar;
+        return roleParaAtualizar;
     }
 
     public void excluirCargo(Long id) throws Exception {
@@ -83,7 +83,7 @@ public class CargoService {
         try {
             cargoRepository.deleteById(id);
         } catch (Exception e) {
-            throw new Exception("Produto não foi excluido! Verifique a credencial e tente novamente!");
+            throw new Exception("Product não foi excluido! Verifique a credencial e tente novamente!");
         }
     }
 }
