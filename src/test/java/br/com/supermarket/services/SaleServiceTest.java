@@ -23,14 +23,14 @@ class SaleServiceTest {
     private SaleRepository saleRepository;
 
     @InjectMocks
-    private VendaService vendaService;
+    private SaleService saleService;
 
     @Test
     void buscaPorTodasVendasDeveRetornalArrayVazio() {
         ArrayList<Sale> listaVazia = new ArrayList();
 
-        when(vendaService.pegarTodasVendas()).thenReturn(listaVazia);
-        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
+        when(saleService.getAllSales()).thenReturn(listaVazia);
+        ArrayList<Sale> retorno = saleService.getAllSales();
 
         Assert.assertTrue(retorno.isEmpty());
     }
@@ -41,7 +41,7 @@ class SaleServiceTest {
         lista.add(new Sale());
 
         when(saleRepository.findAll()).thenReturn(lista);
-        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
+        ArrayList<Sale> retorno = saleService.getAllSales();
 
         assertFalse(retorno.isEmpty());
     }
@@ -54,7 +54,7 @@ class SaleServiceTest {
         lista.add(new Sale());
 
         when(saleRepository.findAll()).thenReturn(lista);
-        ArrayList<Sale> retorno = vendaService.pegarTodasVendas();
+        ArrayList<Sale> retorno = saleService.getAllSales();
 
         Assert.assertEquals(lista.size(), retorno.size());
     }
@@ -65,7 +65,7 @@ class SaleServiceTest {
         Long id = 1L;
         sale.setId(id);
         when(saleRepository.findById(id)).thenReturn(java.util.Optional.of(sale));
-        Sale retorno = vendaService.pegarVendaPeloId(id);
+        Sale retorno = saleService.getSaleById(id);
         assertNotNull(retorno);
         assertEquals(retorno.getId(), sale.getId());
     }
@@ -73,7 +73,7 @@ class SaleServiceTest {
     @Test
     void buscarVendaSemIdRetornaException() {
         String mensagemException = "Sale inexistente!";
-        Throwable retorno = assertThrows(Exception.class, () -> vendaService.pegarVendaPeloId(null), mensagemException);
+        Throwable retorno = assertThrows(Exception.class, () -> saleService.getSaleById(null), mensagemException);
         assertTrue(retorno.getMessage().equals(mensagemException));
     }
 
@@ -85,7 +85,7 @@ class SaleServiceTest {
         Optional<Sale> vendaOptional = saleRepository.findById(656L);
         Sale sale1 = vendaOptional.get();
         sale1.setSaleValue(BigDecimal.valueOf(9.99));
-        Sale saleRetorno = vendaService.pegarVendaPeloId(656L);
+        Sale saleRetorno = saleService.getSaleById(656L);
         assertEquals(sale.getSaleValue(), saleRetorno.getSaleValue());
     }
 

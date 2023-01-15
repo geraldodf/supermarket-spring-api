@@ -2,7 +2,7 @@ package br.com.supermarket.resources;
 
 import br.com.supermarket.dtos.SaleDto;
 import br.com.supermarket.models.Sale;
-import br.com.supermarket.services.VendaService;
+import br.com.supermarket.services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -12,31 +12,31 @@ import java.util.ArrayList;
 public class SaleResource {
 
     @Autowired
-    private VendaService saleService;
+    private SaleService saleService;
 
     @GetMapping
     public ArrayList<Sale> getAllSales() {
-        return saleService.pegarTodasVendas();
+        return saleService.getAllSales();
     }
 
     @GetMapping("/{id}")
     public Sale getSaleById(@PathVariable("id") Long id) throws Exception {
-        return saleService.pegarVendaPeloId(id);
+        return saleService.getSaleById(id);
     }
 
     @PostMapping
     public void createSale(@RequestBody SaleDto saleDto) throws Exception {
-        saleService.criarVenda(saleDto);
+        saleService.createSale(saleDto);
     }
 
     @PutMapping("/{id}")
     public void updateVenda(@RequestBody SaleDto saleDto, @PathVariable("id") Long id) throws Exception {
-        saleService.atualizarVenda(saleDto, id);
+        saleService.updateSale(saleDto, id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteSale(@PathVariable("id") Long id) throws Exception {
-        saleService.excluirVenda(id);
+        saleService.deleteSale(id);
     }
 }
 
