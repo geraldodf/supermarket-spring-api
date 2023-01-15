@@ -4,7 +4,7 @@ import br.com.supermarket.dtos.SaleDto;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.Sale;
 import br.com.supermarket.repositories.SaleRepository;
-import br.com.supermarket.util.DataUtilitario;
+import br.com.supermarket.util.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +82,7 @@ public class VendaService {
         Sale saleCriada = new Sale();
         ArrayList<Product> listaDeProducts = new ArrayList<>();
 
-        saleCriada.setSaleDate(DataUtilitario.getHorarioEDataAtualString());
+        saleCriada.setSaleDate(DateUtility.getTimeDateCurrentString());
 
         saleDto.getIdProduto().forEach(p -> {
             try {

@@ -5,7 +5,7 @@ import br.com.supermarket.exceptions.*;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductType;
 import br.com.supermarket.repositories.ProductRepository;
-import br.com.supermarket.util.DataUtilitario;
+import br.com.supermarket.util.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -159,7 +159,7 @@ public class ProdutoService {
         product.setPriceBuy(productDto.getPriceBuy());
         product.setPriceSale(productDto.getPriceSale());
         product.setNetProfit(productDto.getPriceSale().subtract(productDto.getPriceBuy()));
-        product.setCreationDate(DataUtilitario.getDataAtualComoString());
+        product.setCreationDate(DateUtility.getCurrentDateString());
 
         ProductType productTypeOptional = tipoProdutoService
                 .pegarUmTipoDoProdutoPeloId(productDto.getIdProductType());

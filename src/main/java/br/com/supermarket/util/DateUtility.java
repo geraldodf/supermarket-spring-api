@@ -3,9 +3,9 @@ package br.com.supermarket.util;
 
 import java.time.LocalDateTime;
 
-public class DataUtilitario {
+public class DateUtility {
 
-    public static String getDataAtualComoString() {
+    public static String getCurrentDateString() {
         LocalDateTime now = LocalDateTime.now();
         return new StringBuilder()
                 .append(now.getDayOfMonth())
@@ -15,7 +15,7 @@ public class DataUtilitario {
                 .append(now.getYear()).toString();
     }
 
-    public static String getHorarioAtualString() {
+    public static String getCurrentTimeString() {
         LocalDateTime now = LocalDateTime.now();
         return new StringBuilder().append(now.getHour())
                 .append(":")
@@ -25,8 +25,8 @@ public class DataUtilitario {
                 .toString();
     }
 
-    public static String getHorarioEDataAtualString(){
-        return getDataAtualComoString() + " - " + getHorarioAtualString();
+    public static String getTimeDateCurrentString(){
+        return getCurrentDateString() + " - " + getCurrentTimeString();
     }
 
 }
