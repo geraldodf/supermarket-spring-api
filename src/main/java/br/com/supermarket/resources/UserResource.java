@@ -1,7 +1,7 @@
 package br.com.supermarket.resources;
 
 import br.com.supermarket.models.User;
-import br.com.supermarket.services.UsuarioService;
+import br.com.supermarket.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -11,26 +11,26 @@ import java.util.ArrayList;
 public class UserResource {
 
     @Autowired
-    private UsuarioService userService;
+    private UserService userService;
 
     @GetMapping
     public ArrayList<User> getAllUsers() throws Exception {
-        return userService.pegarTodosUsuarios();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long id) throws Exception {
-        return userService.pegarUmUsuario(id);
+        return userService.getUserById(id);
     }
 
     @GetMapping("/search")
     public ArrayList<User> getUserByName(@RequestParam(name = "name") String name) throws Exception {
-        return userService.pegarUsuarioPorNome(name);
+        return userService.getUsersByName(name);
     }
 
     @PostMapping
     public void createUser(@RequestBody User user) throws Exception {
-        userService.criarUsuario(user);
+        userService.createUser(user);
     }
 
     @PutMapping("/{id}")
@@ -40,7 +40,7 @@ public class UserResource {
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long id) throws Exception {
-        userService.excuirUsuario(id);
+        userService.deleteUser(id);
     }
 
 }
