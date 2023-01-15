@@ -20,7 +20,7 @@ public class ProdutoService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private TipoProdutoService tipoProdutoService;
+    private ProductTypeService productTypeService;
 
     public ArrayList<Product> pegarTodosProdutos() {
         return (ArrayList<Product>) productRepository.findAll();
@@ -161,8 +161,8 @@ public class ProdutoService {
         product.setNetProfit(productDto.getPriceSale().subtract(productDto.getPriceBuy()));
         product.setCreationDate(DateUtility.getCurrentDateString());
 
-        ProductType productTypeOptional = tipoProdutoService
-                .pegarUmTipoDoProdutoPeloId(productDto.getIdProductType());
+        ProductType productTypeOptional = productTypeService
+                .getProductTypeById(productDto.getIdProductType());
 
         product.setProductType(productTypeOptional);
 

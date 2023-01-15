@@ -31,7 +31,7 @@ class ProductServiceTest {
     private ProdutoService produtoService;
 
     @Mock
-    private TipoProdutoService tipoProdutoService;
+    private ProductTypeService productTypeService;
 
     @Mock
     private ProductTypeRepository productTypeRepository;
@@ -104,7 +104,7 @@ class ProductServiceTest {
         ProductType tipo = new ProductType();
         tipo.setNameProductType("Teste");
         tipo.setProductList(null);
-        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
 
         ProductDto productDto = new ProductDto();
         productDto.setDescription("Teste0");
@@ -125,7 +125,7 @@ class ProductServiceTest {
         ProductType tipo = new ProductType();
         tipo.setNameProductType("Teste");
         tipo.setProductList(null);
-        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
 
         ProductDto productDto = new ProductDto();
         productDto.setDescription("Teste0");
@@ -147,7 +147,7 @@ class ProductServiceTest {
         ProductType tipo = new ProductType();
         tipo.setNameProductType("Teste");
         tipo.setProductList(null);
-        Mockito.when(tipoProdutoService.pegarUmTipoDoProdutoPeloId(2L)).thenReturn(tipo);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
 
         ProductDto productDto = new ProductDto();
         productDto.setDescription("Teste0");

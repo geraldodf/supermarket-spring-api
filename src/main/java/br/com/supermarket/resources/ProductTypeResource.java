@@ -1,7 +1,7 @@
 package br.com.supermarket.resources;
 
 import br.com.supermarket.models.ProductType;
-import br.com.supermarket.services.TipoProdutoService;
+import br.com.supermarket.services.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -13,36 +13,36 @@ import java.util.ArrayList;
 public class ProductTypeResource {
 
     @Autowired
-    private TipoProdutoService productTypeService;
+    private ProductTypeService productTypeService;
 
     @GetMapping
     @CrossOrigin(allowedHeaders = "*")
     public ArrayList<ProductType> getAllProductsTypes() {
-        return productTypeService.pegarTodosTiposDosProdutos();
+        return productTypeService.getAllProductsTypes();
     }
 
     @GetMapping("/{id}")
     @CrossOrigin(allowedHeaders = "*")
     public ProductType getProductTypeById(@PathVariable("id") Long id) {
-        return productTypeService.pegarUmTipoDoProdutoPeloId(id);
+        return productTypeService.getProductTypeById(id);
     }
 
     @GetMapping("/name")
     @CrossOrigin(allowedHeaders = "*")
     public ArrayList<ProductType> getProductsTypesByName(@RequestParam(name = "name") String name) {
-        return productTypeService.pegarTipoDoProdutoPorNome(name);
+        return productTypeService.gellProductsTypesByName(name);
     }
 
     @GetMapping("/types")
     @CrossOrigin(allowedHeaders = "*")
     public ArrayList<ProductType> getProductsTypesSort(Sort sort) {
-        return productTypeService.pegarTiposDoProdutoComSort(sort);
+        return productTypeService.getProductsTypesSort(sort);
     }
 
     @PostMapping
     @CrossOrigin(allowedHeaders = "*")
     public ProductType createProductType(@RequestBody ProductType productType) throws Exception {
-        return productTypeService.criarTipoDoProduto(productType);
+        return productTypeService.createProductType(productType);
     }
 
     @PutMapping("/{id}")
@@ -50,13 +50,13 @@ public class ProductTypeResource {
     public ProductType updateProductType
             (@PathVariable("id") Long id, @RequestBody ProductType productType)
             throws Exception {
-        return productTypeService.atualizarTipoDoProduto(id, productType);
+        return productTypeService.updateProductType(id, productType);
     }
 
     @DeleteMapping("/{id}")
     @CrossOrigin(allowedHeaders = "*")
     public void deleteProductTypeById(@PathVariable("id") Long id) throws Exception {
-        productTypeService.excluirTipoDoProdutoPeloId(id);
+        productTypeService.deleteProductType(id);
     }
 
 }
