@@ -28,7 +28,7 @@ import java.util.Optional;
 class ProductServiceTest {
 
     @InjectMocks
-    private ProdutoService produtoService;
+    private ProductService productService;
 
     @Mock
     private ProductTypeService productTypeService;
@@ -56,7 +56,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> produtoService.criarProduto(productDto));
+        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> productService.createProduct(productDto));
     }
 
     @Test
@@ -69,7 +69,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> produtoService.criarProduto(productDto));
+        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> productService.createProduct(productDto));
     }
 
     @Test
@@ -82,7 +82,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Assert.assertThrows(ProductDescriptionNullException.class, () -> produtoService.criarProduto(productDto));
+        Assert.assertThrows(ProductDescriptionNullException.class, () -> productService.createProduct(productDto));
     }
 
     @Test
@@ -95,7 +95,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Assert.assertThrows(ProductNullBarcodeException.class, () -> produtoService.criarProduto(productDto));
+        Assert.assertThrows(ProductNullBarcodeException.class, () -> productService.createProduct(productDto));
     }
 
     @Test
@@ -114,7 +114,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Product product = produtoService.criarProduto(productDto);
+        Product product = productService.createProduct(productDto);
 
         Assertions.assertEquals(-60, product.getQuantity());
     }
@@ -135,7 +135,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Product product = produtoService.criarProduto(productDto);
+        Product product = productService.createProduct(productDto);
         product.setNetProfit(new BigDecimal(0.9));
 
         Assert.assertThrows(ProductProfitInconsistentException.class, () -> product.autoVerify());
@@ -157,7 +157,7 @@ class ProductServiceTest {
         productDto.setPriceSale(BigDecimal.valueOf(2.49));
         productDto.setIdProductType(2L);
 
-        Product product = produtoService.criarProduto(productDto);
+        Product product = productService.createProduct(productDto);
         System.out.println(product.getNetProfit());
 
         Assert.assertEquals(product.getNetProfit().doubleValue(), -0, 30);
@@ -166,9 +166,9 @@ class ProductServiceTest {
     @Test
     void pegarTodosProdutosDeveRetornarListaDeProdutosVazia() {
         ArrayList<Product> listaDeProducts = new ArrayList();
-        Mockito.when(produtoService.pegarTodosProdutos()).thenReturn(listaDeProducts);
-        Assert.assertEquals(produtoService.pegarTodosProdutos().size(), 0);
-        Assert.assertEquals(produtoService.pegarTodosProdutos().isEmpty(), true);
+        Mockito.when(productService.getAllProducts()).thenReturn(listaDeProducts);
+        Assert.assertEquals(productService.getAllProducts().size(), 0);
+        Assert.assertEquals(productService.getAllProducts().isEmpty(), true);
     }
 
     @Test
@@ -177,8 +177,8 @@ class ProductServiceTest {
         listaDeProducts.add(new Product());
 
         Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(1, produtoService.pegarTodosProdutos().size());
-        Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
+        Assert.assertEquals(1, productService.getAllProducts().size());
+        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
 
     }
 
@@ -189,8 +189,8 @@ class ProductServiceTest {
         listaDeProducts.add(new Product());
 
         Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(2, produtoService.pegarTodosProdutos().size());
-        Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
+        Assert.assertEquals(2, productService.getAllProducts().size());
+        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
 
     }
 
@@ -204,9 +204,9 @@ class ProductServiceTest {
         listaDeProducts.add(product);
 
         Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(3, produtoService.pegarTodosProdutos().size());
-        Assert.assertEquals(false, produtoService.pegarTodosProdutos().isEmpty());
-        Assert.assertEquals("Teste Descricao", produtoService.pegarTodosProdutos().get(2).getDescription());
+        Assert.assertEquals(3, productService.getAllProducts().size());
+        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
+        Assert.assertEquals("Teste Descricao", productService.getAllProducts().get(2).getDescription());
     }
 
     @Test
@@ -214,7 +214,7 @@ class ProductServiceTest {
         Long id = 3L;
 
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(new Product()));
-        Assert.assertNotNull(produtoService.pegarUmProduto(id));
+        Assert.assertNotNull(productService.getProductById(id));
     }
 
     @Test
@@ -299,7 +299,7 @@ class ProductServiceTest {
     void pegarTodoProdutosPaginadosDeveRetornarListDeProdutoOK() throws Exception {
         Pageable pageable = PageRequest.of(1, 5, Direction.ASC);
 
-        produtoService.pesquisaPaginada(pageable);  
+        productService.pesquisaPaginada(pageable);
 
     }
 

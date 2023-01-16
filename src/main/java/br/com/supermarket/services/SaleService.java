@@ -17,7 +17,7 @@ public class SaleService {
     @Autowired
     private SaleRepository saleRepository;
     @Autowired
-    private ProdutoService produtoService;
+    private ProductService productService;
 
 
     public ArrayList<Sale> getAllSales() {
@@ -76,7 +76,7 @@ public class SaleService {
 
         saleDto.getIdProduto().forEach(p -> {
             try {
-                productList.add(produtoService.pegarUmProduto(p));
+                productList.add(productService.getProductById(p));
             } catch (Exception e) {
                 e.printStackTrace();
             }

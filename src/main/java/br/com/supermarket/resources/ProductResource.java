@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import br.com.supermarket.services.ProdutoService;
+import br.com.supermarket.services.ProductService;
 import java.util.ArrayList;
 
 @RequestMapping("/products")
@@ -14,19 +14,19 @@ import java.util.ArrayList;
 public class ProductResource {
 
     @Autowired
-    private ProdutoService productService;
+    private ProductService productService;
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping
     public ArrayList<Product> getAllProducts() {
-        return productService.pegarTodosProdutos();
+        return productService.getAllProducts();
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/name")
     public ArrayList<Product> searchProductsByDescription(@RequestParam(name = "description") String description)
             throws Exception {
-        return productService.pesquisaProdutoPorDescricao(description);
+        return productService.getProductsByDescription(description);
     }
 
     @CrossOrigin(allowedHeaders = "*")
@@ -39,7 +39,7 @@ public class ProductResource {
     @GetMapping("/products-description")
     public Page<Product> searchByDescriptionPaged(@RequestParam(name = "description") String description,
                                                   Pageable pageable) throws Exception {
-        return productService.pesquisaPorDescricaoPaginada(description, pageable);
+        return productService.getByDescriptionPaginated(description, pageable);
     }
 
     // @CrossOrigin(allowedHeaders = "*")
@@ -52,32 +52,32 @@ public class ProductResource {
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/bar-code")
     public ArrayList<Product> pesquisarProdutoPorCodigo(@RequestParam(name = "barCode") Long barCode) throws Exception {
-        return productService.pesquisaProdutoPorCodigo(barCode);
+        return productService.getProductsByBarCode(barCode);
 
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) throws Exception {
-        return productService.pegarUmProduto(id);
+        return productService.getProductById(id);
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @PostMapping
     public void createProduct(@RequestBody ProductDto productDto) throws Exception {
-        productService.criarProduto(productDto);
+        productService.createProduct(productDto);
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long id) throws Exception {
-        productService.excluirProduto(id);
+        productService.DeleteProduct(id);
     }
 
     @CrossOrigin(allowedHeaders = "*")
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) throws Exception {
-        productService.atualizarProduto(id, productDto);
+        productService.updateProduct(id, productDto);
     }
 
 }
