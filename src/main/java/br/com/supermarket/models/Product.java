@@ -10,37 +10,37 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "produtos")
+@Table(name = "products")
 public class Product {
 
     @Id
-    @Column(name = "produto_id")
+    @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "produto_descricao")
+    @Column(name = "product_description")
     private String description;
 
-    @Column(name = "produto_preco_compra")
+    @Column(name = "product_price_buy")
     private BigDecimal priceBuy;
 
-    @Column(name = "produto_preco_venda")
+    @Column(name = "product_price_sale")
     private BigDecimal priceSale;
 
-    @Column(name = "produto_lucro_liquido")
+    @Column(name = "product_net_profit")
     private BigDecimal netProfit;
 
-    @Column(name = "produto_quantidade")
+    @Column(name = "product_quantity")
     private Long quantity;
 
-    @Column(name = "produto_codigo_barras")
+    @Column(name = "product_bar_code")
     private Long barCode;
 
-    @Column(name = "produto_data_criacao")
+    @Column(name = "product_creation_date")
     private String creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_produto_fk")
+    @JoinColumn(name = "product_type_fk")
     private ProductType productType;
 
     @Override

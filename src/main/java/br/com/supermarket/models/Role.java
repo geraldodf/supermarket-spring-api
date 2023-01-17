@@ -7,15 +7,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "cargos")
+@Table(name = "roles")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cargo_id")
+    @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "cargo_nome")
+    @Column(name = "role_name")
     private String name;
 
 

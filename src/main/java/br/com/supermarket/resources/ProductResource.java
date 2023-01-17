@@ -32,7 +32,7 @@ public class ProductResource {
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/products")
     public Page<Product> searchPaginatedProducts(Pageable pageable) throws Exception {
-        return productService.pesquisaPaginada(pageable);
+        return productService.paginatedSearch(pageable);
     }
 
     @CrossOrigin(allowedHeaders = "*")

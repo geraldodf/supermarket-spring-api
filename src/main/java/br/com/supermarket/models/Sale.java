@@ -14,20 +14,20 @@ public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "venda_id")
+    @Column(name = "sale_id")
     private Long id;
 
-    @Column(name = "venda_data")
+    @Column(name = "sale_date")
     private String saleDate;
 
-    @Column(name = "venda_valor")
-    private BigDecimal saleValue = new BigDecimal(0.0);
+    @Column(name = "sale_value")
+    private BigDecimal saleValue;
 
     @ManyToMany
     @JoinTable(
-            name = "vendas_produtos",
-            joinColumns = @JoinColumn(name = "vendafk"),
-            inverseJoinColumns = @JoinColumn(name = "produtofk")
+            name = "sales_products",
+            joinColumns = @JoinColumn(name = "salefk"),
+            inverseJoinColumns = @JoinColumn(name = "productfk")
     )
     private List<Product> productList;
 

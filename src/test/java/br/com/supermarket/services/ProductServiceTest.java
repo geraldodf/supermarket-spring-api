@@ -299,7 +299,7 @@ class ProductServiceTest {
     void pegarTodoProdutosPaginadosDeveRetornarListDeProdutoOK() throws Exception {
         Pageable pageable = PageRequest.of(1, 5, Direction.ASC);
 
-        productService.pesquisaPaginada(pageable);
+        productService.paginatedSearch(pageable);
 
     }
 
