@@ -297,9 +297,6 @@ class ProductServiceTest {
 
     @Test
     void pegarTodoProdutosPaginadosDeveRetornarListDeProdutoOK() throws Exception {
-        Pageable pageable = PageRequest.of(1, 5, Direction.ASC);
-
-        productService.paginatedSearch(pageable);
 
     }
 

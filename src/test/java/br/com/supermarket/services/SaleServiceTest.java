@@ -72,7 +72,7 @@ class SaleServiceTest {
 
     @Test
     void buscarVendaSemIdRetornaException() {
-        String mensagemException = "Sale inexistente!";
+        String mensagemException = "Sale nonexistent!";
         Throwable retorno = assertThrows(Exception.class, () -> saleService.getSaleById(null), mensagemException);
         assertTrue(retorno.getMessage().equals(mensagemException));
     }
