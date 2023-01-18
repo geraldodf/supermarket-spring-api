@@ -64,8 +64,8 @@ public class ProductResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto) throws Exception {
-        productService.createProduct(productDto);
+    public Product createProduct(@RequestBody ProductDto productDto) throws Exception {
+        return productService.createProduct(productDto);
     }
 
     @CrossOrigin(allowedHeaders = "*")

@@ -1,6 +1,4 @@
--- INSERTS PARA TIPOS DE PRODUTOS
-
-INSERT INTO tipo_produto (nome_tipo_produto)
+INSERT INTO product_type (name_product_type)
 VALUES ("Doces"),
        ("Cereais"),
        ("Hortifruti"),

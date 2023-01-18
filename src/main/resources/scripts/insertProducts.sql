@@ -1,8 +1,5 @@
--- INSERT PARA PRODUTOS
-
-INSERT INTO produtos (produto_descricao, produto_preco_compra, produto_preco_venda, produto_lucro_liquido,
-                      produto_codigo_barras,
-                      produto_quantidade, produto_data_criacao, tipo_produto_fk)
+INSERT INTO products (product_description, product_price_buy, product_price_sale, product_net_profit, product_bar_code,
+                      product_quantity, product_creation_date, product_type_fk)
 VALUES ("Feijão 1kg", 2.99, 4.99, 2, 50, 1, '11/01/2023', 2),
        ("Amendoin 600g", 0.99, 2.49, 1.50, 24, 1, '11/01/2023', 2),
        ("Chocolate Barra 110g Lacta", 2.49, 3.99, 1.50, 42114, 70, '11/01/2023', 1),
@@ -27,4 +24,23 @@ VALUES ("Feijão 1kg", 2.99, 4.99, 2, 50, 1, '11/01/2023', 2),
        ("Vinho Chileno Branco 750ML", 45.29, 79.99, 34.70, 3451675, 32, '11/01/2023', 13),
        ("Pão Frances", 4.99, 8.99, 4.00, 789458475, 259, '11/01/2023', 10),
        ("Amaciante Omo 5L", 25.49, 35.49, 10.00, 78362514, 150, '11/01/2023', 14),
-       ("Pes 2023 Deluxe Edition", 200.00, 350.00, 150.00, 789142514236, 10, '11/01/2023', 15);
+       ("Pes 2023 Deluxe Edition", 200.00, 350.00, 150.00, 789142514236, 10, '11/01/2023', 15),
+       ("Pão de Forma 500g", 2.99, 3.99, 1.00, 50, 11, '11/01/2023', 10),
+       ("Maionese 500g", 3.99, 4.99, 1.00, 40, 12, '11/01/2023', 6),
+       ("Refrigerante 2L", 3.99, 4.99, 1.00, 30, 13, '11/01/2023', 12),
+       ("Sabão em pó 2kg", 7.99, 8.99, 1.00, 20, 14, '11/01/2023', 14),
+       ("Cerveja 600ml", 4.99, 5.99, 1.00, 25, 15, '11/01/2023', 3),
+       ("Azeite de Oliva 500ml", 9.99, 12.99, 3.00, 15, 16, '11/01/2023', 6),
+       ("Queijo Ralado 150g", 4.99, 5.99, 1.00, 35, 17, '11/01/2023', 8),
+       ("Presunto fatiado 200g", 7.99, 8.99, 1.00, 25, 18, '11/01/2023', 8),
+       ("Chocolate em pó 200g", 4.99, 5.99, 1.00, 20, 19, '11/01/2023', 1),
+       ("Iogurte Natural 500g", 2.99, 3.99, 1.00, 30, 20, '11/01/2023', 7),
+       ("Arroz 1kg", 3.49, 5.99, 2.50, 40, 2, '11/01/2023', 2),
+       ("Açúcar 1kg", 2.89, 4.49, 1.60, 50, 3, '11/01/2023', 2),
+       ("Farinha de Trigo 1kg", 4.19, 6.99, 2.80, 30, 4, '11/01/2023', 2),
+       ("Leite Integral 1L", 2.79, 3.99, 1.20, 45, 5, '11/01/2023', 15),
+       ("Óleo de Cozinha 1L", 5.99, 7.99, 2.00, 25, 6, '11/01/2023', 15),
+       ("Molho de Tomate 500ml", 1.99, 2.99, 1.00, 35, 7, '11/01/2023', 6),
+       ("Macarrão 500g", 1.69, 2.99, 1.30, 50, 8, '11/01/2023', 5),
+       ("Café 500g", 8.99, 12.99, 4.00, 20, 9, '11/01/2023', 15),
+       ("Biscoito Recheado 200g", 2.99, 3.99, 1.00, 40, 10, '11/01/2023', 4);

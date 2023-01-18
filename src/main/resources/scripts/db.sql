@@ -1,54 +1,56 @@
-create database supermercadospringdb;
-use supermercadospringdb;
+create
+database supermarketdb;
+use
+supermarketdb;
 
-create table produtos
+create table products
 (
-    produto_id              Integer NOT NULL auto_increment primary key,
-    produto_descricao       varchar(266),
-    produto_preco_compra decimal(6, 2),
-    produto_preco_venda  decimal(6, 2),
-    produto_lucro_liquido           decimal(6, 2),
-    produto_codigo_barras          bigint,
-    produto_quantidade      integer,
-    produto_data_criacao    varchar(266)
+    product_id            Integer NOT NULL auto_increment primary key,
+    product_description   varchar(266),
+    product_price_buy     decimal(6, 2),
+    product_price_sale    decimal(6, 2),
+    product_net_profit    decimal(6, 2),
+    product_bar_code      bigint,
+    product_quantity      integer,
+    product_creation_date varchar(266)
 );
 
 create table users
 (
-    usuario_id    Integer NOT NULL auto_increment primary key,
-    usuario_nome  varchar(266),
-    usuario_senha varchar(266)
+    user_id       Integer NOT NULL auto_increment primary key,
+    user_name     varchar(266),
+    user_password varchar(266)
 );
 
-create table vendas
+create table sales
 (
-    venda_id    Integer NOT NULL auto_increment primary key,
-    venda_data  varchar(266),
-    venda_valor decimal(6, 2)
+    sale_id    Integer NOT NULL auto_increment primary key,
+    sale_date  varchar(266),
+    sale_value decimal(6, 2)
 );
 
-create table vendas_produtos
+create table sales_products
 (
-    venda_produto_id Integer NOT NULL auto_increment primary key,
-    vendafk          Integer NOT null,
-    produtofk        Integer NOT NULL,
-    foreign key (produtofk) references produtos (produto_id),
-    foreign key (vendafk) references vendas (venda_id)
+    sale_product_id Integer NOT NULL auto_increment primary key,
+    sale_fk         Integer NOT null,
+    product_fk      Integer NOT NULL,
+    foreign key (product_fk) references products (product_id),
+    foreign key (sale_fk) references sales (sale_id)
 );
 
-create table tipo_produto
+create table product_type
 (
-    tipo_produto_id   Integer NOT NULL auto_increment primary key,
-    nome_tipo_produto varchar(266)
+    product_type_id   Integer NOT NULL auto_increment primary key,
+    name_product_type varchar(266)
 );
 
-ALTER TABLE produtos
-    add tipo_produto_fk Integer;
-ALTER TABLE produtos
-    add foreign key (tipo_produto_fk) references tipo_produto (tipo_produto_id);
+ALTER TABLE products
+    add product_type_fk Integer;
+ALTER TABLE products
+    add foreign key (product_type_fk) references product_type (product_type_id);
 
-create table cargos
+create table roles
 (
-    cargo_id   Integer NOT NULL auto_increment primary key,
-    cargo_nome varchar(266)
+    role_id   Integer NOT NULL auto_increment primary key,
+    role_name varchar(266)
 );

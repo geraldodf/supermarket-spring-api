@@ -23,7 +23,7 @@ public class ProductType {
 
     @OneToMany(mappedBy = "productType")
     @JsonIgnore
-    private List<Product> productType;
+    private List<Product> productList;
 
 
 }

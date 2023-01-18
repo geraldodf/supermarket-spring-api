@@ -18,15 +18,24 @@ public class ProductTypeService {
         return (ArrayList<ProductType>) productTypeRepository.findAll();
     }
 
-    public ProductType createProductType(ProductType tipo) throws Exception {
-        if (tipo.getNameProductType() == null || tipo.getNameProductType().length() < 5)
-            throw new Exception("Type cannot be created without a name, or with a name of less than 5 characters.");
-        return productTypeRepository.save(tipo);
+
+    public ArrayList<ProductType> gellProductsTypesByName(String name) {
+        return productTypeRepository.searchByName(name);
+    }
+
+    public ArrayList<ProductType> getProductsTypesSort(Sort sort) {
+        return (ArrayList<ProductType>) productTypeRepository.findAll(sort);
     }
 
     public ProductType getProductTypeById(Long id) {
         Optional<ProductType> productTYpe = productTypeRepository.findById(id);
         return productTYpe.get();
+    }
+
+    public ProductType createProductType(ProductType tipo) throws Exception {
+        if (tipo.getNameProductType() == null || tipo.getNameProductType().length() < 5)
+            throw new Exception("Type cannot be created without a name, or with a name of less than 5 characters.");
+        return productTypeRepository.save(tipo);
     }
 
     public ProductType updateProductType(Long id, ProductType tipo) throws Exception {
@@ -63,11 +72,4 @@ public class ProductTypeService {
         productTypeRepository.deleteById(id);
     }
 
-    public ArrayList<ProductType> gellProductsTypesByName(String name) {
-        return productTypeRepository.searchByName(name);
-    }
-
-    public ArrayList<ProductType> getProductsTypesSort(Sort sort) {
-        return (ArrayList<ProductType>) productTypeRepository.findAll(sort);
-    }
 }
