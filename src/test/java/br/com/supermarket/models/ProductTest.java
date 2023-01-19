@@ -1,8 +1,8 @@
 package br.com.supermarket.models;
 
 import java.math.BigDecimal;
-
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import br.com.supermarket.exceptions.*;
@@ -12,117 +12,117 @@ import br.com.supermarket.exceptions.ProductDescriptionInvalidException;
 class ProductTest {
 
     @Test
-    void verificarProdutoDeveRetornarOk() throws Exception {
+    void checkProductMustReturnOk() throws Exception {
 
-        Product product = produtoCriado();
+        Product product = createdProduct();
 
         product.autoVerify();
 
-        Assert.assertEquals(123L, product.getBarCode(), 0);
-        Assert.assertEquals("Hoje", product.getCreationDate());
-        Assert.assertEquals("Teste Descricao", product.getDescription());
-        Assert.assertEquals(BigDecimal.valueOf(1.00), product.getNetProfit());
-        Assert.assertEquals(BigDecimal.valueOf(3.00), product.getPriceSale());
-        Assert.assertEquals(BigDecimal.valueOf(2.00), product.getPriceBuy());
-        Assert.assertEquals(10L, product.getQuantity(), 0);
-        Assert.assertNotNull(product.getProductType());
+        Assertions.assertEquals(123L, product.getBarCode(), 0);
+        Assertions.assertEquals("Today", product.getCreationDate());
+        Assertions.assertEquals("Test Description", product.getDescription());
+        Assertions.assertEquals(BigDecimal.valueOf(1.00), product.getNetProfit());
+        Assertions.assertEquals(BigDecimal.valueOf(3.00), product.getPriceSale());
+        Assertions.assertEquals(BigDecimal.valueOf(2.00), product.getPriceBuy());
+        Assertions.assertEquals(10L, product.getQuantity(), 0);
+        Assertions.assertNotNull(product.getProductType());
     }
 
     @Test
-    void verificarProdutoNaoNuloDoProdutoCriadoNaoDeveLancarExcecao() {
-        Product product = produtoCriado();
+    void productCannotBeNull() {
+        Product product = createdProduct();
         product.verifyProductAttributesNoNull();
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoDescricaoInvalidaException() {
-        Product product = produtoCriado();
+    void shouldThrowProductDescriptionInvalidException() {
+        Product product = createdProduct();
         product.setDescription("");
-        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductDescriptionInvalidException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoDescricaoInvalidaExceptionCom5Caracteres() {
-        Product product = produtoCriado();
-        product.setDescription("Teste");
-        Assert.assertThrows(ProductDescriptionInvalidException.class, () -> product.autoVerify());
+    void shouldThrowProductDescriptionInvalidExceptionWithFiveCharacters() {
+        Product product = createdProduct();
+        product.setDescription("*****");
+        Assert.assertThrows(ProductDescriptionInvalidException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoDescricaoNulaException() {
-        Product product = produtoCriado();
+    void shouldThrowProductDescriptionNullException() {
+        Product product = createdProduct();
         product.setDescription(null);
-        Assert.assertThrows(ProductDescriptionNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductDescriptionNullException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoCodigoNuloException() {
-        Product product = produtoCriado();
+    void shouldThrowProductNullBarcodeException() {
+        Product product = createdProduct();
         product.setBarCode(null);
-        Assert.assertThrows(ProductNullBarcodeException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductNullBarcodeException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoCodigoInvalidoException() {
-        Product product = produtoCriado();
+    void shouldThrowProductInvalidBarcodeException() {
+        Product product = createdProduct();
         product.setBarCode(-213L);
-        Assert.assertThrows(ProductInvalidBarcodeException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductInvalidBarcodeException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoDataDeCriacaoNulaException() {
-        Product product = produtoCriado();
+    void shouldThrowProductDateOfCreationNullException() {
+        Product product = createdProduct();
         product.setCreationDate(null);
-        Assert.assertThrows(ProductDateOfCreationNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductDateOfCreationNullException.class, product::autoVerify);
 
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoLucroNuloException() {
-        Product product = produtoCriado();
+    void shouldThrowProductProfitNullException() {
+        Product product = createdProduct();
         product.setNetProfit(null);
-        Assert.assertThrows(ProductProfitNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductProfitNullException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoLucroInconsistenteException() {
-        Product product = produtoCriado();
+    void shouldThrowProductProfitInconsistentException() {
+        Product product = createdProduct();
         product.setNetProfit(BigDecimal.valueOf(5000));
-        Assert.assertThrows(ProductProfitInconsistentException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductProfitInconsistentException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoPrecoDeCompraNuloException() {
-        Product product = produtoCriado();
+    void shouldThrowProductPurchasePriceNullException() {
+        Product product = createdProduct();
         product.setPriceBuy(null);
-        Assert.assertThrows(ProductPurchasePriceNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductPurchasePriceNullException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoPrecoDeVendaNuloException() {
-        Product product = produtoCriado();
+    void shouldThrowProductSalePriceNullException() {
+        Product product = createdProduct();
         product.setPriceSale(null);
-        Assert.assertThrows(ProductSalePriceNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductSalePriceNullException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoDeveLancarProdutoQuantidadeNulaException() {
-        Product product = produtoCriado();
+    void shouldThrowProductQuantityNullException() {
+        Product product = createdProduct();
         product.setQuantity(null);
-        Assert.assertThrows(ProductQuantityNullException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductQuantityNullException.class, product::autoVerify);
     }
 
     @Test
-    void verificarProdutoNaoDeveLancarProblemaComQuantidadeNegativa() {
-        Product product = produtoCriado();
+    void shouldNotGenerateProblemNegativeQuantity() {
+        Product product = createdProduct();
         product.setQuantity(-200L);
     }
 
-    Product produtoCriado() {
+    Product createdProduct() {
         Product product = new Product();
         product.setBarCode(123L);
-        product.setCreationDate("Hoje");
-        product.setDescription("Teste Descricao");
+        product.setCreationDate("Today");
+        product.setDescription("Test Description");
         product.setNetProfit(BigDecimal.valueOf(1.00));
         product.setPriceBuy(BigDecimal.valueOf(2.00));
         product.setPriceSale(BigDecimal.valueOf(3.00));
