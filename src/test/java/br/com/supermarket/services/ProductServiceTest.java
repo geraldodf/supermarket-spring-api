@@ -1,11 +1,13 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.ProductDto;
-import br.com.supermarket.exceptions.*;
+import br.com.supermarket.exceptions.ProductDescriptionInvalidException;
+import br.com.supermarket.exceptions.ProductDescriptionNullException;
+import br.com.supermarket.exceptions.ProductNullBarcodeException;
+import br.com.supermarket.exceptions.ProductProfitInconsistentException;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductType;
 import br.com.supermarket.repositories.ProductRepository;
-import br.com.supermarket.repositories.ProductTypeRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,38 +18,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@SuppressWarnings("SpellCheckingInspection")
 @SpringBootTest
 class ProductServiceTest {
 
     @InjectMocks
     private ProductService productService;
-
     @Mock
     private ProductTypeService productTypeService;
-
-    @Mock
-    private ProductTypeRepository productTypeRepository;
-
     @Mock
     private ProductRepository productRepository;
-
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
-    @Before
-    public void setup() {
-    }
-
     @Test
-    void criarProdutoDeveLancarProdutoDescricaoInvalidaException() {
+    void createProductMustLaunchProductDescriptionInvalidException() {
         ProductDto productDto = new ProductDto();
         productDto.setDescription("F");
         productDto.setBarCode(12345L);
@@ -60,9 +50,9 @@ class ProductServiceTest {
     }
 
     @Test
-    void criarProdutoDeveLancarProdutoDescricaoInvalidaExceptionCom5Caracteres() {
+    void createProductMustLaunchProductDescriptionInvalidExceptionWithFiveCharacters() {
         ProductDto productDto = new ProductDto();
-        productDto.setDescription("Teste");
+        productDto.setDescription("*****");
         productDto.setBarCode(12345L);
         productDto.setQuantity(250L);
         productDto.setPriceBuy(BigDecimal.valueOf(1.79));
@@ -73,7 +63,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void criarProdutoDeveLancarProdutoDescricaoNulaException() {
+    void createProductMustLaunchProductDescriptionNullException() {
         ProductDto productDto = new ProductDto();
         productDto.setDescription(null);
         productDto.setBarCode(12345L);
@@ -86,9 +76,9 @@ class ProductServiceTest {
     }
 
     @Test
-    void criarProdutoDeveLancarProdutoCodigoNuloException() {
+    void createProductShouldThrowProductNullBarcodeException() {
         ProductDto productDto = new ProductDto();
-        productDto.setDescription("Teste");
+        productDto.setDescription("******");
         productDto.setBarCode(null);
         productDto.setQuantity(250L);
         productDto.setPriceBuy(BigDecimal.valueOf(1.79));
@@ -99,15 +89,15 @@ class ProductServiceTest {
     }
 
     @Test
-    void criarProdutoQtdNegativaNaoDeveLancarException() throws Exception {
+    void createProductNegativeQuantityShouldNotThrowException() throws Exception {
 
-        ProductType tipo = new ProductType();
-        tipo.setNameProductType("Teste");
-        tipo.setProductList(null);
-        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
+        ProductType type = new ProductType();
+        type.setNameProductType("******");
+        type.setProductList(null);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(type);
 
         ProductDto productDto = new ProductDto();
-        productDto.setDescription("Teste0");
+        productDto.setDescription("******");
         productDto.setBarCode(12345L);
         productDto.setQuantity(-60L);
         productDto.setPriceBuy(BigDecimal.valueOf(1.79));
@@ -120,15 +110,15 @@ class ProductServiceTest {
     }
 
     @Test
-    void criarProdutoDeveRetornarProdutoLucroInconsistenteException() throws Exception {
+    void createProductShouldReturnProductProfitInconsistentException() throws Exception {
 
-        ProductType tipo = new ProductType();
-        tipo.setNameProductType("Teste");
-        tipo.setProductList(null);
-        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
+        ProductType type = new ProductType();
+        type.setNameProductType("******");
+        type.setProductList(null);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(type);
 
         ProductDto productDto = new ProductDto();
-        productDto.setDescription("Teste0");
+        productDto.setDescription("******");
         productDto.setBarCode(12345L);
         productDto.setQuantity(2L);
         productDto.setPriceBuy(BigDecimal.valueOf(1.79));
@@ -136,21 +126,21 @@ class ProductServiceTest {
         productDto.setIdProductType(2L);
 
         Product product = productService.createProduct(productDto);
-        product.setNetProfit(new BigDecimal(0.9));
+        product.setNetProfit(new BigDecimal("0.9"));
 
-        Assert.assertThrows(ProductProfitInconsistentException.class, () -> product.autoVerify());
+        Assert.assertThrows(ProductProfitInconsistentException.class, product::autoVerify);
     }
 
     @Test
-    void criarProdutoDeveRetornarComLucroDeveSerNegativo() throws Exception {
+    void createProductWithNegativeProfitShouldNotGenerateError() throws Exception {
 
-        ProductType tipo = new ProductType();
-        tipo.setNameProductType("Teste");
-        tipo.setProductList(null);
-        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(tipo);
+        ProductType type = new ProductType();
+        type.setNameProductType("******");
+        type.setProductList(null);
+        Mockito.when(productTypeService.getProductTypeById(2L)).thenReturn(type);
 
         ProductDto productDto = new ProductDto();
-        productDto.setDescription("Teste0");
+        productDto.setDescription("******");
         productDto.setBarCode(12345L);
         productDto.setQuantity(2L);
         productDto.setPriceBuy(BigDecimal.valueOf(2.79));
@@ -160,144 +150,137 @@ class ProductServiceTest {
         Product product = productService.createProduct(productDto);
         System.out.println(product.getNetProfit());
 
-        Assert.assertEquals(product.getNetProfit().doubleValue(), -0, 30);
+        Assertions.assertEquals(product.getNetProfit().doubleValue(), -0.3, 0);
     }
 
     @Test
-    void pegarTodosProdutosDeveRetornarListaDeProdutosVazia() {
-        ArrayList<Product> listaDeProducts = new ArrayList();
-        Mockito.when(productService.getAllProducts()).thenReturn(listaDeProducts);
-        Assert.assertEquals(productService.getAllProducts().size(), 0);
-        Assert.assertEquals(productService.getAllProducts().isEmpty(), true);
+    void getAllProductsShouldReturnEmptyProductsList() {
+        ArrayList<Product> productsList = new ArrayList<>();
+        Mockito.when(productService.getAllProducts()).thenReturn(productsList);
+        Assertions.assertEquals(productService.getAllProducts().size(), 0);
+        Assertions.assertTrue(productService.getAllProducts().isEmpty());
     }
 
     @Test
-    void pegarTodosProdutosDeveRetornarListaDeProdutosComUmProduto() {
-        ArrayList<Product> listaDeProducts = new ArrayList();
-        listaDeProducts.add(new Product());
+    void getAllProductsShouldReturnListOfProductsWithOneProduct() {
+        ArrayList<Product> ProductsList = new ArrayList<>();
+        ProductsList.add(new Product());
 
-        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(1, productService.getAllProducts().size());
-        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
+        Mockito.when(productRepository.findAll()).thenReturn(ProductsList);
+        Assertions.assertEquals(1, productService.getAllProducts().size());
+        Assertions.assertFalse(productService.getAllProducts().isEmpty());
+    }
+
+    @Test
+    void getAllProductsShouldReturnListOfProductsWithTwoProducts() {
+        ArrayList<Product> productsList = new ArrayList<>();
+        productsList.add(new Product());
+        productsList.add(new Product());
+
+        Mockito.when(productRepository.findAll()).thenReturn(productsList);
+        Assertions.assertEquals(2, productService.getAllProducts().size());
+        Assertions. assertFalse(productService.getAllProducts().isEmpty());
 
     }
 
     @Test
-    void pegarTodosProdutosDeveRetornarListaDeProdutosComDoisProdutos() {
-        ArrayList<Product> listaDeProducts = new ArrayList();
-        listaDeProducts.add(new Product());
-        listaDeProducts.add(new Product());
-
-        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(2, productService.getAllProducts().size());
-        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
-
-    }
-
-    @Test
-    void pegarTodosProdutosDeveRetornarListaDeProdutosComDoisProdutosEVerificandoDescricao() {
-        ArrayList<Product> listaDeProducts = new ArrayList();
-        listaDeProducts.add(new Product());
-        listaDeProducts.add(new Product());
+    void getAllProductsShouldReturnListOfProductsWithTwoProductsAndCheckingDescription() {
+        ArrayList<Product> productsList = new ArrayList<>();
+        productsList.add(new Product());
+        productsList.add(new Product());
         Product product = new Product();
-        product.setDescription("Teste Descricao");
-        listaDeProducts.add(product);
+        product.setDescription("Description test");
+        productsList.add(product);
 
-        Mockito.when(productRepository.findAll()).thenReturn(listaDeProducts);
-        Assert.assertEquals(3, productService.getAllProducts().size());
-        Assert.assertEquals(false, productService.getAllProducts().isEmpty());
-        Assert.assertEquals("Teste Descricao", productService.getAllProducts().get(2).getDescription());
+        Mockito.when(productRepository.findAll()).thenReturn(productsList);
+        Assertions.assertEquals(3, productService.getAllProducts().size());
+        Assertions.assertFalse(productService.getAllProducts().isEmpty());
+        Assertions.assertEquals("Description test", productService.getAllProducts().get(2).getDescription());
     }
 
     @Test
-    void pegarUmProdutoPeloIdDeveRetornarProdutoVazio() throws Exception {
+    void getProductByIdShouldReturnEmptyProduct() throws Exception {
         Long id = 3L;
-
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(new Product()));
-        Assert.assertNotNull(productService.getProductById(id));
+        Assertions.assertNotNull(productService.getProductById(id));
     }
 
     @Test
-    void pegarProdutosPorDescricaoDeveRetornarListaDeProdutoVazio() throws Exception {
-        String descricao = "Teste";
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
+    void getProductsByDescriptionShouldReturnEmptyProductList() {
+        String description = "Test";
+        ArrayList<Product> productsList = new ArrayList<>();
 
-        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(true, productRepository.searchByDescription(descricao).isEmpty());
-        Assert.assertEquals(0, productRepository.searchByDescription(descricao).size());
+        Mockito.when(productRepository.searchByDescription(description)).thenReturn(productsList);
+        Assertions.assertTrue(productRepository.searchByDescription(description).isEmpty());
+        Assertions.assertEquals(0, productRepository.searchByDescription(description).size());
     }
 
     @Test
-    void pegarProdutosPorDescicaoDeveRetornarListaComUmProduto() throws Exception {
-        String descricao = "Teste";
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
-        listaDeProducts.add(new Product());
+    void getProductsByDescriptionShouldReturnListWithOneProduct() {
+        String description = "Test";
+        ArrayList<Product> productsList = new ArrayList<>();
+        productsList.add(new Product());
 
-        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, productRepository.searchByDescription(descricao).isEmpty());
-        Assert.assertEquals(1, productRepository.searchByDescription(descricao).size());
+        Mockito.when(productRepository.searchByDescription(description)).thenReturn(productsList);
+        Assertions.assertFalse(productRepository.searchByDescription(description).isEmpty());
+        Assertions.assertEquals(1, productRepository.searchByDescription(description).size());
     }
 
     @Test
-    void pegarProdutosPorDescricaoDeveRetornarListaComDoisProdutosEVerificarAsDescricoes() throws Exception {
-        String descricao = "Teste";
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
+    void getProductsByDescriptionShouldReturnListWithTwoProductsAndCheckDescriptions() {
+        String description = "******";
+        ArrayList<Product> productsList = new ArrayList<>();
         Product p1 = new Product();
         Product p2 = new Product();
-        p1.setDescription("Teste 1");
-        p2.setDescription("Teste 2");
-        listaDeProducts.add(p1);
-        listaDeProducts.add(p2);
+        p1.setDescription("Test one");
+        p2.setDescription("Test two");
+        productsList.add(p1);
+        productsList.add(p2);
 
-        Mockito.when(productRepository.searchByDescription(descricao)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, productRepository.searchByDescription(descricao).isEmpty());
-        Assert.assertEquals(2, productRepository.searchByDescription(descricao).size());
-        Assert.assertEquals("Teste 1", productRepository.searchByDescription(descricao).get(0).getDescription());
-        Assert.assertEquals("Teste 2", productRepository.searchByDescription(descricao).get(1).getDescription());
+        Mockito.when(productRepository.searchByDescription(description)).thenReturn(productsList);
+        Assertions.assertFalse(productRepository.searchByDescription(description).isEmpty());
+        Assertions.assertEquals(2, productRepository.searchByDescription(description).size());
+        Assertions.assertEquals("Test one", productRepository.searchByDescription(description).get(0).getDescription());
+        Assertions.assertEquals("Test two", productRepository.searchByDescription(description).get(1).getDescription());
     }
 
     @Test
-    void pegarProdutosPorCodigoDeveRetornarListaDeProdutoVazio() throws Exception {
-        Long codigo = 1010L;
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
+    void getProductsByCodeShouldReturnEmptyProductList() {
+        Long barCode = 1010L;
+        ArrayList<Product> productsList = new ArrayList<>();
 
-        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(true, productRepository.searchByBarCode(codigo).isEmpty());
-        Assert.assertEquals(0, productRepository.searchByBarCode(codigo).size());
+        Mockito.when(productRepository.searchByBarCode(barCode)).thenReturn(productsList);
+        Assertions.assertTrue(productRepository.searchByBarCode(barCode).isEmpty());
+        Assertions.assertEquals(0, productRepository.searchByBarCode(barCode).size());
     }
 
     @Test
-    void pegarProdutosPorCodigoDeveRetornarListaComUmProduto() throws Exception {
-        Long codigo = 1010L;
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
-        listaDeProducts.add(new Product());
+    void getProductsByCodeShouldReturnListWithOneProduct()  {
+        Long barCode = 1010L;
+        ArrayList<Product> productsList = new ArrayList<>();
+        productsList.add(new Product());
 
-        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, productRepository.searchByBarCode(codigo).isEmpty());
-        Assert.assertEquals(1, productRepository.searchByBarCode(codigo).size());
+        Mockito.when(productRepository.searchByBarCode(barCode)).thenReturn(productsList);
+        Assertions.assertFalse(productRepository.searchByBarCode(barCode).isEmpty());
+        Assertions.assertEquals(1, productRepository.searchByBarCode(barCode).size());
     }
 
     @Test
-    void pegarProdutosPorCodigoDeveRetornarListaComDoisProdutosEVerificarAsQtd() throws Exception {
-        Long codigo = 1010L;
-        ArrayList<Product> listaDeProducts = new ArrayList<>();
+    void getProductsByCodeShouldReturnListWithTwoProductsAndCheckQuantities() {
+        Long barCode = 1010L;
+        ArrayList<Product> productsList = new ArrayList<>();
         Product p1 = new Product();
         Product p2 = new Product();
         p1.setQuantity(1L);
         p2.setQuantity(2L);
-        listaDeProducts.add(p1);
-        listaDeProducts.add(p2);
+        productsList.add(p1);
+        productsList.add(p2);
 
-        Mockito.when(productRepository.searchByBarCode(codigo)).thenReturn(listaDeProducts);
-        Assert.assertEquals(false, productRepository.searchByBarCode(codigo).isEmpty());
-        Assert.assertEquals(2, productRepository.searchByBarCode(codigo).size());
-        Assert.assertEquals(1L, productRepository.searchByBarCode(codigo).get(0).getQuantity(), 0);
-        Assert.assertEquals(2L, productRepository.searchByBarCode(codigo).get(1).getQuantity(), 0);
-    }
-
-    @Test
-    void pegarTodoProdutosPaginadosDeveRetornarListDeProdutoOK() throws Exception {
-
+        Mockito.when(productRepository.searchByBarCode(barCode)).thenReturn(productsList);
+        Assertions.assertFalse(productRepository.searchByBarCode(barCode).isEmpty());
+        Assertions.assertEquals(2, productRepository.searchByBarCode(barCode).size());
+        Assertions.assertEquals(1L, productRepository.searchByBarCode(barCode).get(0).getQuantity(), 0);
+        Assertions.assertEquals(2L, productRepository.searchByBarCode(barCode).get(1).getQuantity(), 0);
     }
 
 }

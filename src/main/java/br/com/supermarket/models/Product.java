@@ -7,38 +7,48 @@ import br.com.supermarket.exceptions.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @Entity
 @Table(name = "products")
 public class Product {
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_description")
     private String description;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_price_buy")
     private BigDecimal priceBuy;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_price_sale")
     private BigDecimal priceSale;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_net_profit")
     private BigDecimal netProfit;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_quantity")
     private Long quantity;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_bar_code")
     private Long barCode;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @Column(name = "product_creation_date")
     private String creationDate;
 
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @ManyToOne
     @JoinColumn(name = "product_type_fk")
     private ProductType productType;

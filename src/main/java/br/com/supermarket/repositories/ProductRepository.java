@@ -18,8 +18,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     @Query("SELECT p FROM Product p WHERE CONCAT(p.barCode, '') LIKE %?1%")
     public ArrayList<Product> searchByBarCode(Long barCode);
 
-    List<Product> findAllByDescription(String description);
-
     @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
     Page<Product> searchByDescriptionPaged(String description, Pageable pageable);
 

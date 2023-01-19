@@ -2,7 +2,6 @@ package br.com.supermarket.services;
 
 import br.com.supermarket.models.Sale;
 import br.com.supermarket.repositories.SaleRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,7 +51,7 @@ class SaleServiceTest {
         when(saleRepository.findAll()).thenReturn(salesList);
         ArrayList<Sale> sales = saleService.getAllSales();
 
-        Assert.assertEquals(salesList.size(), sales.size());
+        assertEquals(salesList.size(), sales.size());
     }
 
     @Test
