@@ -19,7 +19,7 @@ public class ProductTypeService {
     }
 
 
-    public ArrayList<ProductType> gellProductsTypesByName(String name) {
+    public ArrayList<ProductType> getProductsTypesByName(String name) {
         return productTypeRepository.searchByName(name);
     }
 

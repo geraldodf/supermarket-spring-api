@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import br.com.supermarket.services.ProductService;
+
 import java.util.ArrayList;
 
 @RequestMapping("/products")
@@ -23,7 +24,7 @@ public class ProductResource {
     }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/name")
+    @GetMapping("/description")
     public ArrayList<Product> searchProductsByDescription(@RequestParam(name = "description") String description)
             throws Exception {
         return productService.getProductsByDescription(description);
@@ -42,16 +43,23 @@ public class ProductResource {
         return productService.getByDescriptionPaginated(description, pageable);
     }
 
-    // @CrossOrigin(allowedHeaders = "*")
-    // @GetMapping("/produtos-tipo")
-    // public ArrayList<Product> pesquisaPorTipoPaginada(@RequestParam(name = "nomeTipo") String nomeTipo,
-    //         Pageable pageable) throws Exception {
-    //     return produtoService.pesquisaPorTipoPaginada(nomeTipo, pageable);
-    // }
+    @CrossOrigin(allowedHeaders = "*")
+    @GetMapping("/products-type-name")
+    public ArrayList<Product> searchByProductTypeNamePaged(@RequestParam(name = "typeName") String typeName,
+                                                           Pageable pageable) {
+        return productService.searchByProductTypeNamePaged(typeName, pageable);
+    }
+
+    @CrossOrigin(allowedHeaders = "*")
+    @GetMapping("/products-type-id")
+    public ArrayList<Product> searchByProductTypeIdPaged(@RequestParam(name = "typeId") Long typeId,
+                                                         Pageable pageable) {
+        return productService.searchByProductTypeIdPaged(typeId, pageable);
+    }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/bar-code")
-    public ArrayList<Product> pesquisarProdutoPorCodigo(@RequestParam(name = "barCode") Long barCode) throws Exception {
+    public ArrayList<Product> getProductsByBarCode(@RequestParam(name = "barCode") Long barCode) throws Exception {
         return productService.getProductsByBarCode(barCode);
 
     }

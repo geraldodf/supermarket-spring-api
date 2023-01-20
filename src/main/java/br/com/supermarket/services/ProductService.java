@@ -60,12 +60,15 @@ public class ProductService {
         return productRepository.searchByDescriptionPaged(description, pageable);
     }
 
-    // public ArrayList<Product> pesquisaPorTipoPaginada(String nomeTipo, Pageable pageable) {
-    //     ArrayList<ProductType> listaRetornoDeTipos = tipoDoProdutoService.pegarTipoDoProdutoPorNome(nomeTipo);
-    //     ProductType tipoDoProdutoParaBusca = listaRetornoDeTipos.get(0);
-    //     return produtoRepository.pesquisaPorTipoPaginada(tipoDoProdutoParaBusca.getId(), pageable);
-    // }
-    //fixme
+    public ArrayList<Product> searchByProductTypeNamePaged(String nomeTipo, Pageable pageable) {
+        ArrayList<ProductType> productsTypes = productTypeService.getProductsTypesByName(nomeTipo);
+        ProductType productType = productsTypes.get(0);
+        return (ArrayList<Product>) productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
+    }
+    public ArrayList<Product> searchByProductTypeIdPaged(Long typeId, Pageable pageable) {
+        ProductType productType = productTypeService.getProductTypeById(typeId);
+        return (ArrayList<Product>) productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
+    }
 
 
     public Product createProduct(ProductDto productDto) throws Exception {

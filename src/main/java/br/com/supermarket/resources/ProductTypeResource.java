@@ -30,7 +30,7 @@ public class ProductTypeResource {
     @GetMapping("/name")
     @CrossOrigin(allowedHeaders = "*")
     public ArrayList<ProductType> getProductsTypesByName(@RequestParam(name = "name") String name) {
-        return productTypeService.gellProductsTypesByName(name);
+        return productTypeService.getProductsTypesByName(name);
     }
 
     @GetMapping("/types")
