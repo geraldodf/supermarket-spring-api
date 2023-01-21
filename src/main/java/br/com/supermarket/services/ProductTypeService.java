@@ -32,25 +32,25 @@ public class ProductTypeService {
         return productTYpe.get();
     }
 
-    public ProductType createProductType(ProductType tipo) throws Exception {
-        if (tipo.getNameProductType() == null || tipo.getNameProductType().length() < 5)
+    public ProductType createProductType(ProductType type) throws Exception {
+        if (type.getNameProductType() == null || type.getNameProductType().length() < 5)
             throw new Exception("Type cannot be created without a name, or with a name of less than 5 characters.");
-        return productTypeRepository.save(tipo);
+        return productTypeRepository.save(type);
     }
 
-    public ProductType updateProductType(Long id, ProductType tipo) throws Exception {
+    public ProductType updateProductType(Long id, ProductType type) throws Exception {
         if (id == null) throw new Exception("Unable to update a type without specifying who will update");
-        if (tipo.getNameProductType() == null) throw new Exception("Type cannot be created without a name.");
+        if (type.getNameProductType() == null) throw new Exception("Type cannot be created without a name.");
 
 
-        Optional<ProductType> productTypeOptional = null;
+        Optional<ProductType> productTypeOptional;
         try {
             productTypeOptional = productTypeRepository.findById(id);
         } catch (Exception e) {
             throw new Exception("Error fetching type to be updated.");
         }
 
-        ProductType productType = null;
+        ProductType productType;
         try {
             productType = productTypeOptional.get();
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class ProductTypeService {
         }
 
         try {
-            productType.setNameProductType(tipo.getNameProductType());
+            productType.setNameProductType(type.getNameProductType());
         } catch (Exception e) {
             throw new Exception("Error updating type.");
         }

@@ -57,9 +57,7 @@ public class SaleService {
             Sale saleUpdated = optionalSale.get();
             Sale sale = createSaleReceivingDTO(saleDto);
             saleUpdated.setProductList(sale.getProductList());
-            sale.getProductList().forEach(p -> {
-                saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale()));
-            });
+            sale.getProductList().forEach(p -> saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale())));
             verifySale(saleUpdated);
             saleRepository.save(saleUpdated);
         } catch (Exception e) {
@@ -74,7 +72,7 @@ public class SaleService {
 
         sale.setSaleDate(DateUtility.getTimeDateCurrentString());
 
-        saleDto.getIdProduto().forEach(p -> {
+        saleDto.getProductId().forEach(p -> {
             try {
                 productList.add(productService.getProductById(p));
             } catch (Exception e) {
@@ -83,9 +81,7 @@ public class SaleService {
         });
 
         try {
-            productList.forEach(p -> {
-                sale.setSaleValue(sale.getSaleValue().add(p.getPriceSale()));
-            });
+            productList.forEach(p -> sale.setSaleValue(sale.getSaleValue().add(p.getPriceSale())));
         } catch (Exception e) {
             throw new Exception("Error adding products to sale.");
         }

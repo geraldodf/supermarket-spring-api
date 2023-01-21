@@ -23,7 +23,7 @@ public class RoleService {
         if (id == null)
             throw new Exception("The role is is null.");
 
-        Optional<Role> optionalRole = null;
+        Optional<Role> optionalRole = Optional.empty();
         try {
             optionalRole = roleRepository.findById(id);
         } catch (Exception e) {

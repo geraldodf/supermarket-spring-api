@@ -13,10 +13,10 @@ import java.util.List;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
-    public ArrayList<Product> searchByDescription(String description);
+    ArrayList<Product> searchByDescription(String description);
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.barCode, '') LIKE %?1%")
-    public ArrayList<Product> searchByBarCode(Long barCode);
+    ArrayList<Product> searchByBarCode(Long barCode);
 
     @Query("SELECT p FROM Product p WHERE CONCAT(p.description, '') LIKE %?1%")
     Page<Product> searchByDescriptionPaged(String description, Pageable pageable);

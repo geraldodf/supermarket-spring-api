@@ -7,22 +7,20 @@ public class DateUtility {
 
     public static String getCurrentDateString() {
         LocalDateTime now = LocalDateTime.now();
-        return new StringBuilder()
-                .append(now.getDayOfMonth())
-                .append("/")
-                .append(now.getMonthValue())
-                .append("/")
-                .append(now.getYear()).toString();
+        return now.getDayOfMonth() +
+                "/" +
+                now.getMonthValue() +
+                "/" +
+                now.getYear();
     }
 
     public static String getCurrentTimeString() {
         LocalDateTime now = LocalDateTime.now();
-        return new StringBuilder().append(now.getHour())
-                .append(":")
-                .append(now.getMinute())
-                .append(":")
-                .append(now.getSecond())
-                .toString();
+        return now.getHour() +
+                ":" +
+                now.getMinute() +
+                ":" +
+                now.getSecond();
     }
 
     public static String getTimeDateCurrentString(){

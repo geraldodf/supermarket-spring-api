@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import br.com.supermarket.exceptions.*;
-import br.com.supermarket.exceptions.ProductDescriptionInvalidException;
 
 @SpringBootTest
 class ProductTest {
 
     @Test
-    void checkProductMustReturnOk() throws Exception {
+    void checkProductMustReturnOk() {
 
         Product product = createdProduct();
 

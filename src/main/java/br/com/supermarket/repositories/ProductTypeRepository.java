@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public interface ProductTypeRepository extends PagingAndSortingRepository<ProductType, Long> {
 
     @Query("SELECT t FROM ProductType t WHERE CONCAT(t.nameProductType, '') LIKE %?1%")
-    public ArrayList<ProductType> searchByName(String name);
+    ArrayList<ProductType> searchByName(String name);
 
 }

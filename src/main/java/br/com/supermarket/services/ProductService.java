@@ -26,7 +26,7 @@ public class ProductService {
         return (ArrayList<Product>) productRepository.findAll();
     }
 
-    public Product getProductById(Long id) throws Exception {
+    public Product getProductById(Long id) {
 
         Optional<Product> product = productRepository.findById(id);
         return product.get();
@@ -60,8 +60,8 @@ public class ProductService {
         return productRepository.searchByDescriptionPaged(description, pageable);
     }
 
-    public ArrayList<Product> searchByProductTypeNamePaged(String nomeTipo, Pageable pageable) {
-        ArrayList<ProductType> productsTypes = productTypeService.getProductsTypesByName(nomeTipo);
+    public ArrayList<Product> searchByProductTypeNamePaged(String typeName, Pageable pageable) {
+        ArrayList<ProductType> productsTypes = productTypeService.getProductsTypesByName(typeName);
         ProductType productType = productsTypes.get(0);
         return (ArrayList<Product>) productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
     }

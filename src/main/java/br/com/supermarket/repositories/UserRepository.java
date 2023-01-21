@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT p FROM User p WHERE CONCAT(p.name, '') LIKE %?1%")
-    public List<User> searchByName(String name);
+    List<User> searchByName(String name);
 
 
 }

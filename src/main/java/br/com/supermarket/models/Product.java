@@ -94,11 +94,8 @@ public class Product {
     }
 
     public boolean verifyProductAttributesNoNull() {
-        if (this.quantity != null && this.priceSale != null && this.netProfit != null &&
-                this.priceBuy != null && this.barCode != null && this.description != null) {
-            return true;
-        } else
-            return false;
+        return this.quantity != null && this.priceSale != null && this.netProfit != null &&
+                this.priceBuy != null && this.barCode != null && this.description != null;
     }
 
 }

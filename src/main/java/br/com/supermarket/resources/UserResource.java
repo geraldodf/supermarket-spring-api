@@ -35,7 +35,7 @@ public class UserResource {
 
     @PutMapping("/{id}")
     public void updateUser(@PathVariable("id") Long id, @RequestBody User user) throws Exception {
-        userService.atualizarUsuario(id, user);
+        userService.userUpdate(id, user);
     }
 
     @DeleteMapping("/{id}")

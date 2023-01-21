@@ -1,7 +1,7 @@
-## Supermercado Back-End
+## Back-End Supermarket
 
-Projeto qual eu torno meu portfolio, com o intuito de mostrar minha experiência. Também foi totalmente criado do absoluto 0 por mim. Também tenho ele como api consumida por meus 2 projetos front end.
+Project which I make my portfolio, in order to show my experience. It was also completely created from absolute 0 by me. I also have it as an api consumed by my 2 front end projects.
 
-Aqui eu aplico todos novos conhecimentos como, testes, padrões de projetos, boas práticas, e até mesmo programação funcional no Java.
+Here I apply all new knowledge such as tests, design patterns, best practices, and even functional programming in Java.
 
-### Esse projeto não está finalizado, estarei fazendo mudanças frequentemente e refatorações quando necessário.
+### This project is not finished, I will be making changes frequently and refactoring when necessary.

@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public interface RoleRepository extends CrudRepository<Role, Long> {
 
     @Query("SELECT c FROM Role c WHERE CONCAT(c.name, '') LIKE %?1%")
-    public ArrayList<Role> searchByName(String name);
+    ArrayList<Role> searchByName(String name);
 
 }

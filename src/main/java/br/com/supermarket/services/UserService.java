@@ -43,7 +43,7 @@ public class UserService {
         }
     }
 
-    public void atualizarUsuario(Long id, User user) throws Exception {
+    public void userUpdate(Long id, User user) throws Exception {
         verifyUser(user);
         try {
             Optional<User> optionalUser = userRepository.findById(id);
@@ -69,8 +69,7 @@ public class UserService {
 
     public ArrayList<User> getUsersByName(String nome) throws Exception {
         try {
-            ArrayList<User> users = (ArrayList<User>) userRepository.searchByName(nome);
-            return users;
+            return (ArrayList<User>) userRepository.searchByName(nome);
         } catch (Exception e) {
             throw new Exception("Invalid user! check and try again.");
         }

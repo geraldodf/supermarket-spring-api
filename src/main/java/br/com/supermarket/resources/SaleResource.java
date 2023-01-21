@@ -30,7 +30,7 @@ public class SaleResource {
     }
 
     @PutMapping("/{id}")
-    public void updateVenda(@RequestBody SaleDto saleDto, @PathVariable("id") Long id) throws Exception {
+    public void updateSale(@RequestBody SaleDto saleDto, @PathVariable("id") Long id) throws Exception {
         saleService.updateSale(saleDto, id);
     }
 

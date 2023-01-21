@@ -39,7 +39,7 @@ public class ProductResource {
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/products-description")
     public Page<Product> searchByDescriptionPaged(@RequestParam(name = "description") String description,
-                                                  Pageable pageable) throws Exception {
+                                                  Pageable pageable) {
         return productService.getByDescriptionPaginated(description, pageable);
     }
 

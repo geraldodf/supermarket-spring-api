@@ -11,8 +11,8 @@
 	<groupId>br.com.supermercado</groupId>
 	<artifactId>supermarket-api</artifactId>
 	<version>0.0.1</version>
-	<name>supermercado-api</name>
-	<description>Sistema para supermercados</description>
+	<name>supermarket-api</name>
+	<description>Software for Supermarkets</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
