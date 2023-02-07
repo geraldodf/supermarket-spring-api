@@ -52,7 +52,7 @@ public class SaleService {
         }
     }
 
-    public void updateSale(SaleDto saleDto, Long id) throws Exception {
+    public Sale updateSale(SaleDto saleDto, Long id) throws Exception {
         try {
             Optional<Sale> optionalSale = saleRepository.findById(id);
             Sale saleUpdated = optionalSale.get();
@@ -60,7 +60,7 @@ public class SaleService {
             saleUpdated.setProductList(sale.getProductList());
             sale.getProductList().forEach(p -> saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale())));
             verifySale(saleUpdated);
-            saleRepository.save(saleUpdated);
+            return saleRepository.save(saleUpdated);
         } catch (Exception e) {
             throw new Exception("Error updating the sale.");
         }

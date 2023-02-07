@@ -30,8 +30,8 @@ public class SaleResource {
     }
 
     @PutMapping("/{id}")
-    public void updateSale(@RequestBody SaleDto saleDto, @PathVariable("id") Long id) throws Exception {
-        saleService.updateSale(saleDto, id);
+    public Sale updateSale(@RequestBody SaleDto saleDto, @PathVariable("id") Long id) throws Exception {
+        return saleService.updateSale(saleDto, id);
     }
 
     @DeleteMapping("/{id}")
