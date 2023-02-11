@@ -36,26 +36,16 @@ public class ProductResource {
         return productService.paginatedSearch(pageable);
     }
 
-    @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/products-description")
-    public Page<Product> searchByDescriptionPaged(@RequestParam(name = "description") String description,
-                                                  Pageable pageable) {
-        return productService.getByDescriptionPaginated(description, pageable);
-    }
 
     @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/products-type-name")
-    public ArrayList<Product> searchByProductTypeNamePaged(@RequestParam(name = "typeName") String typeName,
-                                                           Pageable pageable) {
-        return productService.searchByProductTypeNamePaged(typeName, pageable);
+    @GetMapping("/page")
+    public Page<Product> searchProductsPaged(@RequestParam(required = false) Long typeId,
+                                             @RequestParam(required = false) String typeName,
+                                             @RequestParam(required = false) String description,
+                                             Pageable pageable) {
+        return productService.searchProductsPaged(typeId, typeName, description, pageable);
     }
 
-    @CrossOrigin(allowedHeaders = "*")
-    @GetMapping("/products-type-id")
-    public ArrayList<Product> searchByProductTypeIdPaged(@RequestParam(name = "typeId") Long typeId,
-                                                         Pageable pageable) {
-        return productService.searchByProductTypeIdPaged(typeId, pageable);
-    }
 
     @CrossOrigin(allowedHeaders = "*")
     @GetMapping("/bar-code")

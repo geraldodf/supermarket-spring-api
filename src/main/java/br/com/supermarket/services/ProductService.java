@@ -56,18 +56,32 @@ public class ProductService {
         return page;
     }
 
-    public Page<Product> getByDescriptionPaginated(String description, Pageable pageable) {
+    public Page<Product> searchByDescriptionPaginated(String description, Pageable pageable) {
         return productRepository.searchByDescriptionPaged(description, pageable);
     }
 
-    public ArrayList<Product> searchByProductTypeNamePaged(String typeName, Pageable pageable) {
+    public Page<Product> searchByProductTypeNamePaged(String typeName, Pageable pageable) {
         ArrayList<ProductType> productsTypes = productTypeService.getProductsTypesByName(typeName);
         ProductType productType = productsTypes.get(0);
-        return (ArrayList<Product>) productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
+        return productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
     }
-    public ArrayList<Product> searchByProductTypeIdPaged(Long typeId, Pageable pageable) {
+
+    public Page<Product> searchByProductTypeIdPaged(Long typeId, Pageable pageable) {
         ProductType productType = productTypeService.getProductTypeById(typeId);
-        return (ArrayList<Product>) productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
+        return productRepository.searchByProductTypeIdPaged(productType.getId(), pageable);
+    }
+
+    public Page<Product> searchProductsPaged(Long typeId, String typeName, String description, Pageable pageable) {
+        if (typeName != null) {
+            return searchByProductTypeNamePaged(typeName, pageable);
+        }
+        if (typeId != null) {
+            return searchByProductTypeIdPaged(typeId, pageable);
+        }
+        if (description != null) {
+            return searchByDescriptionPaginated(description, pageable);
+        }
+        return productRepository.findAll(pageable);
     }
 
 
@@ -168,4 +182,6 @@ public class ProductService {
         product.setProductType(productTypeOptional);
         return product;
     }
+
+
 }

@@ -22,7 +22,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     Page<Product> searchByDescriptionPaged(String description, Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE p.productType.id = :id")
-    List<Product> searchByProductTypeIdPaged(Long id, Pageable pageable);
+    Page<Product> searchByProductTypeIdPaged(Long id, Pageable pageable);
     
 
 }
