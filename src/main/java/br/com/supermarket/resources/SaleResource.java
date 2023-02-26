@@ -24,6 +24,7 @@ public class SaleResource {
         return saleService.getSaleById(id);
     }
 
+    @CrossOrigin(allowedHeaders = "*")
     @PostMapping
     public void createSale(@RequestBody SaleDto saleDto) throws Exception {
         saleService.createSale(saleDto);

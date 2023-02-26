@@ -2,7 +2,6 @@ package br.com.supermarket.models;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,8 +31,7 @@ public class Sale {
     )
     private List<Product> productList;
 
-    public Sale(Long id, String saleDate, BigDecimal saleValue, List<Product> productList) {
-        this.id = id;
+    public Sale(String saleDate, BigDecimal saleValue, List<Product> productList) {
         this.saleDate = saleDate;
         this.saleValue = saleValue;
         this.productList = productList;

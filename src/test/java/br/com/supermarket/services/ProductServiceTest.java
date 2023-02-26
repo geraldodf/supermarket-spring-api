@@ -1,10 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.ProductDto;
-import br.com.supermarket.exceptions.ProductDescriptionInvalidException;
-import br.com.supermarket.exceptions.ProductDescriptionNullException;
-import br.com.supermarket.exceptions.ProductNullBarcodeException;
-import br.com.supermarket.exceptions.ProductProfitInconsistentException;
+import br.com.supermarket.exceptions.*;
 import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductType;
 import br.com.supermarket.repositories.ProductRepository;
@@ -17,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;

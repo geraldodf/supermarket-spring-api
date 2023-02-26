@@ -2,11 +2,13 @@ package br.com.supermarket.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import br.com.supermarket.models.Product;
 
 @Getter
 @Setter
 public class SaleDto {
-    private List<Long> productId;
+    private ArrayList<Product> productList;
+    private BigDecimal saleValue;
 }

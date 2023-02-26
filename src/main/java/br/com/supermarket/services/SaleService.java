@@ -1,14 +1,11 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.SaleDto;
-import br.com.supermarket.models.Product;
 import br.com.supermarket.models.Sale;
 import br.com.supermarket.repositories.SaleRepository;
 import br.com.supermarket.util.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -17,9 +14,6 @@ public class SaleService {
 
     @Autowired
     private SaleRepository saleRepository;
-    @Autowired
-    private ProductService productService;
-
 
     public ArrayList<Sale> getAllSales() {
         return (ArrayList<Sale>) saleRepository.findAll();
@@ -58,7 +52,8 @@ public class SaleService {
             Sale saleUpdated = optionalSale.get();
             Sale sale = createSaleReceivingDTO(saleDto);
             saleUpdated.setProductList(sale.getProductList());
-            sale.getProductList().forEach(p -> saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale())));
+            sale.getProductList()
+                    .forEach(p -> saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale())));
             verifySale(saleUpdated);
             return saleRepository.save(saleUpdated);
         } catch (Exception e) {
@@ -68,27 +63,7 @@ public class SaleService {
 
     public Sale createSaleReceivingDTO(SaleDto saleDto) throws Exception {
 
-        Sale sale = new Sale();
-        ArrayList<Product> productList = new ArrayList<>();
-
-        sale.setSaleDate(DateUtility.getTimeDateCurrentString());
-
-        saleDto.getProductId().forEach(p -> {
-            try {
-                productList.add(productService.getProductById(p));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        try {
-            productList.forEach(p -> sale.setSaleValue(sale.getSaleValue().add(p.getPriceSale())));
-        } catch (Exception e) {
-            throw new Exception("Error adding products to sale.");
-        }
-
-        sale.setProductList(productList);
-        verifySale(sale);
+        Sale sale = new Sale(DateUtility.getTimeDateCurrentString(), saleDto.getSaleValue(), saleDto.getProductList());
         return sale;
     }
 
