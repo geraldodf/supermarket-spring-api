@@ -3,11 +3,9 @@ package br.com.supermarket.models;
 import lombok.Getter;
 import lombok.Setter;
 import br.com.supermarket.exceptions.*;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @Entity
