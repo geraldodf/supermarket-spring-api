@@ -1,6 +1,7 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.SaleDto;
+import br.com.supermarket.models.ProductSale;
 import br.com.supermarket.models.Sale;
 import br.com.supermarket.repositories.SaleRepository;
 import br.com.supermarket.util.DateUtility;
@@ -29,13 +30,9 @@ public class SaleService {
     }
 
     public void createSale(SaleDto saleDto) throws Exception {
-        try {
             Sale sale = createSaleReceivingDTO(saleDto);
-            verifySale(sale);
+            sale.autoVerify();
             saleRepository.save(sale);
-        } catch (Exception e) {
-            throw new Exception("Error creating sale.");
-        }
     }
 
     public void deleteSale(Long id) throws Exception {
@@ -48,34 +45,29 @@ public class SaleService {
 
     public Sale updateSale(SaleDto saleDto, Long id) throws Exception {
         try {
-            Optional<Sale> optionalSale = saleRepository.findById(id);
-            Sale saleUpdated = optionalSale.get();
+            Sale saleUpdated = saleRepository.findById(id).get();
             Sale sale = createSaleReceivingDTO(saleDto);
-            saleUpdated.setProductList(sale.getProductList());
-            sale.getProductList()
-                    .forEach(p -> saleUpdated.setSaleValue(saleUpdated.getSaleValue().add(p.getPriceSale())));
-            verifySale(saleUpdated);
+            sale.setSaleValue(saleDto.getSaleValue());
+            saleUpdated.autoVerify();
             return saleRepository.save(saleUpdated);
+
         } catch (Exception e) {
             throw new Exception("Error updating the sale.");
         }
     }
 
     public Sale createSaleReceivingDTO(SaleDto saleDto) throws Exception {
-
-        Sale sale = new Sale(DateUtility.getTimeDateCurrentString(), saleDto.getSaleValue(), saleDto.getProductList());
+        Sale sale = new Sale();
+        sale = saleRepository.save(sale);
+        sale.setSaleDate(DateUtility.getTimeDateCurrentString());
+        sale.setSaleValue(saleDto.getSaleValue());
+        ProductSale productSale = new ProductSale();
+        productSale.setIdProduct(saleDto.getProductList().get(1).getId());
+        productSale.setProductPrice(saleDto.getProductList().get(1).getPriceSale());
+        productSale.setQuantityProduct(3L);
+        sale.getProductSaleList().add(productSale);
+        sale.getProductSaleList().get(0).setSale(sale);
         return sale;
     }
 
-    public void verifySale(Sale sale) throws Exception {
-        if (sale.getSaleValue() == null) {
-            throw new Exception("You cannot create a sale that does not have a value.");
-        }
-        if (sale.getSaleDate() == null) {
-            throw new Exception("The Sale must have a valid date.");
-        }
-        if (sale.getProductList() == null) {
-            throw new Exception("The sale must have at least 1 product.");
-        }
-    }
 }

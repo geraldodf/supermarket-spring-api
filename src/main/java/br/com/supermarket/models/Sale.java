@@ -3,8 +3,10 @@ package br.com.supermarket.models;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -23,21 +25,21 @@ public class Sale {
     @Column(name = "sale_value")
     private BigDecimal saleValue;
 
-    @ManyToMany
-    @JoinTable(
-            name = "sales_products",
-            joinColumns = @JoinColumn(name = "sale_fk"),
-            inverseJoinColumns = @JoinColumn(name = "product_fk")
-    )
-    private List<Product> productList;
-
-    public Sale(String saleDate, BigDecimal saleValue, List<Product> productList) {
-        this.saleDate = saleDate;
-        this.saleValue = saleValue;
-        this.productList = productList;
-    }
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    private List<ProductSale> productSaleList;
 
     public Sale() {
         this.saleValue = new BigDecimal(0.00);
+        this.productSaleList = new ArrayList<ProductSale>();
+    }
+
+   
+    public void autoVerify() throws Exception {
+        if (this.getSaleValue() == null) {
+            throw new Exception("You cannot create a sale that does not have a value.");
+        }
+        if (this.getSaleDate() == null) {
+            throw new Exception("The Sale must have a valid date.");
+        }
     }
 }

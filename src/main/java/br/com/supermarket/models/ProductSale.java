@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ch.qos.logback.core.subst.Token.Type;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +22,10 @@ public class ProductSale {
     @Column(name = "product_sales_id")
     private Long id;
 
-    @Column(name = "sale_fk")
-    private Long idSale;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sale_fk")
+    @JsonIgnore
+    private Sale sale;
 
     @Column(name = "product_fk")
     private Long idProduct;
