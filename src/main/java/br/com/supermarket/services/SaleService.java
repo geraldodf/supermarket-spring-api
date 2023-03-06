@@ -1,8 +1,10 @@
 package br.com.supermarket.services;
 
 import br.com.supermarket.dtos.SaleDto;
+import br.com.supermarket.models.Product;
 import br.com.supermarket.models.ProductSale;
 import br.com.supermarket.models.Sale;
+import br.com.supermarket.repositories.ProductRepository;
 import br.com.supermarket.repositories.SaleRepository;
 import br.com.supermarket.util.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ public class SaleService {
 
     @Autowired
     private SaleRepository saleRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
 
     public ArrayList<Sale> getAllSales() {
         return (ArrayList<Sale>) saleRepository.findAll();
@@ -30,9 +36,20 @@ public class SaleService {
     }
 
     public void createSale(SaleDto saleDto) throws Exception {
-            Sale sale = createSaleReceivingDTO(saleDto);
-            sale.autoVerify();
-            saleRepository.save(sale);
+        Sale sale = createSaleReceivingDTO(saleDto);
+
+        sale.getProductSaleList().forEach(p -> {
+
+            Product product = productService.getProductById(p.getIdProduct());
+            product.setQuantity(product.getQuantity() - p.getQuantityProduct());
+            product.verifyProductAttributesNoNull();
+            product.autoVerify();
+            productRepository.save(product);
+
+        });
+
+        sale.autoVerify();
+        saleRepository.save(sale);
     }
 
     public void deleteSale(Long id) throws Exception {

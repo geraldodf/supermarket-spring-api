@@ -1,13 +1,8 @@
 package br.com.supermarket.models;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import ch.qos.logback.core.subst.Token.Type;
 import lombok.Getter;
 import lombok.Setter;
 
