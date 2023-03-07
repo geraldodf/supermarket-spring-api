@@ -38,15 +38,19 @@ public class SaleService {
     public void createSale(SaleDto saleDto) throws Exception {
         Sale sale = createSaleReceivingDTO(saleDto);
 
-        sale.getProductSaleList().forEach(p -> {
+        try {
+            sale.getProductSaleList().forEach(p -> {
 
-            Product product = productService.getProductById(p.getIdProduct());
-            product.setQuantity(product.getQuantity() - p.getQuantityProduct());
-            product.verifyProductAttributesNoNull();
-            product.autoVerify();
-            productRepository.save(product);
-
-        });
+                Product product = productService.getProductById(p.getIdProduct());
+                product.setQuantity(product.getQuantity() - p.getQuantityProduct());
+                product.verifyProductAttributesNoNull();
+                product.autoVerify();
+                productRepository.save(product);
+    
+            });
+        } catch (Exception e) {
+            throw new Exception("Error when withdrawing product inventory");
+        }
 
         sale.autoVerify();
         saleRepository.save(sale);
