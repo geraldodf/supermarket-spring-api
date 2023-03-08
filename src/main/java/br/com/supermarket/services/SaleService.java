@@ -10,6 +10,7 @@ import br.com.supermarket.util.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,25 +36,27 @@ public class SaleService {
         }
     }
 
-    public void createSale(SaleDto saleDto) throws Exception {
+    public Sale createSale(SaleDto saleDto) throws Exception {
         Sale sale = createSaleReceivingDTO(saleDto);
 
-        try {
-            sale.getProductSaleList().forEach(p -> {
-
-                Product product = productService.getProductById(p.getIdProduct());
-                product.setQuantity(product.getQuantity() - p.getQuantityProduct());
-                product.verifyProductAttributesNoNull();
-                product.autoVerify();
-                productRepository.save(product);
-    
-            });
-        } catch (Exception e) {
-            throw new Exception("Error when withdrawing product inventory");
-        }
-
         sale.autoVerify();
-        saleRepository.save(sale);
+        return saleRepository.save(sale);
+    }
+
+    public Sale updateSale(SaleDto saleDto, Long id) throws Exception {
+        Sale saleUpdated = saleRepository.findById(id).get();
+        Sale sale = createSaleReceivingDTO(saleDto);
+        saleUpdated.setSaleValue(sale.getSaleValue());
+
+        List<ProductSale> productSales = new ArrayList<>();
+        sale.getProductSaleList().forEach(p -> {
+            productSales.add(p);
+        });
+
+        saleUpdated.setProductSaleList(productSales);
+        saleUpdated.autoVerify();
+        return saleRepository.save(saleUpdated);
+
     }
 
     public void deleteSale(Long id) throws Exception {
@@ -61,19 +64,6 @@ public class SaleService {
             saleRepository.deleteById(id);
         } else {
             throw new Exception("Sale not found.");
-        }
-    }
-
-    public Sale updateSale(SaleDto saleDto, Long id) throws Exception {
-        try {
-            Sale saleUpdated = saleRepository.findById(id).get();
-            Sale sale = createSaleReceivingDTO(saleDto);
-            sale.setSaleValue(saleDto.getSaleValue());
-            saleUpdated.autoVerify();
-            return saleRepository.save(saleUpdated);
-
-        } catch (Exception e) {
-            throw new Exception("Error updating the sale.");
         }
     }
 
@@ -89,6 +79,18 @@ public class SaleService {
         sale.getProductSaleList().add(productSale);
         sale.getProductSaleList().get(0).setSale(sale);
         return sale;
+    }
+
+    public void CheckoutProductsFromDatabase(Sale sale) {
+        sale.getProductSaleList().forEach(p -> {
+
+            Product product = productService.getProductById(p.getIdProduct());
+            product.setQuantity(product.getQuantity() - p.getQuantityProduct());
+            product.verifyProductAttributesNoNull();
+            product.autoVerify();
+            productRepository.save(product);
+
+        });
     }
 
 }

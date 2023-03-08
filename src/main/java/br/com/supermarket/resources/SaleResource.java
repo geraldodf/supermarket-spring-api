@@ -26,8 +26,8 @@ public class SaleResource {
 
     @CrossOrigin(allowedHeaders = "*")
     @PostMapping
-    public void createSale(@RequestBody SaleDto saleDto) throws Exception {
-        saleService.createSale(saleDto);
+    public Sale createSale(@RequestBody SaleDto saleDto) throws Exception {
+        return saleService.createSale(saleDto);
     }
 
     @PutMapping("/{id}")
