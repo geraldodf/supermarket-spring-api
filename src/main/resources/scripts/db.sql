@@ -29,11 +29,13 @@ create table sales
     sale_value decimal(6, 2)
 );
 
-create table sales_products
+create table product_sales
 (
-    sale_product_id Integer NOT NULL auto_increment primary key,
-    sale_fk         Integer NOT null,
-    product_fk      Integer NOT NULL,
+    product_sales_id Integer NOT NULL auto_increment primary key,
+    sale_fk          Integer NOT null,
+    product_fk       Integer NOT NULL,
+    product_price    integer,
+    quantity_product decimal(6, 2),
     foreign key (product_fk) references products (product_id),
     foreign key (sale_fk) references sales (sale_id)
 );
