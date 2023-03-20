@@ -23,19 +23,19 @@ public class UserResource {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/name'")
     public ArrayList<User> getUserByName(@RequestParam(name = "name") String name) throws Exception {
         return userService.getUsersByName(name);
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user) throws Exception {
-        userService.createUser(user);
+    public User createUser(@RequestBody User user) throws Exception {
+        return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable("id") Long id, @RequestBody User user) throws Exception {
-        userService.userUpdate(id, user);
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws Exception {
+        return userService.userUpdate(id, user);
     }
 
     @DeleteMapping("/{id}")
