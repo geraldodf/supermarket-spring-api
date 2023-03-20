@@ -17,9 +17,14 @@ create table products
 
 create table users
 (
-    user_id       Integer NOT NULL auto_increment primary key,
-    user_name     varchar(266),
-    user_password varchar(266)
+    user_id                   Integer NOT NULL auto_increment primary key,
+    user_name                 varchar(266),
+    user_surname              varchar(266),
+    user_phone_number         varchar(266),
+    user_phone_number_reserve varchar(266),
+    user_email                varchar(266),
+    user_password             varchar(266)
+
 );
 
 create table sales
