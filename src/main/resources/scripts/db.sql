@@ -61,3 +61,16 @@ create table roles
     role_id   Integer NOT NULL auto_increment primary key,
     role_name varchar(266)
 );
+
+CREATE TABLE addresses
+(
+    id                      INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    address_street_name     VARCHAR(266),
+    address_number          BIGINT,
+    address_complement      VARCHAR(266),
+    address_reference_point VARCHAR(266),
+    address_neighborhood    VARCHAR(266),
+    address_cep             VARCHAR(266),
+    address_city            VARCHAR(266),
+    address_uf              VARCHAR(266)
+);
