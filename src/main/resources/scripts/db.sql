@@ -1,70 +1,35 @@
-create
-database supermarketdb;
-use
+CREATE
+DATABASE supermarketdb;
+USE
 supermarketdb;
 
-create table products
+CREATE TABLE products
 (
-    product_id            Integer NOT NULL auto_increment primary key,
-    product_description   varchar(266),
-    product_price_buy     decimal(6, 2),
-    product_price_sale    decimal(6, 2),
-    product_net_profit    decimal(6, 2),
-    product_bar_code      bigint,
-    product_quantity      integer,
-    product_creation_date varchar(266)
+    product_id            INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    product_description   VARCHAR(266),
+    product_price_buy     DECIMAL(6, 2),
+    product_price_sale    DECIMAL(6, 2),
+    product_net_profit    DECIMAL(6, 2),
+    product_bar_code      BIGINT,
+    product_quantity      INT,
+    product_creation_date VARCHAR(266)
 );
 
-create table users
+CREATE TABLE users
 (
-    user_id                   Integer NOT NULL auto_increment primary key,
-    user_name                 varchar(266),
-    user_surname              varchar(266),
-    user_phone_number         varchar(266),
-    user_phone_number_reserve varchar(266),
-    user_email                varchar(266),
-    user_password             varchar(266)
-
+    user_id                   INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_name                 VARCHAR(266),
+    user_surname              VARCHAR(266),
+    user_phone_number         VARCHAR(266),
+    user_phone_number_reserve VARCHAR(266),
+    user_email                VARCHAR(266),
+    user_password             VARCHAR(266)
 );
 
-create table sales
-(
-    sale_id    Integer NOT NULL auto_increment primary key,
-    sale_date  varchar(266),
-    sale_value decimal(6, 2)
-);
-
-create table product_sales
-(
-    product_sales_id Integer NOT NULL auto_increment primary key,
-    sale_fk          Integer NOT null,
-    product_fk       Integer NOT NULL,
-    product_price    integer,
-    quantity_product decimal(6, 2),
-    foreign key (product_fk) references products (product_id),
-    foreign key (sale_fk) references sales (sale_id)
-);
-
-create table product_type
-(
-    product_type_id   Integer NOT NULL auto_increment primary key,
-    name_product_type varchar(266)
-);
-
-ALTER TABLE products
-    add product_type_fk Integer;
-ALTER TABLE products
-    add foreign key (product_type_fk) references product_type (product_type_id);
-
-create table roles
-(
-    role_id   Integer NOT NULL auto_increment primary key,
-    role_name varchar(266)
-);
 
 CREATE TABLE addresses
 (
-    id                      INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    address_id              INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     address_street_name     VARCHAR(266),
     address_number          BIGINT,
     address_complement      VARCHAR(266),
@@ -72,5 +37,44 @@ CREATE TABLE addresses
     address_neighborhood    VARCHAR(266),
     address_cep             VARCHAR(266),
     address_city            VARCHAR(266),
-    address_uf              VARCHAR(266)
+    address_uf              VARCHAR(266),
+    address_fk              INT,
+    FOREIGN KEY (address_fk) REFERENCES users (user_id)
+);
+
+
+CREATE TABLE sales
+(
+    sale_id    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    sale_date  VARCHAR(266),
+    sale_value DECIMAL(6, 2)
+);
+
+CREATE TABLE product_sales
+(
+    product_sales_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    sale_fk          INT NOT NULL,
+    product_fk       INT NOT NULL,
+    product_price    INT,
+    quantity_product DECIMAL(6, 2),
+    FOREIGN KEY (product_fk) REFERENCES products (product_id),
+    FOREIGN KEY (sale_fk) REFERENCES sales (sale_id)
+);
+
+CREATE TABLE product_type
+(
+    product_type_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name_product_type VARCHAR(266)
+);
+
+ALTER TABLE products
+    ADD product_type_fk INT;
+
+ALTER TABLE products
+    ADD FOREIGN KEY (product_type_fk) REFERENCES product_type (product_type_id);
+
+CREATE TABLE roles
+(
+    role_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(266)
 );

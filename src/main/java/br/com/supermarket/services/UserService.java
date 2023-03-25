@@ -1,5 +1,6 @@
 package br.com.supermarket.services;
 
+import br.com.supermarket.dtos.UserDto;
 import br.com.supermarket.models.User;
 import br.com.supermarket.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,28 +14,30 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AddressService addressService;
 
 
-    public ArrayList<User> getAllUsers() throws Exception {
+    public ArrayList<User> getAllUsers() {
         return (ArrayList<User>) userRepository.findAll();
     }
 
 
-    public User getUserById(Long id) throws Exception {
+    public User getUserById(Long id) {
         return userRepository.findById(id).get();
     }
 
-    public ArrayList<User> getUsersByName(String nome) throws Exception {
+    public ArrayList<User> getUsersByName(String nome) {
         return (ArrayList<User>) userRepository.searchByName(nome);
     }
 
-    public User createUser(User user) throws Exception {
-        verifyUser(user);
+    public User createUser(UserDto userDto) {
+        User user = createUserReceivingDto(userDto);
         return userRepository.save(user);
     }
 
-    public User userUpdate(Long id, User user) throws Exception {
-        verifyUser(user);
+
+    public User userUpdate(Long id, User user) {
         Optional<User> optionalUser = userRepository.findById(id);
         User userUpdated = optionalUser.get();
 
@@ -48,17 +51,23 @@ public class UserService {
         return userRepository.save(userUpdated);
     }
 
-    public void deleteUser(Long id) throws Exception {
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
+    private User createUserReceivingDto(UserDto userDto) {
+        User user = new User();
 
-    public void verifyUser(User user) throws Exception {
-        if (user.getName().length() <= 3) {
-            throw new Exception("User must have a name with more than 3 characters! Check that the name is entered and try again.");
-        }
-        if (user.getPassword().length() > 999) {
-            throw new Exception("User must have a password with at least 4 numbers! Check that the password has been entered and try again.");
-        }
+        userDto.getAddressesIds().forEach(id -> {
+            user.getAddresses().add(addressService.getById(id));
+        });
+        user.setSurname(userDto.getSurname());
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setPhoneNumberReserve(userDto.getPhoneNumberReserve());
+
+        return user;
     }
 }

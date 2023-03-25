@@ -1,5 +1,6 @@
 package br.com.supermarket.resources;
 
+import br.com.supermarket.dtos.UserDto;
 import br.com.supermarket.models.User;
 import br.com.supermarket.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class UserResource {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) throws Exception {
-        return userService.createUser(user);
+    public User createUser(@RequestBody UserDto userdto) throws Exception {
+        return userService.createUser(userdto);
     }
 
     @PutMapping("/{id}")

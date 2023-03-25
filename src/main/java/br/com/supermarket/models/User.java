@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +17,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_fk")
+    private List<Address> addresses;
     @Column(name = "user_name")
     private String name;
     @Column(name = "user_surname")
@@ -28,4 +34,7 @@ public class User {
     @Column(name = "user_password")
     private String password;
 
+    public User() {
+        this.addresses = new ArrayList<>();
+    }
 }
