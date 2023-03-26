@@ -4,6 +4,8 @@ import br.com.supermarket.dtos.UserDto;
 import br.com.supermarket.models.User;
 import br.com.supermarket.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +32,11 @@ public class UserService {
     public ArrayList<User> getUsersByName(String nome) {
         return (ArrayList<User>) userRepository.searchByName(nome);
     }
+
+    public Page<User> pagedSearch(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
 
     public User createUser(UserDto userDto) {
         User user = createUserReceivingDto(userDto);
@@ -70,4 +77,5 @@ public class UserService {
 
         return user;
     }
+
 }

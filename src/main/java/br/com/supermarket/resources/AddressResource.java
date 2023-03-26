@@ -4,6 +4,8 @@ package br.com.supermarket.resources;
 import br.com.supermarket.models.Address;
 import br.com.supermarket.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +25,11 @@ public class AddressResource {
     @GetMapping("/{id}")
     public Address getById(@PathVariable("id") Long id) {
         return addressService.getById(id);
+    }
+
+    @GetMapping("/page")
+    public Page<Address> pagedSearch(Pageable pageable){
+        return addressService.pagedSearch(pageable);
     }
 
     @PostMapping

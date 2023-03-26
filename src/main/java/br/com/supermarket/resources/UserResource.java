@@ -4,7 +4,10 @@ import br.com.supermarket.dtos.UserDto;
 import br.com.supermarket.models.User;
 import br.com.supermarket.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 
 @RestController
@@ -15,32 +18,37 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    public ArrayList<User> getAllUsers() throws Exception {
+    public ArrayList<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable("id") Long id) throws Exception {
+    public User getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/name'")
-    public ArrayList<User> getUserByName(@RequestParam(name = "name") String name) throws Exception {
+    @GetMapping("/name")
+    public ArrayList<User> getUserByName(@RequestParam(name = "name") String name) {
         return userService.getUsersByName(name);
     }
 
+    @GetMapping("/page")
+    public Page<User> pagedSearch(Pageable pageable){
+        return userService.pagedSearch(pageable);
+    }
+
     @PostMapping
-    public User createUser(@RequestBody UserDto userdto) throws Exception {
+    public User createUser(@RequestBody UserDto userdto) {
         return userService.createUser(userdto);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws Exception {
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         return userService.userUpdate(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id) throws Exception {
+    public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
 

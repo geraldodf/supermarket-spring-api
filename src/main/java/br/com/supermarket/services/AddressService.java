@@ -3,6 +3,8 @@ package br.com.supermarket.services;
 import br.com.supermarket.models.Address;
 import br.com.supermarket.repositories.AddresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,11 @@ public class AddressService {
     public Address getById(Long id) {
         return addresRepository.findById(id).get();
     }
+
+    public Page<Address> pagedSearch(Pageable pageable) {
+        return addresRepository.findAll(pageable);
+    }
+
 
     public Address create(Address address) {
         return addresRepository.save(address);
@@ -42,4 +49,5 @@ public class AddressService {
     public void delete(Long id) {
         addresRepository.deleteById(id);
     }
+
 }

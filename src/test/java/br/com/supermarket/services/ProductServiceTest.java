@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -173,7 +174,7 @@ class ProductServiceTest {
 
         Mockito.when(productRepository.findAll()).thenReturn(productsList);
         Assertions.assertEquals(2, productService.getAllProducts().size());
-        Assertions. assertFalse(productService.getAllProducts().isEmpty());
+        Assertions.assertFalse(productService.getAllProducts().isEmpty());
 
     }
 
@@ -249,7 +250,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductsByCodeShouldReturnListWithOneProduct()  {
+    void getProductsByCodeShouldReturnListWithOneProduct() {
         Long barCode = 1010L;
         ArrayList<Product> productsList = new ArrayList<>();
         productsList.add(new Product());
