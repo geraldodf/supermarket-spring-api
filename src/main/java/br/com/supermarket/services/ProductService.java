@@ -26,13 +26,11 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-
-        Optional<Product> product = productRepository.findById(id);
-        return product.get();
+        return productRepository.findById(id).get();
     }
 
     public ArrayList<Product> getProductsByBarCode(Long barCode) throws Exception {
-        if (productRepository.searchByBarCode(barCode) == null) {
+        if (null == productRepository.searchByBarCode(barCode)) {
             throw new Exception("Product nonexistent! Verify and try again.");
         }
         return productRepository.searchByBarCode(barCode);
@@ -82,7 +80,6 @@ public class ProductService {
         }
         return productRepository.findAll(pageable);
     }
-
 
     public Product createProduct(ProductDto productDto) throws Exception {
         verifyProductDto(productDto);
@@ -181,6 +178,5 @@ public class ProductService {
         product.setProductType(productTypeOptional);
         return product;
     }
-
 
 }
