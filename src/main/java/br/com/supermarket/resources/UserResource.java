@@ -33,7 +33,7 @@ public class UserResource {
     }
 
     @GetMapping("/page")
-    public Page<User> pagedSearch(Pageable pageable){
+    public Page<User> pagedSearch(Pageable pageable) {
         return userService.pagedSearch(pageable);
     }
 
@@ -43,8 +43,8 @@ public class UserResource {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
-        return userService.userUpdate(id, user);
+    public User updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
+        return userService.userUpdate(id, userDto);
     }
 
     @DeleteMapping("/{id}")

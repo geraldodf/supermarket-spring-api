@@ -19,11 +19,9 @@ public class UserService {
     @Autowired
     private AddressService addressService;
 
-
     public ArrayList<User> getAllUsers() {
         return (ArrayList<User>) userRepository.findAll();
     }
-
 
     public User getUserById(Long id) {
         return userRepository.findById(id).get();
@@ -37,23 +35,25 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-
     public User createUser(UserDto userDto) {
         User user = createUserReceivingDto(userDto);
         return userRepository.save(user);
     }
 
+    public User userUpdate(Long id, UserDto userDto) {
+        User userUpdated = userRepository.findById(id).get();
 
-    public User userUpdate(Long id, User user) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        User userUpdated = optionalUser.get();
 
-        userUpdated.setName(user.getName());
-        userUpdated.setSurname(user.getSurname());
-        userUpdated.setPassword(user.getPassword());
-        userUpdated.setEmail(user.getEmail());
-        userUpdated.setPhoneNumber(user.getPhoneNumber());
-        userUpdated.setPhoneNumberReserve(user.getPhoneNumberReserve());
+        userDto.getAddressesIds().forEach(idAddress -> {
+            userUpdated.getAddresses().add(addressService.getById(idAddress));
+        });
+
+        userUpdated.setName(userDto.getName());
+        userUpdated.setSurname(userDto.getSurname());
+        userUpdated.setPassword(userDto.getPassword());
+        userUpdated.setEmail(userDto.getEmail());
+        userUpdated.setPhoneNumber(userDto.getPhoneNumber());
+        userUpdated.setPhoneNumberReserve(userDto.getPhoneNumberReserve());
 
         return userRepository.save(userUpdated);
     }
