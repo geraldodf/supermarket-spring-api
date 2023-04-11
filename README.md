@@ -3,9 +3,9 @@ The Supermarket Spring API is a RESTful API designed to serve web clients with a
 
 This project is based on the Spring ecosystem and leverages the following main modules:
 
-Spring Boot;
-Spring Data;
-Spring Web;
+- Spring Boot;
+- Spring Data;
+- Spring Web;
 
 The application was designed based on the Layered Architecture, where the main components are:
 
