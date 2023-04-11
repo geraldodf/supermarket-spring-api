@@ -1,4 +1,4 @@
-###Supermarket Spring API
+### Supermarket Spring API
 The Supermarket Spring API is a RESTful API designed to serve web clients with a focus on the supermarket business. It allows users to perform basic CRUD (Create, Read, Update, and Delete) operations on products available for sale, manage stock quantities, calculate the total purchase value, among other features that are gradually being developed.
 
 This project is based on the Spring ecosystem and leverages the following main modules:
