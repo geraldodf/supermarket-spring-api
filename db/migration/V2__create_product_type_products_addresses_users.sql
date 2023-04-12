@@ -1,3 +1,20 @@
+INSERT INTO product_type (name_product_type)
+VALUES ("Doces"),
+       ("Cereais"),
+       ("Hortifruti"),
+       ("Bolachas e Biscoitos"),
+       ("Massas"),
+       ("Temperos e Condimentos"),
+       ("Laticíneos"),
+       ("Friamberia"),
+       ("Açougue"),
+       ("Padaria"),
+       ("Higiene Pessoal"),
+       ("Bebidas"),
+       ("Bebidas Alcoólicas"),
+       ("Limpeza"),
+       ("Outros");
+
 INSERT INTO products (product_description, product_price_buy, product_price_sale, product_net_profit, product_bar_code,
                       product_quantity, product_creation_date, product_type_fk)
 VALUES ("Feijão 1kg", 2.99, 4.99, 2, 50, 1, '11/01/2023', 2),
@@ -45,3 +62,29 @@ VALUES ("Feijão 1kg", 2.99, 4.99, 2, 50, 1, '11/01/2023', 2),
        ("Café 500g", 8.99, 12.99, 4.00, 20, 9, '11/01/2023', 15),
        ("Biscoito Recheado 200g", 2.99, 3.99, 1.00, 40, 10, '11/01/2023', 4);
 
+INSERT INTO addresses (address_street_name, address_number, address_complement, address_reference_point,
+                       address_neighborhood, address_cep, address_city, address_uf)
+VALUES ('Rua F', 987, 'Bloco 1, apto 201', 'Perto do shopping', 'Bairro 6', '67890-123', 'Porto Alegre', 'RS'),
+       ('Rua G', 456, 'Rua ABC', 'Perto da escola', 'Bairro 7', '78901-234', 'Fortaleza', 'CE'),
+       ('Rua H', 987, 'Casa 2', 'Em frente a Lan House', 'Bairro 8', '89012-345', 'Porto Velho', 'RO'),
+       ('Avenida I', 1234, 'Sala 101', 'Próximo ao hospital', 'Bairro 9', '90123-456', 'Salvador', 'BA'),
+       ('Rua K', 890, 'Bloco B, apto 301', 'Próximo ao metrô', 'Bairro 11', '12345-678', 'São Paulo', 'SP'),
+       ('Rua L', 123, 'Casa 1', 'Em frente ao mercado', 'Bairro 12', '23456-789', 'Curitiba', 'PR'),
+       ('Rua M', 456, 'Casa 2', 'Próximo ao parque', 'Bairro 13', '34567-890', 'Recife', 'PE'),
+       ('Rua N', 789, 'Apartamento 301', 'Próximo à praia', 'Bairro 14', '45678-901', 'Natal', 'RN'),
+       ('Rua O', 1011, 'Sala 201', 'Próximo à universidade', 'Bairro 15', '56789-012', 'Belém', 'PA'),
+       ('Rua P', 1213, 'Bloco C, apto 401', 'Próximo à estação de trem', 'Bairro 16', '67890-123', 'Porto Alegre',
+        'RS');
+
+
+INSERT INTO users (user_name, user_surname, user_phone_number, user_phone_number_reserve, user_email, user_password)
+VALUES ('João', 'Silva', '(11) 99999-9999', '(11) 98888-8888', 'joao.silva@gmail.com', '123456'),
+       ('Maria', 'Fernandes', '(21) 99999-9999', '(21) 98888-8888', 'maria.fernandes@gmail.com', '123456'),
+       ('Pedro', 'Santos', '(31) 99999-9999', '(31) 98888-8888', 'pedro.santos@gmail.com', '123456'),
+       ('Carla', 'Souza', '(41) 99999-9999', '(41) 98888-8888', 'carla.souza@gmail.com', '123456'),
+       ('Lucas', 'Oliveira', '(51) 99999-9999', '(51) 98888-8888', 'lucas.oliveira@gmail.com', '123456'),
+       ('Ana', 'Almeida', '(61) 99999-9999', '(61) 98888-8888', 'ana.almeida@gmail.com', '123456'),
+       ('Bruno', 'Costa', '(71) 99999-9999', '(71) 98888-8888', 'bruno.costa@gmail.com', '123456'),
+       ('Laura', 'Rocha', '(81) 99999-9999', '(81) 98888-8888', 'laura.rocha@gmail.com', '123456'),
+       ('Mariana', 'Gomes', '(85) 99999-9999', '(85) 98888-8888', 'mariana.gomes@gmail.com', '123456'),
+       ('Rafael', 'Lima', '(91) 99999-9999', '(91) 98888-8888', 'rafael.lima@gmail.com', '123456');
