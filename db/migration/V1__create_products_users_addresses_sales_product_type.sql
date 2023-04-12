@@ -1,8 +1,3 @@
-CREATE
-DATABASE supermarketdb;
-USE
-supermarketdb;
-
 CREATE TABLE products
 (
     product_id            INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
