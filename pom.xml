@@ -87,7 +87,13 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>9.8.1</version>
+			</plugin>
         </plugins>
+        <finalName>geraldodf/supermarket-api:1.0.0</finalName>
     </build>
 
 </project>
