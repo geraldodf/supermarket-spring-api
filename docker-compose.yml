@@ -1,0 +1,19 @@
+services:
+  app:
+    container_name: springboot-postgres
+    image: geraldodf/supermarket-api.1.0
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-supermarket
+  postgres-supermarket:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=supermarketdb
+
+

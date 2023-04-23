@@ -54,7 +54,18 @@ IDE. (Must have Java and Maven installed):
 
 - Run this command to create the database:
 
-######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=supermarketdb -p 5433:5432 -d
-postgres
+######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=supermarketdb -p 5433:5432 -d postgres
 
 - Then just run it in your IDE, and it will be available to access port 8080/api in your browser.
+
+#### 2) Viewing environment
+
+- Create this container containing the database:
+
+######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=supermarketdb -p 5433:5432 -d postgres
+
+Then go to the root folder of the project and use the command:
+
+###### docker-compose up
+
+Ready! The project will be running on port http://localhost:8080/api. Just make requests and test its functionality. :)

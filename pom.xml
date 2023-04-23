@@ -93,7 +93,7 @@
                 <version>9.8.1</version>
             </plugin>
         </plugins>
-        <finalName>supermarket-api</finalName>
+        <finalName>supermarket-api.1.0</finalName>
     </build>
 
 </project>
