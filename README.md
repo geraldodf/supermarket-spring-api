@@ -47,14 +47,16 @@ Technologies Used
 
 ### Two ways to run the project
 
+(Must have Java and Maven installed)
+
 #### 1) Development environment
 
 Follow these steps to run the application with just the dockerized database, and with the application running in your
-IDE. (Must have Java and Maven installed):
+IDE. 
 
 - Run this command to create the database:
 
-######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=supermarketdb -p 5433:5432 -d postgres
+######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=supermarketdb -p 5432:5432 -d postgres
 
 - Then just run it in your IDE, and it will be available to access port 8080/api in your browser.
 
@@ -62,9 +64,13 @@ IDE. (Must have Java and Maven installed):
 
 - Create this container containing the database:
 
-######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=supermarketdb -p 5433:5432 -d postgres
+######  docker run --name postgres-supermarket -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=supermarketdb -p 5432:5432 -d postgres
 
 Then go to the root folder of the project and use the command:
+
+###### mvn clean install
+
+Finally use the command:
 
 ###### docker-compose up
 
